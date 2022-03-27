@@ -3,10 +3,11 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, FlatList } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 function HomeScreen({route, navigation}){
-  console.log(route.params);
-  const token = route.params.token;
+  
   var initialVal = [{id: 0, name:'nic'}]
   const [dogs, setDogs] = React.useState(initialVal)
   const renderImage = (raw_data) => {
@@ -14,6 +15,7 @@ function HomeScreen({route, navigation}){
   }
   //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
   React.useEffect(()=>{
+    const token = route.params.token;
     fetch(`http://localhost:8000/dogs/getAll?token=${token}`)
     .then((response) => response.json())
     .then((json) => {
@@ -64,7 +66,7 @@ function RegisterScreen({route,navigation}){
 }
 
 
-function LoginScreen({navigation}) {
+function LoginScreen({route, navigation}) {
   //toto su tie hodnoty, username je hodnota a setusername je ako keby metoda kde nastavime tu hodnotu, nieco ako premenna a su to nejake hooks... nvm 
   // proste to je hook na state lebo to ma nejaky stav a potom ked sa zmeni stav tak sa to znova vyrenderuje
   const [username, setusername] = React.useState('');
@@ -75,7 +77,13 @@ function LoginScreen({navigation}) {
     .then((response) => response.json())
     .then((json) => {
       console.log(json)
-      navigation.navigate('Home',{"token":json.token});
+      route.params.setToken(json.token)
+      // navigation.navigate({
+      //   name: 'Home',
+      //   params: { "token": json.token },
+      //   merge: true,
+      // });
+      
     })
     .catch((error) => {
       console.error(error);
@@ -98,16 +106,25 @@ function LoginScreen({navigation}) {
 //https://reactnavigation.org/docs/bottom-tab-navigator toto tam chceme potom ale nejako to o-ifovat aby pokial sa neprihlasi videl len ten login
 //stack by sme mohli pouzit ale ked klika zase z psa na detail psa, formular a tak aby sa vzdy mohol vratit naspat a aby tie data boli ulozene a nerobilo sa kazdy krat request na backend len nvm ako este
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function App() {
-  //const [token, setToken] = React.useState(null);
+  const [token, setToken] = React.useState(undefined);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        {token == undefined ? (
+          <>
+          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken }}/>
+          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken }}/>
+          </>
+          
+        ):(
+          <>
+          <Tab.Screen name="Home" component={HomeScreen} initialParams={{ "token": token }}/>
+          </>
+        )}
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
