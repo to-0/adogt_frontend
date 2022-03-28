@@ -1,10 +1,10 @@
 
 import * as React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, FlatList, AppRegistry, Dimensions, ImageBackground } from 'react-native';
-import { NavigationContainer,DefaultTheme } from '@react-navigation/native';
+import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import styles from './styles'
 
 function HomeScreen({route, navigation}){
   
@@ -13,6 +13,11 @@ function HomeScreen({route, navigation}){
   const renderImage = (raw_data) => {
       return `data:image/png;base64,${raw_data}`
   }
+  var dog_images = [
+    require('./img/baset.jpg'),
+    require('./img/bigl.jpg'),
+    require('./img/bulldog.jpg')
+  ];
   //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
   React.useEffect(()=>{
     const token = route.params.token;
@@ -33,11 +38,24 @@ function HomeScreen({route, navigation}){
   }, [])
   // tu musi byt item nie dog lebo tak funguje ten flatlist...
   const renderItem = ({ item })=> (
-    <View style={styles_home.item}>
-      <Text style={styles_home.item_title}>{item.name}</Text>
-      <Text>{item.age}</Text>
-      <Text>{item.breed}</Text>
+    <View>
+      <Image style={styles.item_image} source={dog_images[item.id - 1]} />
+
+      <View style={styles.item}>
+
+        <View style={{flex: 3}}>
+          <Text style={styles.item_title}>{item.name}</Text>
+          <Text style={styles.item_text}>Vek: {item.age} roky</Text>
+          <Text style={styles.item_text}>Plemeno: {item.breed}</Text>
+        </View>
+
+        <View style={{flex: 1}}>
+          <Image style={styles.icon} source={require('./img/informationIcon.png')} />
+        </View>
+
+      </View>             
     </View>
+     
   );
   return (
     <View>
@@ -54,6 +72,14 @@ function HomeScreen({route, navigation}){
 
     </View>
   );
+}
+
+function AccountScreen({route, navigation}) {
+
+}
+
+function FormsScreen({route, navigation}) {
+
 }
 
 function RegisterScreen({route,navigation}){
@@ -91,13 +117,19 @@ function LoginScreen({route, navigation}) {
 
   }
   return (
-      <ImageBackground source={require('./img/background.webp')} resizeMode="cover" style={basic_styles.image}>
+      <ImageBackground source={require('./img/background.webp')} resizeMode="cover" style={styles.background_image}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
-          <Text style={[basic_styles.title, {marginTop: (Dimensions.get('window').height) * 0.15}]}>Vitajte v Adogt</Text>
-          <TextInput placeholder='Meno' onChangeText={(value) => setusername(value)} style={[basic_styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
-          <TextInput placeholder='Heslo' onChangeText={(value) => setPass(value)} style={basic_styles.form}/>
-          <View style={basic_styles.button}><Button title="Prihlásiť sa" onPress={button_login} color='#f76226'/></View>
-          <Text style={[basic_styles.link, {marginBottom: (Dimensions.get('window').height) * 0.05}]} onPress={ () => navigation.navigate('Register',{test:"this is test"}) } > Zaregistrovať sa!</Text>
+          <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.15}]}>
+            Vitajte v Adogt
+          </Text>
+          <TextInput placeholder='Meno' onChangeText={(value) => setusername(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
+          <TextInput placeholder='Heslo' onChangeText={(value) => setPass(value)} secureTextEntry={true} style={styles.form}/>
+          <View style={styles.button}>
+            <Button title="Prihlásiť sa" onPress={button_login} color='#f76226'/>
+          </View>
+          <Text style={[styles.link, {marginBottom: (Dimensions.get('window').height) * 0.05}]} onPress={ () => navigation.navigate('Register',{test:"this is test"}) }>
+            Zaregistrovať sa!
+          </Text>
         </View>
       </ImageBackground>
       );
@@ -121,51 +153,26 @@ function App() {
           
         ):(
           <>
-          <Tab.Screen name="Home" component={HomeScreen} initialParams={{ "token": token }}/>
+          <Tab.Screen name="Prehľad psov" component={HomeScreen} initialParams={{ "token": token }}
+            options={{
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />}
+            }}/>
+    
+          <Tab.Screen name="Profil" component={AccountScreen} initialParams={{ "token": token }}
+            options={{
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/accountIcon.png')} />}
+            }}/>
+      
+          <Tab.Screen name="Formuláre" component={FormsScreen} initialParams={{ "token": token }}
+            options={{
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />}
+            }}/>
           </>
-        )}
+        )} 
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
-const basic_styles = StyleSheet.create({
-  form: {
-    width: (Dimensions.get('window').width) * 0.6,
-    backgroundColor: 'white',
-    borderColor: 'black',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    margin: 10,
-  },
-  button: {
-    width: (Dimensions.get('window').width) * 0.6,
-    backgroundColor: '#f76226',
-    margin: 20,
-  },
-  title: {
-    fontSize:36,
-    fontWeight:'bold',
-  },
-  link: { 
-    color: 'brown',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  }
-});
-const styles_home = StyleSheet.create({
-  item: {
-    backgroundColor: '#5cd8fa',
-    padding: 20,
-    marginVertical:8,
-    marginHorizontal:10
-  },
-  item_title: {
-    fontSize: 25,
-    fontFamily: 'bold'
-  }
-});
 
 AppRegistry.registerComponent(App, () => App);
 export default App;
