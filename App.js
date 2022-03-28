@@ -132,7 +132,7 @@ const styles2 = StyleSheet.create({
   form: {
     backgroundColor: 'white',
     borderColor: 'black',
-    border:1,
+    
   },
   title:{
     fontSize:20,
