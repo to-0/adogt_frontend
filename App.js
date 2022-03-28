@@ -1,7 +1,7 @@
 
 import * as React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, FlatList } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, TextInput, Button, StyleSheet, FlatList, AppRegistry, Dimensions, ImageBackground } from 'react-native';
+import { NavigationContainer,DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -91,15 +91,15 @@ function LoginScreen({route, navigation}) {
 
   }
   return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles2.title}>Vitajte v Adogt</Text>
-      <Text> Meno </Text>
-      <TextInput placeholder='Meno' onChangeText={(value) => setusername(value)} style={styles2.form}/>
-      <Text> Heslo </Text>
-      <TextInput placeholder='Heslo' onChangeText={(value) => setPass(value)} style={styles2.form}/>
-      <Button title="Login" onPress={button_login} style={styles2.butt}/>
-      <Text style={{color:'blue'}} onPress={ () => navigation.navigate('Register',{test:"this is test"}) } > Zaregistrovat sa!</Text>
-    </View>
+      <ImageBackground source={require('./img/background.webp')} resizeMode="cover" style={basic_styles.image}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+          <Text style={[basic_styles.title, {marginTop: (Dimensions.get('window').height) * 0.15}]}>Vitajte v Adogt</Text>
+          <TextInput placeholder='Meno' onChangeText={(value) => setusername(value)} style={[basic_styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
+          <TextInput placeholder='Heslo' onChangeText={(value) => setPass(value)} style={basic_styles.form}/>
+          <View style={basic_styles.button}><Button title="Prihlásiť sa" onPress={button_login} color='#f76226'/></View>
+          <Text style={[basic_styles.link, {marginBottom: (Dimensions.get('window').height) * 0.05}]} onPress={ () => navigation.navigate('Register',{test:"this is test"}) } > Zaregistrovať sa!</Text>
+        </View>
+      </ImageBackground>
       );
 }
 // toto robi ze sa to stackuje a je tam vzdy moznost ist spat ale da sa to zmenit, potom mozeme dat nejaky tab navigation... 
@@ -115,7 +115,7 @@ function App() {
       <Tab.Navigator>
         {token == undefined ? (
           <>
-          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken }}/>
+          <Tab.Screen name=" " component={LoginScreen} initialParams={{ setToken: setToken }}/>
           <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken }}/>
           </>
           
@@ -128,18 +128,30 @@ function App() {
     </NavigationContainer>
   );
 }
-const styles2 = StyleSheet.create({
+const basic_styles = StyleSheet.create({
   form: {
+    width: (Dimensions.get('window').width) * 0.6,
     backgroundColor: 'white',
     borderColor: 'black',
-    
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    margin: 10,
   },
-  title:{
-    fontSize:20,
+  button: {
+    width: (Dimensions.get('window').width) * 0.6,
+    backgroundColor: '#f76226',
+    margin: 20,
+  },
+  title: {
+    fontSize:36,
     fontWeight:'bold',
   },
-  butt:{
-    margin:20,
+  link: { 
+    color: 'brown',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   }
 });
 const styles_home = StyleSheet.create({
@@ -155,4 +167,5 @@ const styles_home = StyleSheet.create({
   }
 });
 
+AppRegistry.registerComponent(App, () => App);
 export default App;
