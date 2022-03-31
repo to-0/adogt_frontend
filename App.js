@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,8 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from './styles'
 
+
+const HOST = '192.168.1.18'
 function HomeScreen({route, navigation}){
-  
   var initialVal = [{id: 0, name:'nic'}]
   const [dogs, setDogs] = React.useState(initialVal)
   const renderImage = (raw_data) => {
@@ -19,13 +19,31 @@ function HomeScreen({route, navigation}){
     require('./img/bulldog.jpg')
   ];
   //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
+  const get_dog_image = (dog_id) => {
+    fetch(`http://${HOST}:8000/images?token=${token}&dog_id=${dog_id}`,)
+    .then((response) => response.json())
+    .then((json)=> {
+      if(json.message === "ok"){
+        return json.data;
+      }
+      else {
+        return '';
+      }
+    })
+  }
   React.useEffect(()=>{
     const token = route.params.token;
-    fetch(`http://localhost:8000/dogs/getAll?token=${token}`)
+    fetch(`http://${HOST}:8000/dogs/getAll?token=${token}`, {
+      method: 'get',
+      headers: {
+      'Accept': 'application/json, text/plain, */*', 
+      'Content-Type': 'application/json'
+      }
+    })
     .then((response) => response.json())
     .then((json) => {
+      console.log(json)
       var temp = []
-      console.log(json);
       for(var i=0;i<json.length;i++){
         temp.push(json[i]);
       }
@@ -59,11 +77,6 @@ function HomeScreen({route, navigation}){
   );
   return (
     <View>
-      {/* <Text>${token}</Text>
-      {dogs.map((dog) => (
-        <Text>{dog.name}</Text>
-      ))}
-      */}
       <FlatList
         data={dogs}
         renderItem={renderItem}
@@ -75,7 +88,35 @@ function HomeScreen({route, navigation}){
 }
 
 function AccountScreen({route, navigation}) {
-
+  const logout_function = ()=> {
+    fetch(`http://${HOST}:8000/users/logout?token=${route.params.token}`)
+    .then((response) => response.json())
+    .then((json) => {
+      route.params.setToken(undefined)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+  const [username,setUsername] = React.useState('')
+  const [email,setEmail] = React.useState('')
+  React.useEffect(()=>{
+    setUsername(route.params.username);
+    setEmail(route.params.email);
+    console.log(email);
+    console.log(username);
+  }, [])
+  return (
+    <View>
+      <Text>
+        {username}
+      </Text>
+      <Text>
+        {email}
+      </Text>
+      <Button title='Logout' onPress={logout_function} style={styles.button}> </Button>
+    </View>
+  )
 }
 
 function FormsScreen({route, navigation}) {
@@ -99,16 +140,16 @@ function LoginScreen({route, navigation}) {
   const [pass, setPass] = React.useState('');
   const button_login = () => {    
     // TODO zmenit url na komp lebo potom to nepojde z mobilu 
-    fetch(`http://localhost:8000/users/signUser?username=${username}&password=${pass}`)
+    fetch(`http://${HOST}:8000/users/signUser?username=${username}&password=${pass}`)
     .then((response) => response.json())
     .then((json) => {
       console.log(json)
-      route.params.setToken(json.token)
-      // navigation.navigate({
-      //   name: 'Home',
-      //   params: { "token": json.token },
-      //   merge: true,
-      // });
+      route.params.setShelter(json.shelter);
+      route.params.setUsername(username);
+      route.params.setEmail(json.email);
+      route.params.setToken(json.token);
+      console.log(json.email);
+      console.log(json.username);
       
     })
     .catch((error) => {
@@ -142,23 +183,27 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [token, setToken] = React.useState(undefined);
+  const [shelter,setShelter] = React.useState(false);
+  const [username,setUsername] = React.useState('');
+  const [email,setEmail] = React.useState('');
+  console.log(HOST);
   return (
     <NavigationContainer>
       <Tab.Navigator>
         {token == undefined ? (
           <>
-          <Tab.Screen name=" " component={LoginScreen} initialParams={{ setToken: setToken }}/>
-          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken }}/>
+          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}/>
+          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail }}/>
           </>
           
         ):(
           <>
-          <Tab.Screen name="Prehľad psov" component={HomeScreen} initialParams={{ "token": token }}
+          <Tab.Screen name="Prehľad psov" component={HomeScreen} initialParams={{ "token": token, "shelter":shelter}}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />}
             }}/>
     
-          <Tab.Screen name="Profil" component={AccountScreen} initialParams={{ "token": token }}
+          <Tab.Screen name="Profil" component={AccountScreen} initialParams={{ "token": token, "shelter":shelter, "username":username, "email":email, setToken: setToken}}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/accountIcon.png')} />}
             }}/>
