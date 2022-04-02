@@ -6,18 +6,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from './styles'
 
 
-const HOST = '192.168.1.18'
+const HOST = '192.168.0.124'
 function HomeScreen({route, navigation}){
   var initialVal = [{id: 0, name:'nic'}]
   const [dogs, setDogs] = React.useState(initialVal)
   const renderImage = (raw_data) => {
       return `data:image/png;base64,${raw_data}`
   }
-  var dog_images = [
-    require('./img/baset.jpg'),
-    require('./img/bigl.jpg'),
-    require('./img/bulldog.jpg')
-  ];
+  var dog_images = {
+    1: require('./img/baset.jpg'),
+    2: require('./img/bigl.jpg'),
+    3: require('./img/dobermann.jpg'),
+    4: require('./img/jackRussel.jpg'),
+    5: require('./img/vlciak.jpg'),
+    6: require('./img/jazvecik.jpg'),
+    7: require('./img/bulldog.jpg'),
+    8: require('./img/mops.jpg'),
+    9: require('./img/doga.jpg'),
+    10: require('./img/labrador.jpg')
+  };
   //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
   const get_dog_image = (dog_id) => {
     fetch(`http://${HOST}:8000/images?token=${token}&dog_id=${dog_id}`,)
@@ -57,7 +64,7 @@ function HomeScreen({route, navigation}){
   // tu musi byt item nie dog lebo tak funguje ten flatlist...
   const renderItem = ({ item })=> (
     <View>
-      <Image style={styles.item_image} source={dog_images[item.id - 1]} />
+      <Image style={styles.item_image} source={dog_images[item.id]} />
 
       <View style={styles.item}>
 
@@ -103,18 +110,28 @@ function AccountScreen({route, navigation}) {
   React.useEffect(()=>{
     setUsername(route.params.username);
     setEmail(route.params.email);
-    console.log(email);
+    console.log("params" + route.params.email);
     console.log(username);
   }, [])
   return (
-    <View>
-      <Text>
-        {username}
-      </Text>
-      <Text>
-        {email}
-      </Text>
-      <Button title='Logout' onPress={logout_function} style={styles.button}> </Button>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', height: (Dimensions.get('window').height)}}>
+
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        <Image style={styles.profile_icon} source={require('./img/profileIcon.png')} />
+
+        <View style={styles.profile_text_fields}>
+          <Text style={styles.profile_text}>{username}</Text>
+          <Text style={styles.profile_text}>{email}</Text>
+        </View>
+
+      </View>
+
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View style={[styles.button, {marginBottom: 30}]} >
+          <Button title='Logout' onPress={logout_function} color='#f76226' />
+        </View>
+      </View>
+      
     </View>
   )
 }

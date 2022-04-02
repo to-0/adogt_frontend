@@ -53,5 +53,18 @@ export default StyleSheet.create({
     width: (Dimensions.get('window').width),
     height: undefined,
     aspectRatio: 1 / 1,
+  },
+  profile_icon: {
+    flex: 1,
+    aspectRatio: 1 / 1,
+    margin: 20,
+  },
+  profile_text_fields: {
+    flex: 1,
+    margin: 20,
+    marginTop: 30,
+  },
+  profile_text: {
+    fontSize: 20,
   }
 });
