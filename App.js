@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from './styles'
 
 
-const HOST = '192.168.0.124'
+const HOST = '192.168.1.18'
 function HomeScreen({route, navigation}){
   var initialVal = [{id: 0, name:'nic'}]
   const [dogs, setDogs] = React.useState(initialVal)
@@ -31,6 +31,7 @@ function HomeScreen({route, navigation}){
     .then((response) => response.json())
     .then((json)=> {
       if(json.message === "ok"){
+        console.log(json.data);
         return json.data;
       }
       else {
@@ -64,7 +65,8 @@ function HomeScreen({route, navigation}){
   // tu musi byt item nie dog lebo tak funguje ten flatlist...
   const renderItem = ({ item })=> (
     <View>
-      <Image style={styles.item_image} source={dog_images[item.id]} />
+      {/* <Image style={styles.item_image} source={dog_images[item.id]} /> */}
+        <Image style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
 
       <View style={styles.item}>
 
