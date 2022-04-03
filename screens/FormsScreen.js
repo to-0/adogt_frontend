@@ -6,6 +6,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from '../styles'
 const HOST = '192.168.1.18'
 function FormsScreen({route, navigation}) {
-
+    return(
+        <View>
+            <Text>Some forms will be here</Text>
+        </View>
+    )
 }
 export default FormsScreen

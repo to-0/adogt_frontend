@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Image } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-web';
 import styles from '../styles'
 const HOST = '192.168.1.18'
 
@@ -18,6 +19,15 @@ function HomeScreen({route, navigation}){
       9: require('../img/doga.jpg'),
       10: require('../img/labrador.jpg')
     };
+    const info_click = (dog_id) => {
+      alert(dog_id);
+      console.log(dog_id)
+      // fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`)
+      // .then((response) => response.json())
+      // .then((json) => {
+
+      // })
+    }
     //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
     React.useEffect(()=>{
       const token = route.params.token;
@@ -30,12 +40,12 @@ function HomeScreen({route, navigation}){
       })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json)
+        //console.log(json)
         var temp = []
         for(var i=0;i<json.length;i++){
           temp.push(json[i]);
         }
-        console.log("Temp",temp)
+        //console.log("Temp",temp)
         setDogs(temp);
       })
       .catch((error) => {
@@ -46,7 +56,7 @@ function HomeScreen({route, navigation}){
     const renderItem = ({ item })=> (
       <View>
         {/* <Image style={styles.item_image} source={dog_images[item.id]} /> */}
-          <Image style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
+          <Image onPress={()=> console.log('cau',item.id)} style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
   
         <View style={styles.item}>
   
@@ -57,7 +67,9 @@ function HomeScreen({route, navigation}){
           </View>
   
           <View style={{flex: 1}}>
-            <Image style={styles.icon} source={require('../img/informationIcon.png')} />
+            <TouchableWithoutFeedback onPress={()=> info_click(item_id)}>
+            <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
+            </TouchableWithoutFeedback>
           </View>
   
         </View>             

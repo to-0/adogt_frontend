@@ -9,6 +9,6 @@ function RegisterScreen({route,navigation}){
     <View>
       <Text>Register</Text>
     </View>
-  );
+  )
 }
 export default RegisterScreen;
