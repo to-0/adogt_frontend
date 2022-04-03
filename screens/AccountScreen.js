@@ -5,6 +5,7 @@ const HOST = '192.168.1.18'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 const Stack = createNativeStackNavigator();
 function AddDog({route}){
@@ -27,26 +28,46 @@ function AddDog({route}){
   
     let localUri = result.uri;
     let filename = localUri.split('/').pop();
-  
     let match = /\.(\w+)$/.exec(filename);
     let type = match ? `image/${match[1]}` : `image`;
-  
+
     let formData = new FormData();
-    formData.append('photo', { uri: localUri, name: filename, type });
-    // todo zmenit dog id, mozno prerobit na backende call
-    fetch(`http://${HOST}/image/insert?token=${route.params.token}&dog_id=6`, {
-      method: 'POST',
-      body: formData,
-      header: {
-        'content-type': 'multipart/form-data',
-      },
+    // FileSystem.readAsStringAsync(result.uri,)
+    // .then((data)=>{
+    //   console.log(data)
+    //   formData.append('photo', { uri: localUri, name: filename, type, buffer: data });
+    //   fetch(`http://${HOST}/image/insert?token=${route.params.token}&dog_id=6`, {
+    //   method: 'POST',
+    //   body: formData,
+    //   header: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    //   })
+    //   .then((response) =>{
+    //   console.log(response)
+    //   })
+    //   .catch((error)=>{
+    //   console.log(error);
+    // })
+    // })
+    const options = {
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: 'file',
+  };
+
+    FileSystem.uploadAsync(`http://${HOST}:8000/image/insert?token=${route.params.token}&dog_id=6`,localUri,options)
+    .then((response)=>{
+      console.log(response.body);
     })
-    .then((response) =>{
-      console.log(response)
-    })
-    .catch((error)=>{
+    .catch((error)=> {
       console.log(error);
     })
+  
+    
+    
+    // todo zmenit dog id, mozno prerobit na backende call
+    
   };
   return (
     <View>
