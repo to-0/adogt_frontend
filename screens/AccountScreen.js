@@ -36,13 +36,6 @@ function AddDog({route}){
         'Content-Type':'application/x-www-form-urlencoded'
       },
       body: `name=${name}&breed=${breed}&age=${age}&health=${health}&details=${details}`
-      // JSON.stringify({
-      //   "name": name,
-      //   "breed": breed,
-      //   "age": age,
-      //   "health": health,
-      //   "details": details,
-      // })
     })
     .then((response) => response.json())
     .then((json)=> {
@@ -68,12 +61,7 @@ function AddDog({route}){
       }
       
     })
-  }
-    
-    
-    // todo zmenit dog id, mozno prerobit na backende call
-    
-  
+  }  
   return (
     <View>
        <TextInput placeholder='Meno' onChangeText={(value) => setName(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
