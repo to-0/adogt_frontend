@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
 import styles from '../styles'
-const HOST = '192.168.1.18'
+const HOST = '192.168.1.14'
 
 function LoginScreen({route, navigation}) {
     //toto su tie hodnoty, username je hodnota a setusername je ako keby metoda kde nastavime tu hodnotu, nieco ako premenna a su to nejake hooks... nvm 

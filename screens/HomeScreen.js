@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Image } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-web';
 import styles from '../styles'
-const HOST = '192.168.1.18'
+const HOST = '192.168.1.14'
 
 function HomeScreen({route, navigation}){
     var initialVal = [{id: 0, name:'nic'}]
@@ -73,9 +73,8 @@ function HomeScreen({route, navigation}){
           </View>
   
         </View>             
-      </View>
-       
-    );
+      </View> 
+      );
     return (
       <View>
         <FlatList
@@ -83,7 +82,6 @@ function HomeScreen({route, navigation}){
           renderItem={renderItem}
           keyExtractor={(item) => item.id} 
           />
-  
       </View>
     );
   }
