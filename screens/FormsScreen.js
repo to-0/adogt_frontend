@@ -63,6 +63,19 @@ function FormsList({route, navigation}) {
 function FormDetail ({route, navigation}){
   const data = route.params.data;
   const token = route.params.token;
+  const delete_form = ()=> {
+    fetch(`http://${HOST}:8000/forms/delete?token=${token}&form_id=${data.id}`,{
+      method: 'DELETE'
+    })
+    .then((response)=>response.json())
+    .then((json)=>{
+      alert(json.message)
+    })
+    .catch((error)=>{
+      alert(error);
+    })
+
+  }
   return (
     <View style={{flex: 1,alignItems:'center',justifyContent:'flex-start', height: (Dimensions.get('window').height)}}>
       <Text>ID formulara: {data.id}</Text>
@@ -73,12 +86,12 @@ function FormDetail ({route, navigation}){
       <Text>Ukonceny {data.finished}</Text>
       {route.params.shelter == false ? (
         <>
-         <Button title='Upravit formular' style={styles.button} onPress={()=> {navigation.navigate('UpdateForm')}}> </Button>
+         <Button title='Upravit formular' style={styles.button} onPress={()=> {navigation.navigate('UpdateForm',{"form_id":data.id})}}> </Button>
         </>
       )
       : (<></>)
     }
-    <Button title='Vymazat formular'  style={styles.button}> </Button>
+    <Button title='Vymazat formular'  style={styles.button} onPress={delete_form}> </Button>
      
 
     </View>
@@ -95,20 +108,31 @@ function UpdateForm({route,navigation}){
       'details': details,
       'finished': finished
     }
+    console.log(details, finished);
+    console.log(route.params.form_id)
     fetch(`http://${HOST}:8000/forms/edit?token=${route.params.token}&form_id=${route.params.form_id}`,{
-      method: "UPDATE",
+      method: "PUT",
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Content-Type':'application/json'
+        // 'Content-Type':'application/json'
+        'Content-Type':'application/x-www-form-urlencoded'
       },
-      body: JSON.stringify(updatebody)
+      body: `details=${details}&finished=${finished}`
+    })
+    .then((response)=> response.json())
+    .then((json) =>{
+      console.log(json);
+      alert(json.message)
+    })
+    .catch((error)=>{
+      console.log(error);
+      alert("something went wrong");
     })
   }
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
       <TextInput placeholder='Detaily' onChangeText={(value) => setDetails(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
       <Checkbox
-      disabled
       value={finished}
       onValueChange={(newValue) => setFinished(newValue)}
       />
