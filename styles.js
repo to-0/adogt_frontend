@@ -18,6 +18,7 @@ export default StyleSheet.create({
     width: (Dimensions.get('window').width) * 0.6,
     backgroundColor: '#f76226',
     margin: 20,
+    borderRadius: 5,
   },
   title: {
     fontSize:36,
@@ -91,5 +92,30 @@ export default StyleSheet.create({
   dog_button: {
     margin: 15,
     width: (Dimensions.get('window').width) * 0.35,
+    borderRadius: 5,
+  },
+  dog_form: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 20,
+  },
+  dog_form_item: {
+    width: (Dimensions.get('window').width) * 0.8,
+    height: 36,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 1,
+    margin: 10,
+    padding: 10,
+    fontSize: 16,
+    borderRadius: 5,
+  },
+  dog_form_item_multiline: {
+    height: 36*3,
+    textAlignVertical: 'top',
+  },
+  dog_form_info: {
+    alignSelf: 'flex-start',
+    marginLeft: 15,
   }
 });
