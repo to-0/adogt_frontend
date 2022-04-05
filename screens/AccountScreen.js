@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Dimensions, ImageBackground, Image } from 'react-native';
 import styles from '../styles'
-const HOST = '192.168.1.18'
+const HOST = '192.168.0.124'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';

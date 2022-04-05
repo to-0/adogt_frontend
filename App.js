@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import 'react-native-gesture-handler';
 import styles from './styles'
-const HOST = '192.168.1.18'
+const HOST = '192.168.0.124'
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
+import HomeStackScreen from './HomeScreenStack';
 import AccountScreen from './screens/AccountScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import FormsScreen from './screens/FormsScreen';
@@ -25,7 +26,7 @@ function App() {
   console.log(HOST);
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         {token == undefined ? (
           <>
           <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}/>
@@ -34,10 +35,11 @@ function App() {
           
         ):(
           <>
-          <Tab.Screen name="Prehľad psov" component={HomeScreen} initialParams={{ "token": token, "shelter":shelter}}
+          <Tab.Screen name="Prehľad psov" component={HomeStackScreen} initialParams={{"token": token, "shelter":shelter}}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />}
-            }}/>
+            }}>
+          </Tab.Screen>
     
           <Tab.Screen name="Profil" component={AccountScreen} initialParams={{ "token": token, "shelter":shelter, "username":username, "email":email, setToken: setToken}}
             options={{

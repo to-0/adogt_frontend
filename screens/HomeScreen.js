@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, Image } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-web';
+import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
-const HOST = '192.168.1.18'
+const HOST = '192.168.0.124'
 
 function HomeScreen({route, navigation}){
     var initialVal = [{id: 0, name:'nic'}]
@@ -19,15 +18,7 @@ function HomeScreen({route, navigation}){
       9: require('../img/doga.jpg'),
       10: require('../img/labrador.jpg')
     };
-    const info_click = (dog_id) => {
-      alert(dog_id);
-      console.log(dog_id)
-      // fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`)
-      // .then((response) => response.json())
-      // .then((json) => {
-
-      // })
-    }
+    
     //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
     React.useEffect(()=>{
       const token = route.params.token;
@@ -40,7 +31,7 @@ function HomeScreen({route, navigation}){
       })
       .then((response) => response.json())
       .then((json) => {
-        //console.log(json)
+        console.log(json)
         var temp = []
         for(var i=0;i<json.length;i++){
           temp.push(json[i]);
@@ -67,9 +58,11 @@ function HomeScreen({route, navigation}){
           </View>
   
           <View style={{flex: 1}}>
-            <TouchableWithoutFeedback onPress={()=> info_click(item_id)}>
-            <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
-            </TouchableWithoutFeedback>
+            <TouchableOpacity onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
+              <View pointerEvents="none">
+                <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
+              </View>
+            </TouchableOpacity>
           </View>
   
         </View>             

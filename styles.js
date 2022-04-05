@@ -66,5 +66,30 @@ export default StyleSheet.create({
   },
   profile_text: {
     fontSize: 20,
+  },
+  dog_detail: {
+    margin: 20,
+    marginTop: 20,
+  },
+  detail: {
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  detail_info: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  detail_text: {
+    fontSize:18,
+  },
+  dog_detail_buttons: {
+    flexDirection: 'row',
+    margin: 20,
+    justifyContent: 'center',
+  },
+  dog_button: {
+    margin: 15,
+    width: (Dimensions.get('window').width) * 0.35,
   }
 });
