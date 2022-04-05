@@ -46,7 +46,6 @@ function HomeScreen({route, navigation}){
     // tu musi byt item nie dog lebo tak funguje ten flatlist...
     const renderItem = ({ item })=> (
       <View>
-        {/* <Image style={styles.item_image} source={dog_images[item.id]} /> */}
           <Image onPress={()=> console.log('cau',item.id)} style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
   
         <View style={styles.item}>

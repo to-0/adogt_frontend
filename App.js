@@ -11,7 +11,7 @@ import AccountScreen from './screens/AccountScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import FormsScreen from './screens/FormsScreen';
 
-const HOST = '192.168.0.124'
+const HOST = '192.168.1.14'
 export {HOST}
 
 // toto robi ze sa to stackuje a je tam vzdy moznost ist spat ale da sa to zmenit, potom mozeme dat nejaky tab navigation... 
@@ -31,13 +31,23 @@ function App() {
       <Tab.Navigator>
         {token == undefined ? (
           <>
-          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}/>
-          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail }}/>
+          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}
+          options={{
+            tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/loginIcon.jpg')} />},
+            headerShown: false
+          }}
+          />
+          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
+          options={{
+            tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/registerIcon.jpg')} />},
+            headerShown: false
+          }}
+          />
           </>
           
         ):(
           <>
-          <Tab.Screen name="Prehľad psov" component={HomeStackScreen} initialParams={{"token": token, "shelter":shelter}}
+          <Tab.Screen name="Psy" component={HomeStackScreen} initialParams={{"token": token, "shelter":shelter}}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />},
               headerShown: false

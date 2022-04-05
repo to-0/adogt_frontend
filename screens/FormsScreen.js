@@ -36,9 +36,9 @@ function FormsList({route, navigation}) {
           <TouchableOpacity onPress={()=>{navigation.navigate('FormDetail',{data:item})}}>
             <View style={{flex: 3}}>
             
-              <Text style={styles.item_title}>ID: {item.id}</Text>
+              <Text style={styles.item_title}>Formulár ID: {item.id}</Text>
             
-              <Text style={styles.item_text}>Cas: {item.created_at}</Text>
+              <Text style={styles.item_text}>Čas: {item.created_at.substring(0,10)}</Text>
             </View>
             </TouchableOpacity>
             
@@ -63,6 +63,8 @@ function FormsList({route, navigation}) {
 function FormDetail ({route, navigation}){
   const data = route.params.data;
   const token = route.params.token;
+  const [details, setDetails]= React.useState('');
+  const [finished, setFinished] = React.useState(false);
   const delete_form = ()=> {
     fetch(`http://${HOST}:8000/forms/delete?token=${token}&form_id=${data.id}`,{
       method: 'DELETE'
@@ -74,31 +76,56 @@ function FormDetail ({route, navigation}){
     .catch((error)=>{
       alert(error);
     })
-
   }
+  React.useEffect(()=>{
+    const token = route.params.token;
+    fetch(`http://${HOST}:8000/forms/detail?token=${token}&form_id=${data.id}`, {
+      method: 'get',
+      headers: {
+      'Accept': 'application/json, text/plain, */*', 
+      'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      setDetails(json.details);
+      setFinished(json.finished);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, [])
   return (
+    <ImageBackground source={require('../img/background.webp')} resizeMode="cover" style={styles.background_image}>
     <View style={{flex: 1,alignItems:'center',justifyContent:'flex-start', height: (Dimensions.get('window').height)}}>
-      <Text>ID formulara: {data.id}</Text>
+      <Text style={styles.title}>Formulár s ID: {data.id}</Text>
+      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Detaily</Text>
+      <Text>{details}</Text>
       <Text>ID psa: {data.dog_id}</Text>
-      <Text>Detaily</Text>
-      <Text>{data.details}</Text>
-      <Text>Vytvoreny {data.details}</Text>
-      <Text>Ukonceny {data.finished}</Text>
+      <Text>Vytvorený {data.created_at.substring(0,10)}</Text>
+      <Text>Stav ukončenia {finished}</Text>
+      <View>
       {route.params.shelter == false ? (
-        <>
-         <Button title='Upravit formular' style={styles.button} onPress={()=> {navigation.navigate('UpdateForm',{"form_id":data.id})}}> </Button>
-        </>
-      )
-      : (<></>)
-    }
-    <Button title='Vymazat formular'  style={styles.button} onPress={delete_form}> </Button>
-     
-
+          <>
+          <Button title='Upraviť formulár' 
+          style={{margin: 20}} onPress={()=> {navigation.navigate('UpdateForm',{"form_id":data.id})}}
+          color='#f76226'
+          /> 
+          </>
+        )
+        : (<></>)
+      }
+      <Button title='Vymazať formulár'  style={{margin: 20}} onPress={delete_form}
+      color='#f76226'
+      /> 
+      </View>
+      
     </View>
+    </ImageBackground>
   )
 }
 
-const Stack = createNativeStackNavigator();
+
 
 function UpdateForm({route,navigation}){
   const [finished,setFinished] = React.useState(false);
@@ -140,15 +167,15 @@ function UpdateForm({route,navigation}){
     </View>
   )
 }
-
+const FormStack = createNativeStackNavigator();
 function FormsScreen({route, navigation}) {
   const token = route.params.token
   return (
-    <Stack.Navigator> 
-        <Stack.Screen name="FormList" options={{ headerShown: false }} component={FormsList} initialParams={{"token": route.params.token}} />
-        <Stack.Screen name="FormDetail" component={FormDetail} initialParams={{"token": route.params.token,"shelter":route.params.shelter}} />
-        <Stack.Screen name="UpdateForm" component={UpdateForm} initialParams={{"token": route.params.token, "shelter":route.params.shelter}} />
-    </Stack.Navigator>
+    <FormStack.Navigator> 
+        <FormStack.Screen name="FormList"  options={{ headerShown: false }} component={FormsList} initialParams={{"token": route.params.token}} />
+        <FormStack.Screen name="FormDetail" component={FormDetail} initialParams={{"token": route.params.token,"shelter":route.params.shelter}} />
+        <FormStack.Screen name="UpdateForm" component={UpdateForm} initialParams={{"token": route.params.token, "shelter":route.params.shelter}} />
+    </FormStack.Navigator>
 )
 }
 export default FormsScreen

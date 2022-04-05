@@ -17,6 +17,7 @@ export default StyleSheet.create({
   button: {
     width: (Dimensions.get('window').width) * 0.6,
     backgroundColor: '#f76226',
+    color: '#f76226',
     margin: 20,
   },
   title: {
