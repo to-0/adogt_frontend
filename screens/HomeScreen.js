@@ -66,9 +66,8 @@ function HomeScreen({route, navigation}){
           </View>
   
         </View>             
-      </View>
-       
-    );
+      </View> 
+      );
     return (
       <View>
         <FlatList
@@ -76,7 +75,6 @@ function HomeScreen({route, navigation}){
           renderItem={renderItem}
           keyExtractor={(item) => item.id} 
           />
-  
       </View>
     );
   }

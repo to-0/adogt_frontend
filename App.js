@@ -46,7 +46,7 @@ function App() {
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/accountIcon.png')} />}
             }}/>
       
-          <Tab.Screen name="Formuláre" component={FormsScreen} initialParams={{ "token": token }}
+          <Tab.Screen name="Formuláre" component={FormsScreen} initialParams={{ "token": token, "shelter":shelter }}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />}
             }}/>

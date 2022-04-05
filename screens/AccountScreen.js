@@ -3,7 +3,6 @@ import { View, Text, TextInput, Button, FlatList, Dimensions, ImageBackground, I
 import styles from '../styles'
 const HOST = '192.168.0.124'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
@@ -13,6 +12,8 @@ function AddDog({route}){
   const [breed,setBreed] = React.useState('');
   const [details, setDetails] = React.useState('');
   const [health,setHealth] = React.useState('');
+  const [age,setAge] = React.useState('');
+  let localUri = '';
   const select_image = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,58 +26,51 @@ function AddDog({route}){
     if (result.cancelled) {
       return;
     }
-  
-    let localUri = result.uri;
-    let filename = localUri.split('/').pop();
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
-    let formData = new FormData();
-    // FileSystem.readAsStringAsync(result.uri,)
-    // .then((data)=>{
-    //   console.log(data)
-    //   formData.append('photo', { uri: localUri, name: filename, type, buffer: data });
-    //   fetch(`http://${HOST}/image/insert?token=${route.params.token}&dog_id=6`, {
-    //   method: 'POST',
-    //   body: formData,
-    //   header: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    //   })
-    //   .then((response) =>{
-    //   console.log(response)
-    //   })
-    //   .catch((error)=>{
-    //   console.log(error);
-    // })
-    // })
-    const options = {
-      httpMethod: 'POST',
-      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-      fieldName: 'file',
+    localUri = result.uri;
   };
-
-    FileSystem.uploadAsync(`http://${HOST}:8000/image/insert?token=${route.params.token}&dog_id=6`,localUri,options)
-    .then((response)=>{
-      console.log(response.body);
+  const create_dog = () => {
+    fetch(`http:/${HOST}:8000/dogs/addDog?token=${route.params.token}`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      body: `name=${name}&breed=${breed}&age=${age}&health=${health}&details=${details}`
     })
-    .catch((error)=> {
-      console.log(error);
+    .then((response) => response.json())
+    .then((json)=> {
+      if(json.message == "OK"){
+        console.log(json)
+        dog_id = json.id
+        const options = {
+          httpMethod: 'POST',
+          uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+          fieldName: 'file',
+          }
+        FileSystem.uploadAsync(`http://${HOST}:8000/image/insert?token=${route.params.token}&dog_id=${dog_id}`,localUri,options)
+        .then((response)=>{
+          console.log(response.body);
+          alert(response.body);
+        })
+        .catch((error)=> {
+          console.log(error);
+        })
+      }
+      else{
+        alert(json.message);
+      }
+      
     })
-  
-    
-    
-    // todo zmenit dog id, mozno prerobit na backende call
-    
-  };
+  }  
   return (
     <View>
        <TextInput placeholder='Meno' onChangeText={(value) => setName(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
        <TextInput placeholder='Plemeno' onChangeText={(value) => setBreed(value)}  style={styles.form}/>
+       <TextInput placeholder='Vek' onChangeText={(value) => setAge(value)}  style={styles.form}/>
        <TextInput placeholder='Zdravotny stav' onChangeText={(value) => setHealth(value)}  style={styles.form}/>
        <TextInput placeholder='Detaily o' onChangeText={(value) => setDetails(value)}  style={styles.form}/>
        <Button  style={styles.button} title='Vybrat obrazok' onPress={select_image}/>
-       <Button  style={styles.button} title='Pridat psa do databazy'/>
+       <Button  style={styles.button} title='Pridat psa do databazy' onPress={create_dog}/>
     </View>
   )
 }
