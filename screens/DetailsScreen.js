@@ -32,12 +32,12 @@ function DetailsScreen({route,navigation}){
         <View style={styles.dog_detail}>
             <View style={styles.detail}>
                 <Text style={styles.detail_info}>Meno:</Text>
-                <Text style={styles.detail_text}>{details.name}</Text>
+                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.name}</Text>
             </View>
             
             <View style={styles.detail}>
                 <Text style={styles.detail_info}>Vek:</Text>
-                <Text style={styles.detail_text}>{details.age}</Text>
+                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.age}</Text>
             </View>
 
             <View style={styles.detail}>

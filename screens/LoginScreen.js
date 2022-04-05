@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useCallback } from "react";
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
 import styles from '../styles'
 import {HOST} from '../App.js';
@@ -24,12 +25,11 @@ function LoginScreen({route, navigation}) {
       .catch((error) => {
         console.error(error);
       });
-  
     }
     return (
         <ImageBackground source={require('../img/background.webp')} resizeMode="cover" style={styles.background_image}>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
-            <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.15}]}>
+            <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.23}]}>
               Vitajte v Adogt
             </Text>
             <TextInput placeholder='Meno' onChangeText={(value) => setusername(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>

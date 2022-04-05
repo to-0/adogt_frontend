@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
 import {HOST} from '../App.js';
+import { Touchable } from 'react-native-web';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function HomeScreen({route, navigation}){
     var initialVal = [{id: 0, name:'nic'}]
@@ -45,27 +47,29 @@ function HomeScreen({route, navigation}){
     }, [])
     // tu musi byt item nie dog lebo tak funguje ten flatlist...
     const renderItem = ({ item })=> (
-      <View>
-          <Image onPress={()=> console.log('cau',item.id)} style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
-  
-        <View style={styles.item}>
-  
-          <View style={{flex: 3}}>
-            <Text style={styles.item_title}>{item.name}</Text>
-            <Text style={styles.item_text}>Vek: {item.age} roky</Text>
-            <Text style={styles.item_text}>Plemeno: {item.breed}</Text>
-          </View>
-  
-          <View style={{flex: 1}}>
-            <TouchableOpacity onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
-              <View pointerEvents="none">
-                <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
-              </View>
-            </TouchableOpacity>
-          </View>
-  
-        </View>             
-      </View> 
+      <TouchableWithoutFeedback onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
+        <View>
+          <Image style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
+          
+          <View style={styles.item}>
+    
+            <View style={{flex: 3}}>
+              <Text style={styles.item_title}>{item.name}</Text>
+              <Text style={styles.item_text}>Vek: {item.age} roky</Text>
+              <Text style={styles.item_text}>Plemeno: {item.breed}</Text>
+            </View>
+    
+            <View style={{flex: 1}}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
+                <View pointerEvents="none">
+                  <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
+                </View>
+              </TouchableOpacity>
+            </View>
+    
+          </View>             
+        </View> 
+      </TouchableWithoutFeedback>
       );
     return (
       <View>

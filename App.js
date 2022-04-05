@@ -10,8 +10,9 @@ import HomeStackScreen from './HomeScreenStack';
 import AccountScreen from './screens/AccountScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import FormsScreen from './screens/FormsScreen';
+import FormStackScreen from './FormScreenStack';
 
-const HOST = '192.168.1.14'
+const HOST = '192.168.0.124'
 export {HOST}
 
 // toto robi ze sa to stackuje a je tam vzdy moznost ist spat ale da sa to zmenit, potom mozeme dat nejaky tab navigation... 
@@ -26,6 +27,7 @@ function App() {
   const [username,setUsername] = React.useState('');
   const [email,setEmail] = React.useState('');
   console.log(HOST);
+  
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -59,9 +61,10 @@ function App() {
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/accountIcon.png')} />}
             }}/>
       
-          <Tab.Screen name="Formuláre" component={FormsScreen} initialParams={{ "token": token, "shelter":shelter }}
+          <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter }}
             options={{
-              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />}
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />},
+              headerShown: false
             }}/>
           </>
         )} 
