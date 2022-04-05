@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../styles'
-const HOST = '192.168.0.124'
+import {HOST} from '../App.js';
 
 function DogDetailScreen({route,navigation}){
     const dog = route.params.dog;

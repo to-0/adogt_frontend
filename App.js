@@ -5,12 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
 import styles from './styles'
-const HOST = '192.168.0.124'
 import LoginScreen from './screens/LoginScreen';
 import HomeStackScreen from './HomeScreenStack';
 import AccountScreen from './screens/AccountScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import FormsScreen from './screens/FormsScreen';
+
+const HOST = '192.168.0.124'
+export {HOST}
 
 // toto robi ze sa to stackuje a je tam vzdy moznost ist spat ale da sa to zmenit, potom mozeme dat nejaky tab navigation... 
 //https://reactnavigation.org/docs/bottom-tab-navigator toto tam chceme potom ale nejako to o-ifovat aby pokial sa neprihlasi videl len ten login
@@ -26,7 +28,7 @@ function App() {
   console.log(HOST);
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator>
         {token == undefined ? (
           <>
           <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}/>
@@ -37,7 +39,8 @@ function App() {
           <>
           <Tab.Screen name="Prehľad psov" component={HomeStackScreen} initialParams={{"token": token, "shelter":shelter}}
             options={{
-              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />}
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />},
+              headerShown: false
             }}>
           </Tab.Screen>
     

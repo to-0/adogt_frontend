@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Dimensions, ImageBackground, Image } from 'react-native';
 import styles from '../styles'
-const HOST = '192.168.0.124'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import {HOST} from '../App.js';
+
 
 const Stack = createNativeStackNavigator();
 function AddDog({route}){

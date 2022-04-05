@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styles from '../styles'
 import { TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
-const HOST = '192.168.1.14'
+import {HOST} from '../App.js';
 
 
 function FormsList({route, navigation}) {

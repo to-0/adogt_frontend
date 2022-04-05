@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
-const HOST = '192.168.0.124'
+import {HOST} from '../App.js';
 
 function HomeScreen({route, navigation}){
     var initialVal = [{id: 0, name:'nic'}]
