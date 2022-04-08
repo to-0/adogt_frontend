@@ -12,7 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import FormsScreen from './screens/FormsScreen';
 import FormStackScreen from './FormScreenStack';
 
-const HOST = '192.168.0.124'
+const HOST = '192.168.1.23'
 export {HOST}
 
 // toto robi ze sa to stackuje a je tam vzdy moznost ist spat ale da sa to zmenit, potom mozeme dat nejaky tab navigation... 

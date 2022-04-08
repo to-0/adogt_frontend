@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
 import {HOST} from '../App.js';
-import { Touchable } from 'react-native-web';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function HomeScreen({route, navigation}){

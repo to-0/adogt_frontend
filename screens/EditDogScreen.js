@@ -37,7 +37,7 @@ function EditDogScreen({route,navigation}){
       "health": health
     }
     console.log(putBody)
-    fetch(`http://${HOST}:8000/dogs/editDog`,{
+    fetch(`http://${HOST}:8000/dogs/editDog?token=${token}&dog_id=${dog_id}`,{
       method: 'PUT',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -80,7 +80,19 @@ function EditDogScreen({route,navigation}){
         alert(error);
     })
   }
-
+  const add_terms = () => {
+    const token = route.params.token;
+      fetch(`http://${HOST}:8000/terms/create?token=${token}&dog_id=${dog_id}`, {
+        method: 'post',
+      })
+      .then((response)=>response.json())
+      .then((json)=>{
+        alert(json.message);
+      })
+      .catch((error)=>{
+        alert("Niečo sa pokažilo")
+      })
+  }
   return (
     <RootSiblingParent>
       <View style={styles.dog_form}>
@@ -101,6 +113,9 @@ function EditDogScreen({route,navigation}){
 
         <TouchableOpacity style={styles.button} onPress={edit_dog}>
             <Text style={styles.button_text}>Upraviť psa</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={add_terms}>
+            <Text style={styles.button_text}>Pridať termíny pre psa</Text>
         </TouchableOpacity>
       </View>
     </RootSiblingParent>
