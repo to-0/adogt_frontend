@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, Dimensions, ImageBackground, Image } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ImagePicker from 'expo-image-picker';
@@ -97,28 +97,30 @@ function Profil_info({route, navigation}){
   }, [])
     console.log("Pred return");
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', height: (Dimensions.get('window').height)}}>
-      <View style={{flex: 1, flexDirection: 'row'}}>
-          <Image style={styles.profile_icon} source={require('../img/profileIcon.png')} />
-          <View style={styles.profile_text_fields}>
-            <Text style={styles.profile_text}>{username}</Text>
-            <Text style={styles.profile_text}>{email}</Text>
-          </View>
+      <View style={[styles.center_view, {height: (Dimensions.get('window').height)}]}>
+        <Image style={styles.profile_icon} source={require('../img/profileIcon.png')} />
+        <View style={styles.profile_text_fields}>
+          <Text style={styles.profile_text}>Meno: {username}</Text>
+          <Text style={styles.profile_text}>E-mail: {email}</Text>
         </View>
+
         {shelter == true ? (
           <>
-          <Button title="Pridat psa" onPress={()=> navigation.navigate('Pridat psa')}></Button>
+          <View style={{justifyContent: 'flex-end'}}>
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('Pridat psa')}>
+              <Text style={styles.button_text}>Pridanie psa</Text>
+            </TouchableOpacity>
+          </View>
           </>
         ): 
         <>
         </>
         }
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <View style={[styles.button, {marginBottom: 30}]} >
-            <Button title='Logout' onPress={logout_function} color='#f76226' />
-          </View>
+        <View style={{justifyContent: 'flex-end'}}>
+          <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={logout_function}>
+            <Text style={styles.button_text}>Odhlásiť sa</Text>
+          </TouchableOpacity>
         </View>
-        <Text>TU</Text>
       </View>
       )
 }

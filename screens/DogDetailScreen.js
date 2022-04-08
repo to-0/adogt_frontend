@@ -5,6 +5,7 @@ import styles from '../styles'
 import {HOST} from '../App.js';
 
 function DogDetailScreen({route,navigation}){
+    console.log(route.params.shelter);
     const dog = route.params.dog;
     var dog_images = {
         1: require('../img/baset.jpg'),
@@ -27,6 +28,10 @@ function DogDetailScreen({route,navigation}){
         navigation.navigate('Adopčný formulár', {token: route.params.token, id: dog.id})
     };
 
+    const button_edit = () => {
+        navigation.navigate('Upravenie psa', {token: route.params.token, id: dog.id})
+    };
+
     return (
         <View>
             <Image style={styles.item_image} source={dog.data == '' ? dog_images[dog.id]: {uri: `data:${dog.image_type};base64,${dog.data}`}} />
@@ -36,22 +41,33 @@ function DogDetailScreen({route,navigation}){
                 <View style={styles.dog_detail}>
                     <Text style={[styles.item_title, {marginBottom: 20}]}>{dog.name}</Text>
                     <Text style={styles.item_text}>Vek: {dog.age} roky</Text>
-                    <Text style={[styles.item_text, {marginBottom: 10}]}>Plemeno: {dog.breed}</Text>
+                    <Text style={[styles.item_text, {marginBottom: 20}]}>Plemeno: {dog.breed}</Text>
 
                     <TouchableOpacity onPress={()=> navigation.navigate('Detailné informácie', {token: route.params.token, id: dog.id})}>
-                        <View>
-                            <Text style={[styles.link, {textAlign: 'center'}]}>Ďalšie informácie</Text>
-                        </View>
+                        <Text style={[styles.link, {textAlign: 'center'}]}>Ďalšie informácie</Text>
                     </TouchableOpacity>
 
-                    <View style={styles.dog_detail_buttons}>
-                        <View style={styles.dog_button}>
-                            <Button title="Venčenie" onPress={button_walk} color='#f76226'/>
+                    {route.params.shelter == false ? (
+                        <>
+                        <View style={styles.dog_detail_buttons}>
+                            <TouchableOpacity style={styles.dog_button} onPress={button_walk}>
+                                <Text style={styles.button_text}>Venčenie</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.dog_button} onPress={button_adopt}>
+                                <Text style={styles.button_text}>Adopcia</Text>
+                            </TouchableOpacity>
                         </View>
-                        <View style={styles.dog_button}>
-                            <Button title="Adopcia" onPress={button_adopt} color='#f76226'/>
+                        </>
+                    ):(
+                        <>
+                        <View style={{alignItems: 'center'}}>
+                            <TouchableOpacity style={styles.button} onPress={button_edit}>
+                                <Text style={styles.button_text}>Úprava psa</Text>
+                            </TouchableOpacity>
                         </View>
-                    </View>
+                        </>
+                    )}
                 </View>
 
             </View>

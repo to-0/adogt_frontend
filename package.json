@@ -25,10 +25,13 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-calendars": "^1.1280.0",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-image-picker": "^4.7.3",
+    "react-native-root-toast": "^3.3.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-toast-message": "^2.1.5",
     "react-native-web": "0.17.1",
     "react-native-webrtc": "^1.100.0",
     "react-navigation-stack": "^2.10.4"

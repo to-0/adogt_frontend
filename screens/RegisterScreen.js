@@ -1,16 +1,24 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
 import {HOST} from '../App.js';
 import Checkbox from 'expo-checkbox';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import Toast from 'react-native-root-toast';
 
 function RegisterScreen({route,navigation}){
   const [username,setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email,setEmail] = React.useState('');
   const [sh, setSh] = React.useState(false);
-  console.log(route.params);
+  
   const register_user = () => {
+    if (username == '' || password == '' || email == '') {
+      let toast = Toast.show('Chýbajúce údaje', {
+        duration: Toast.durations.LONG,
+      });
+      return;
+    }
     var postBody = {
       "username": username,
       "email": email,
@@ -40,24 +48,30 @@ function RegisterScreen({route,navigation}){
   }
 
   return (
-    <ImageBackground source={require('../img/background.webp')} resizeMode="cover" style={styles.background_image}>
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
-      <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.15}]}>Registrácia</Text>
-      <TextInput placeholder='Meno' onChangeText={(value) => setUsername(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
-      <TextInput placeholder='Email' onChangeText={(value) => setPassword(value)} style={[styles.form]}/>
-      <TextInput placeholder='Heslo' onChangeText={(value) => setEmail(value)} secureTextEntry={true} style={styles.form}/>
-      <Text>Útulok</Text>
-      <Checkbox
-      value={sh}
-      onValueChange={(newValue) => setSh(newValue)}
-      style={{marginTop:(Dimensions.get('window').height) * 0.01}}
-      />
-      <Button style={[styles.button,{marginTop: (Dimensions.get('window').height) * 0.02}]} 
-      title='Zaregistrovať sa'
-      onPress={register_user}
-      color='#f76226'/>
-    </View>
-    </ImageBackground>
+    <RootSiblingParent>
+      <ImageBackground source={require('../img/registrationDoggo.png')} resizeMode="cover" style={styles.small_background_image_full_height}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+          <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.12}]}>Registrácia</Text>
+          <TextInput placeholder='Meno' onChangeText={(value) => setUsername(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
+          <TextInput placeholder='Email' onChangeText={(value) => setPassword(value)} style={[styles.form]}/>
+          <TextInput placeholder='Heslo' onChangeText={(value) => setEmail(value)} secureTextEntry={true} style={styles.form}/>
+
+          <View style={styles.registration_checkbox_view}>
+            <Text>Ste útulok?</Text>
+            <Checkbox
+            value={sh}
+            onValueChange={(newValue) => setSh(newValue)}
+            style={styles.checkbox}
+            />
+          </View>
+          
+          <TouchableOpacity style={[styles.button, {marginTop: (Dimensions.get('window').height) * 0.02}]} onPress={register_user}>
+            <Text style={styles.button_text}>Zaregistrovať sa</Text>
+          </TouchableOpacity>
+          
+        </View>
+      </ImageBackground>
+    </RootSiblingParent>
   )
 }
 export default RegisterScreen;
