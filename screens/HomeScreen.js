@@ -6,10 +6,11 @@ import { Touchable } from 'react-native-web';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function HomeScreen({route, navigation}){
-    var initialVal = [{id: 0, name:'nic'}]
+    //console.log(route.params.shelter)
+    var initialVal = [{}]
     const [dogs, setDogs] = React.useState(initialVal)
     var dog_images = {
-      1: require('../img/baset.jpg'),
+      1: require('../img/baset.jpg'), 
       2: require('../img/bigl.jpg'),
       3: require('../img/dobermann.jpg'),
       4: require('../img/jackRussel.jpg'),
@@ -47,7 +48,7 @@ function HomeScreen({route, navigation}){
     }, [])
     // tu musi byt item nie dog lebo tak funguje ten flatlist...
     const renderItem = ({ item })=> (
-      <TouchableWithoutFeedback onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
+      <TouchableWithoutFeedback onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, shelter: route.params.shelter, dog: item})}>
         <View>
           <Image style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
           
@@ -60,7 +61,7 @@ function HomeScreen({route, navigation}){
             </View>
     
             <View style={{flex: 1}}>
-              <TouchableOpacity onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, dog: item})}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Detail psa', {token: route.params.token, shelter: route.params.shelter, dog: item})}>
                 <View pointerEvents="none">
                   <Image value={item.id} style={styles.icon} source={require('../img/informationIcon.png')} />
                 </View>

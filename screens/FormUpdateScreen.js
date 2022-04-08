@@ -7,6 +7,7 @@ import Checkbox from 'expo-checkbox';
 import {HOST} from '../App.js';
 
 function FormUpdateScreen({route,navigation}){
+    const [reason, setReason] = React.useState('')
     const [finished,setFinished] = React.useState(false);
     const [details,setDetails] = React.useState('');
     const editForm = ()=>{
@@ -37,17 +38,8 @@ function FormUpdateScreen({route,navigation}){
     }
     return(
         <View style={styles.dog_form}>
-            <Text style={styles.dog_form_info}>Ulica, číslo domu</Text>
-            <TextInput style={styles.dog_form_item}/>
-
-            <Text style={styles.dog_form_info}>Mesto</Text>
-            <TextInput style={styles.dog_form_item}/>
-
-            <Text style={styles.dog_form_info}>Telefónne číslo</Text>
-            <TextInput style={styles.dog_form_item}/>
-
             <Text style={styles.dog_form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-            <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true}/>
+            <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => setReason(value)}/>
 
             <Text style={styles.dog_form_info}>Doplňujúce informácie</Text>
             <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => setDetails(value)}/>
@@ -57,9 +49,9 @@ function FormUpdateScreen({route,navigation}){
                 <Checkbox style={styles.checkbox} value={finished} onValueChange={(newValue) => setFinished(newValue)}/>
             </View>
 
-            <View style={styles.button}>
-                <Button style={styles.button} title="Potvrdiť zmeny" onPress={editForm} color='#f76226'/>
-            </View>
+            <TouchableOpacity style={styles.button} onPress={editForm}>
+              <Text style={styles.button_text}>Potvrdiť zmeny</Text>
+            </TouchableOpacity>
             
         </View>
     )

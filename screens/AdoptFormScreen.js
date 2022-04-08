@@ -1,15 +1,24 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import styles from '../styles'
 import {HOST} from '../App.js';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import Toast from 'react-native-root-toast';
 
 function AdoptFormScreen({route,navigation}){
   const token = route.params.token;
   const dog_id = route.params.id;
-  var details = undefined;
-  console.log(token)
+  const [reason, setReason] = React.useState('')
+  const [details,setDetails] = React.useState('');
 
   const button_adopt = () => {
+    console.log(reason + details)
+    if (reason == '') {
+      let toast = Toast.show('Chýbajúce údaje', {
+        duration: Toast.durations.LONG,
+      });
+      return;
+    }
     fetch(`http://${HOST}:8000/forms/create?token=${token}`, {
       method: 'post',
       headers: {
@@ -25,7 +34,7 @@ function AdoptFormScreen({route,navigation}){
         "Úspešne Ste odoslali adopčný formulár. Ďalšie informácie Vám pošleme emailom.",
         [
           {
-            text: "Naspäť na domovskú stránku",
+            text: "Zavrieť",
             onPress: () => navigation.navigate('Prehľad psov', {token: route.params.token, shelter: false}),
             style: "cancel"
           }
@@ -39,25 +48,16 @@ function AdoptFormScreen({route,navigation}){
 
   return (
     <View style={styles.dog_form}>
-      <Text style={styles.dog_form_info}>Ulica, číslo domu</Text>
-      <TextInput style={styles.dog_form_item}/>
-
-      <Text style={styles.dog_form_info}>Mesto</Text>
-      <TextInput style={styles.dog_form_item}/>
-
-      <Text style={styles.dog_form_info}>Telefónne číslo</Text>
-      <TextInput style={styles.dog_form_item}/>
-
       <Text style={styles.dog_form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true}/>
+      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}}/>
 
       <Text style={styles.dog_form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {console.log(value); details = value}}/>
+      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
 
-      <View style={styles.button}>
-        <Button title="Požiadať o adopciu" onPress={button_adopt} color='#f76226'/>
-      </View>
-
+      <TouchableOpacity style={styles.button} onPress={button_adopt}>
+        <Text style={styles.button_text}>Požiadať o adopciu</Text>
+      </TouchableOpacity>
+      
     </View>
   )
 }

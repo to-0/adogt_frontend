@@ -7,6 +7,7 @@ import DogDetailScreen from './screens/DogDetailScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import WalkFormScreen from './screens/WalkFormScreen';
 import AdoptFormScreen from './screens/AdoptFormScreen';
+import EditDogScreen from './screens/EditDogScreen.js';
 
 const HomeStack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function HomeStackScreen({route, navigation}) {
       <HomeStack.Screen name="Detailné informácie" component={DetailsScreen} />
       <HomeStack.Screen name="Formulár na venčenie" component={WalkFormScreen} />
       <HomeStack.Screen name="Adopčný formulár" component={AdoptFormScreen} />
+      <HomeStack.Screen name="Upravenie psa" component={EditDogScreen} />
     </HomeStack.Navigator>
   );
 }

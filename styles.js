@@ -20,6 +20,13 @@ export default StyleSheet.create({
     color: '#f76226',
     margin: 20,
     borderRadius: 5,
+    height: 35,
+  },
+  button_text: {
+    alignSelf: 'center',
+    marginTop: 7,
+    color: 'white',
+    textTransform: 'uppercase'
   },
   title: {
     fontSize:36,
@@ -29,8 +36,16 @@ export default StyleSheet.create({
     color: 'brown',
   },
   background_image: {
-    width: '100%',
-    height: '100%',
+    width: (Dimensions.get('window').width),
+    height: (Dimensions.get('window').height),
+  },
+  small_background_image_full_width: {
+    width: Dimensions.get('window').width, 
+    height: Dimensions.get('window').height * 0.85,
+  },
+  small_background_image_full_height: {
+    width: Dimensions.get('window').width, 
+    height: Dimensions.get('window').height * 1.05,
   },
   item: {
     flexDirection: 'row',
@@ -57,17 +72,19 @@ export default StyleSheet.create({
     aspectRatio: 1 / 1,
   },
   profile_icon: {
-    flex: 1,
+    width: (Dimensions.get('window').width) * 0.3,
+    height: undefined,
     aspectRatio: 1 / 1,
     margin: 20,
   },
   profile_text_fields: {
+    width: (Dimensions.get('window').width) * 0.7,
     flex: 1,
     margin: 20,
-    marginTop: 30,
+    marginTop: 0,
   },
   profile_text: {
-    fontSize: 20,
+    fontSize: 18,
   },
   dog_detail: {
     margin: 20,
@@ -88,17 +105,22 @@ export default StyleSheet.create({
   dog_detail_buttons: {
     flexDirection: 'row',
     margin: 20,
+    marginTop: 15,
     justifyContent: 'center',
   },
   dog_button: {
     margin: 15,
     width: (Dimensions.get('window').width) * 0.35,
+    backgroundColor: '#f76226',
+    color: '#f76226',
     borderRadius: 5,
+    height: 35,
   },
   dog_form: {
     flexDirection: 'column',
     alignItems: 'center',
     margin: 20,
+    marginTop: 40,
   },
   dog_form_item: {
     width: (Dimensions.get('window').width) * 0.8,
@@ -112,11 +134,52 @@ export default StyleSheet.create({
     borderRadius: 5,
   },
   dog_form_item_multiline: {
-    height: 36*3,
+    height: (Dimensions.get('window').height) * 0.12,
     textAlignVertical: 'top',
   },
   dog_form_info: {
     alignSelf: 'flex-start',
     marginLeft: 15,
+  },
+  form_detail: {
+    margin: 20,
+  },
+  form_info_detail: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  form_finished: {
+    fontSize: 18,
+    textTransform: 'uppercase',
+  },
+  checkbox_view: {
+    flexDirection: 'row', 
+    width: (Dimensions.get('window').width), 
+    paddingLeft: 20,
+  },
+  registration_checkbox_view: {
+    flexDirection: 'row', 
+    width: (Dimensions.get('window').width), 
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  checkbox: {
+    marginLeft: (Dimensions.get('window').width) * 0.25,
+  },
+  calendar: {
+    width: (Dimensions.get('window').width) * 0.8,
+    marginBottom: 20,
+  },
+  calendar_text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  center_view: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'flex-start', 
   }
 });

@@ -26,6 +26,7 @@ function App() {
   const [shelter,setShelter] = React.useState(false);
   const [username,setUsername] = React.useState('');
   const [email,setEmail] = React.useState('');
+  const [dog,setDog] = React.useState(undefined)
   console.log(HOST);
   
   return (
@@ -33,13 +34,13 @@ function App() {
       <Tab.Navigator>
         {token == undefined ? (
           <>
-          <Tab.Screen name="Login" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}
+          <Tab.Screen name="Prihlásenie" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}
           options={{
             tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/loginIcon.jpg')} />},
             headerShown: false
           }}
           />
-          <Tab.Screen name="Register" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
+          <Tab.Screen name="Registrácia" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
           options={{
             tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/registerIcon.jpg')} />},
             headerShown: false

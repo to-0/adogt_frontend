@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image, Alert } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styles from '../styles'
 import { TouchableOpacity } from 'react-native';
@@ -10,6 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 function FormDetailScreen ({route, navigation}){
     const data = route.params.data;
     const token = route.params.token;
+    const [reason, setReason] = React.useState('')
     const [details, setDetails]= React.useState('');
     const [finished, setFinished] = React.useState(false);
     const [dog_name, setDogName] = React.useState(undefined)
@@ -27,7 +28,17 @@ function FormDetailScreen ({route, navigation}){
       })
       .then((response)=>response.json())
       .then((json)=>{
-        alert(json.message)
+        Alert.alert(
+          "Odstránenie",
+          "Úspešne Ste odstránili formulár.",
+          [
+            {
+              text: "Zavrieť",
+              onPress: () => navigation.navigate('Formuláre', {token: route.params.token, shelter: false}),
+              style: "cancel"
+            }
+          ]
+        );
       })
       .catch((error)=>{
         alert(error);
@@ -46,6 +57,7 @@ function FormDetailScreen ({route, navigation}){
       .then((json) => {
         setDetails(json.details);
         setFinished(json.finished);
+        setReason(json.reason);
       })
       .catch((error) => {
         console.error(error);
@@ -65,7 +77,7 @@ function FormDetailScreen ({route, navigation}){
         })
     }
     return (
-      <ImageBackground source={require('../img/doggo.jpg')} resizeMode="cover" style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height * 0.85}}>
+      <ImageBackground source={require('../img/doggo.jpg')} resizeMode="cover" style={styles.small_background_image_full_width}>
         <View style={styles.form_detail}>
           {data.type == 1 ? (
               <>
@@ -100,24 +112,33 @@ function FormDetailScreen ({route, navigation}){
               )}
           </View>
           
-          <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
-              <Text style={styles.detail_info}>Detaily:</Text>
-              <Text style={styles.detail_text}>{details}</Text>
-          </View>
+          {reason != '' ? (
+            <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
+                <Text style={styles.detail_info}>Dôvod pre adopciu:</Text>
+                <Text style={styles.detail_text}>{reason}</Text>
+            </View>
+          ):(<></>)}
+
+          {details != '' ? (
+            <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
+                <Text style={styles.detail_info}>Detaily:</Text>
+                <Text style={styles.detail_text}>{details}</Text>
+            </View>
+          ):(<></>)}
           
           <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'flex-start'}}>
           {route.params.shelter == false ? (
               <>
-              <View style={styles.button}>
-                <Button title="Upraviť formulár" onPress={() => navigation.navigate('Úprava formulára',{"form_id":data.id})} color='#f76226'/>
-              </View>
+              <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => navigation.navigate('Úprava formulára',{"form_id":data.id})}>
+                <Text style={styles.button_text}>Upraviť formulár</Text>
+              </TouchableOpacity>
               </>
             )
             : (<></>)
           }
-          <View style={[styles.button, {marginTop: 0}]}>
-              <Button title="Vymazať formulár" onPress={delete_form} color='#f76226'/>
-          </View>
+          <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={delete_form}>
+            <Text style={styles.button_text}>Vymazať formulár</Text>
+          </TouchableOpacity>
           </View>
           
         </View>
