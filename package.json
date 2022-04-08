@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.12",
+    "@react-native-firebase/app": "^14.7.0",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.2",
@@ -29,6 +30,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
+    "react-native-webrtc": "^1.100.0",
     "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
