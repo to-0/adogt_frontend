@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import styles from '../styles'
-import {HOST} from '../App.js';
+
+import styles from '../styles';
 
 function DogDetailScreen({route,navigation}){
-    console.log(route.params.shelter);
+    const token = route.params.token;
     const dog = route.params.dog;
     var dog_images = {
         1: require('../img/baset.jpg'),
@@ -18,18 +18,30 @@ function DogDetailScreen({route,navigation}){
         8: require('../img/mops.jpg'),
         9: require('../img/doga.jpg'),
         10: require('../img/labrador.jpg')
-      };
+    };
+
+    var year_format = '';
+    if (dog.age == 1)
+      year_format = 'rok';
+    else if (dog.age < 5)
+      year_format = 'roky';
+    else
+      year_format = 'rokov';
+
+    const button_detail = () => {
+        navigation.navigate('Detailné informácie', {token: route.params.token, id: dog.id})
+    };
 
     const button_walk = () => {
-        navigation.navigate('Formulár na venčenie', {token: route.params.token, id: dog.id})
+        navigation.navigate('Formulár na venčenie', {token: token, id: dog.id})
     };
 
     const button_adopt = () => {
-        navigation.navigate('Adopčný formulár', {token: route.params.token, id: dog.id})
+        navigation.navigate('Adopčný formulár', {token: token, id: dog.id})
     };
 
     const button_edit = () => {
-        navigation.navigate('Upravenie psa', {token: route.params.token, id: dog.id})
+        navigation.navigate('Upravenie psa', {token: token, id: dog.id})
     };
 
     return (
@@ -40,10 +52,10 @@ function DogDetailScreen({route,navigation}){
   
                 <View style={styles.dog_detail}>
                     <Text style={[styles.item_title, {marginBottom: 20}]}>{dog.name}</Text>
-                    <Text style={styles.item_text}>Vek: {dog.age} roky</Text>
+                    <Text style={styles.item_text}>Vek: {dog.age} {year_format}</Text>
                     <Text style={[styles.item_text, {marginBottom: 20}]}>Plemeno: {dog.breed}</Text>
 
-                    <TouchableOpacity onPress={()=> navigation.navigate('Detailné informácie', {token: route.params.token, id: dog.id})}>
+                    <TouchableOpacity onPress={button_detail}>
                         <Text style={[styles.link, {textAlign: 'center'}]}>Ďalšie informácie</Text>
                     </TouchableOpacity>
 

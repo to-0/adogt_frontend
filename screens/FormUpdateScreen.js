@@ -21,7 +21,6 @@ function FormUpdateScreen({route,navigation}){
         method: "PUT",
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          // 'Content-Type':'application/json'
           'Content-Type':'application/x-www-form-urlencoded'
         },
         body: `details=${details}&finished=${finished}`

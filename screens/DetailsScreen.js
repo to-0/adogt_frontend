@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text } from 'react-native';
+
 import styles from '../styles'
 import {HOST} from '../App.js';
 
-function DetailsScreen({route,navigation}){
-    var initialVal = [{id: 0, name:'nic'}]
-    const [details, setDetails] = React.useState(initialVal)
+function DetailsScreen({route}){
+    const token = route.params.token;
+    const dog_id = route.params.id;
+    const [details, setDetails] = React.useState([{}]);
+    const [year_format, setYearFormat] = React.useState('');
 
     React.useEffect(()=>{
-        const token = route.params.token;
-        const dog_id = route.params.id;
-        
         fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`, {
           method: 'get',
           headers: {
@@ -22,6 +21,13 @@ function DetailsScreen({route,navigation}){
         .then((response) => response.json())
         .then((json) => {
             setDetails(json);
+
+            if (json.age == 1)
+                setYearFormat('rok');
+            else if (json.age < 5)
+                setYearFormat('roky');
+            else
+                setYearFormat('rokov');
         })
         .catch((error) => {
           console.error(error);
@@ -37,7 +43,7 @@ function DetailsScreen({route,navigation}){
             
             <View style={styles.detail}>
                 <Text style={styles.detail_info}>Vek:</Text>
-                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.age}</Text>
+                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.age} {year_format}</Text>
             </View>
 
             <View style={styles.detail}>
