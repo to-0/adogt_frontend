@@ -11,7 +11,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import FormStackScreen from './FormScreenStack';
 import AccountStackScreen from './AccountScreenStack';
 
-const HOST = '192.168.0.124';
+const HOST = '192.168.1.23';
 export {HOST};
 
 const Tab = createBottomTabNavigator();

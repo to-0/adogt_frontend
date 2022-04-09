@@ -9,6 +9,8 @@ function HomeScreen({route, navigation}){
   const token = route.params.token;
   const shelter = route.params.shelter;
   const [dogs, setDogs] = React.useState([{}]);
+  const dog_list = route.params.token;
+  const [refreshing,setRefreshing] = React.useState(false)
   var dog_images = {
     1: require('../img/baset.jpg'), 
     2: require('../img/bigl.jpg'),
@@ -21,9 +23,8 @@ function HomeScreen({route, navigation}){
     9: require('../img/doga.jpg'),
     10: require('../img/labrador.jpg')
   };
-    
-  //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
-  React.useEffect(()=>{
+  const get_dogs = () => {
+    setRefreshing(true);
     fetch(`http://${HOST}:8000/dogs/getAll?token=${token}`, {
       method: 'get',
       headers: {
@@ -38,10 +39,15 @@ function HomeScreen({route, navigation}){
         temp.push(json[i]);
       
       setDogs(temp);
+      setRefreshing(false);
     })
     .catch((error) => {
       console.error(error);
     });
+  }
+  //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
+  React.useEffect(()=>{
+    get_dogs()
   }, []);
     
   const renderItem = ({ item })=> (
@@ -91,7 +97,9 @@ function HomeScreen({route, navigation}){
         <FlatList
           data={dogs}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id} 
+          keyExtractor={(item) => item.id}
+          onRefresh={get_dogs}
+          refreshing={refreshing} 
           />
       </View>
     );
