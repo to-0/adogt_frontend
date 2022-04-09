@@ -1,31 +1,36 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
+import Toast from 'react-native-root-toast';
+
 import styles from '../styles'
 import {HOST} from '../App.js';
-import { RootSiblingParent } from 'react-native-root-siblings';
-import Toast from 'react-native-root-toast';
 
 function AdoptFormScreen({route,navigation}){
   const token = route.params.token;
   const dog_id = route.params.id;
-  const [reason, setReason] = React.useState('')
+  const [reason, setReason] = React.useState('');
   const [details,setDetails] = React.useState('');
 
   const button_adopt = () => {
-    console.log(reason + details)
     if (reason == '') {
-      let toast = Toast.show('Chýbajúce údaje', {
-        duration: Toast.durations.LONG,
-      });
+      Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
       return;
     }
+
+    var postBody = {
+      "type": 1,
+      "dog_id": dog_id,
+      "details": details,
+      "reason": reason,
+    };
+
     fetch(`http://${HOST}:8000/forms/create?token=${token}`, {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*', 
-        'Content-Type':'application/x-www-form-urlencoded'
+        'Content-Type':'application/json'
       },
-      body: `dog_id=${dog_id}&type=1&details=${details}`
+      body: JSON.stringify(postBody)
     })
     .then((response) => response.json())
     .then((json) => {
@@ -35,7 +40,7 @@ function AdoptFormScreen({route,navigation}){
         [
           {
             text: "Zavrieť",
-            onPress: () => navigation.navigate('Prehľad psov', {token: route.params.token, shelter: false}),
+            onPress: () => navigation.navigate('Prehľad psov', {token: token, shelter: false}),
             style: "cancel"
           }
         ]

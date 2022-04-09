@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image, Alert } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import styles from '../styles'
+import { View, Text, ImageBackground, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import Checkbox from 'expo-checkbox';
-import {HOST} from '../App.js';
 import { useFocusEffect } from '@react-navigation/native';
+
+import styles from '../styles';
+import {HOST} from '../App.js';
 
 function FormDetailScreen ({route, navigation}){
     const data = route.params.data;
     const token = route.params.token;
+    const form_id = route.params.form_id
     const [reason, setReason] = React.useState('')
     const [details, setDetails]= React.useState('');
     const [finished, setFinished] = React.useState(false);
@@ -22,19 +22,20 @@ function FormDetailScreen ({route, navigation}){
     );
 
     const delete_form = ()=> {
-      console.log(token, data.id)
       fetch(`http://${HOST}:8000/forms/delete?token=${token}&form_id=${data.id}`,{
         method: 'DELETE'
       })
       .then((response)=>response.json())
       .then((json)=>{
+        console.log(data.id)
+        route.params.setFormId(data.id)
         Alert.alert(
           "Odstránenie",
           "Úspešne Ste odstránili formulár.",
           [
             {
               text: "Zavrieť",
-              onPress: () => navigation.navigate('Formuláre', {token: route.params.token, shelter: false}),
+              onPress: () => navigation.navigate("Prehľad formulárov", {"token": token, "shelter": false, "id": form_id, "setFormId": route.params.setFormId}),
               style: "cancel"
             }
           ]
@@ -47,7 +48,7 @@ function FormDetailScreen ({route, navigation}){
     React.useEffect(()=>{
       const token = route.params.token;
       fetch(`http://${HOST}:8000/forms/detail?token=${token}&form_id=${data.id}`, {
-        method: 'get',
+        method: 'GET',
         headers: {
         'Accept': 'application/json, text/plain, */*', 
         'Content-Type': 'application/json'
@@ -58,15 +59,16 @@ function FormDetailScreen ({route, navigation}){
         setDetails(json.details);
         setFinished(json.finished);
         setReason(json.reason);
+        console.log(json);
       })
       .catch((error) => {
         console.error(error);
       });
-    }, [])
+    }, []);
 
     const getDog = () => {
         fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${data.dog_id}`,{
-            method: 'get'
+            method: 'GET'
         })
         .then((response)=>response.json())
         .then((json)=>{
@@ -75,7 +77,8 @@ function FormDetailScreen ({route, navigation}){
         .catch((error)=>{
             alert(error);
         })
-    }
+    };
+
     return (
       <ImageBackground source={require('../img/doggo.jpg')} resizeMode="cover" style={styles.small_background_image_full_width}>
         <View style={styles.form_detail}>
@@ -112,14 +115,14 @@ function FormDetailScreen ({route, navigation}){
               )}
           </View>
           
-          {reason != '' ? (
+          {reason != '' && reason != null ? (
             <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
                 <Text style={styles.detail_info}>Dôvod pre adopciu:</Text>
                 <Text style={styles.detail_text}>{reason}</Text>
             </View>
           ):(<></>)}
 
-          {details != '' ? (
+          {details != '' && details != null ? (
             <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
                 <Text style={styles.detail_info}>Detaily:</Text>
                 <Text style={styles.detail_text}>{details}</Text>
@@ -129,7 +132,7 @@ function FormDetailScreen ({route, navigation}){
           <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'flex-start'}}>
           {route.params.shelter == false ? (
               <>
-              <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => navigation.navigate('Úprava formulára',{"form_id":data.id})}>
+              <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => navigation.navigate('Úprava formulára', {"form_id":data.id})}>
                 <Text style={styles.button_text}>Upraviť formulár</Text>
               </TouchableOpacity>
               </>
