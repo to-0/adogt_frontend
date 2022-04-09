@@ -29,6 +29,7 @@ function AdoptFormScreen({route,navigation}){
     })
     .then((response) => response.json())
     .then((json) => {
+      console.log(json)
       Alert.alert(
         "Potvrdenie",
         "Úspešne Ste odoslali adopčný formulár. Ďalšie informácie Vám pošleme emailom.",

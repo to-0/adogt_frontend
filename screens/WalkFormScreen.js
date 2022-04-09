@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../styles'
 import {HOST} from '../App.js';
@@ -74,7 +73,7 @@ function WalkFormScreen({route,navigation}){
         'Accept': 'application/json, text/plain, */*', 
         'Content-Type':'application/x-www-form-urlencoded'
       },
-      body: `dog_id=${dog_id}&type=2&details=${details}&term_id=${date}`
+      body: `dog_id=${dog_id}&type=2&details=${details}&term_id=${date}&reason=vencenie`
     })
     .then((response) => response.json())
     .then((json) => {

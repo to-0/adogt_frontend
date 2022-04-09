@@ -28,6 +28,7 @@ function FormDetailScreen ({route, navigation}){
       })
       .then((response)=>response.json())
       .then((json)=>{
+        console.log(json)
         Alert.alert(
           "Odstránenie",
           "Úspešne Ste odstránili formulár.",
