@@ -3,6 +3,7 @@ import { AppRegistry, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
+import firebase from '@react-native-firebase/app';
 
 import styles from './styles'
 import LoginScreen from './screens/LoginScreen';
@@ -13,7 +14,6 @@ import AccountStackScreen from './AccountScreenStack';
 
 const HOST = '192.168.1.23';
 export {HOST};
-
 const Tab = createBottomTabNavigator();
 
 function App() {

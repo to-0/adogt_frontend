@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
-
+import { View, Text, Dimensions, Image, TouchableOpacity, TextInput } from 'react-native';
+import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
 import styles from '../styles'
 import {HOST} from '../App.js';
 
@@ -9,6 +9,7 @@ function AccountScreen({route, navigation}){
   const shelter = route.params.shelter;
   const [username,setUsername] = React.useState('');
   const [email,setEmail] = React.useState('');
+  const [roomId, setRoom] = React.useState('');
 
   const logout_function = ()=> {
     fetch(`http://${HOST}:8000/users/logout?token=${token}`)
@@ -19,6 +20,10 @@ function AccountScreen({route, navigation}){
     .catch((error) => {
       console.error(error);
     });
+  }
+  const test = async () => {
+    const devices = await mediaDevices.enumerateDevices();
+    console.log(devices)
   }
   
   React.useEffect(()=>{
@@ -50,6 +55,18 @@ function AccountScreen({route, navigation}){
         <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={logout_function}>
           <Text style={styles.button_text}>Odhlásiť sa</Text>
         </TouchableOpacity>
+        <Text> Room ID </Text>
+        <TextInput onChangeText={(value) => setRoom(value)}/>
+        <View style={{justifyContent: 'flex-end'}}>
+          <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Create',{"roomId":roomId})}>
+            <Text style={styles.button_text}>Create Room</Text>
+          </TouchableOpacity>
+          </View>
+          <View style={{justifyContent: 'flex-end'}}>
+          <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Join',{"roomId":roomId})}>
+            <Text style={styles.button_text}>Join room</Text>
+          </TouchableOpacity>
+          </View>
       </View>
     </View>
   )
