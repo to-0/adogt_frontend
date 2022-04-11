@@ -11,7 +11,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import FormStackScreen from './FormScreenStack';
 import AccountStackScreen from './AccountScreenStack';
 
-const HOST = '192.168.1.23';
+const HOST = '192.168.0.124';
 export {HOST};
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +23,6 @@ function App() {
   const [email,setEmail] = React.useState('');
   const [dog,setDog] = React.useState(undefined);
   const [dog_id,setDogId] = React.useState(-1);
-  const [form_id,setFormId] = React.useState(-1);
   
   return (
     <NavigationContainer>
@@ -58,7 +57,7 @@ function App() {
               headerShown: false
             }}/>
       
-          <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter, "id": form_id, setFormId: setFormId }}
+          <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter }}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />},
               headerShown: false

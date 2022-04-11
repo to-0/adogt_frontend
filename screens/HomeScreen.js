@@ -9,8 +9,9 @@ function HomeScreen({route, navigation}){
   const token = route.params.token;
   const shelter = route.params.shelter;
   const [dogs, setDogs] = React.useState([{}]);
-  const dog_list = route.params.token;
+  //const dog_list = route.params.token;
   const [refreshing,setRefreshing] = React.useState(false)
+
   var dog_images = {
     1: require('../img/baset.jpg'), 
     2: require('../img/bigl.jpg'),
