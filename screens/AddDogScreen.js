@@ -5,6 +5,7 @@ import * as FileSystem from 'expo-file-system';
 
 import styles from '../styles'
 import {HOST} from '../App.js';
+import HomeScreen from './HomeScreen';
 
 function AddDogScreen({route}){
   const token = route.params.token;

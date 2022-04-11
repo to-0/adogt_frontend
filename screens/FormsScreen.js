@@ -9,11 +9,15 @@ function FormsScreen({route, navigation}) {
   const shelter = route.params.shelter;
   const form_id = route.params.id;
   const [forms,setForms] = React.useState([]);
-  const [refreshing,setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      
+    }, [])
+  );
   const get_forms = () => {
     setRefreshing(true);
-    console.log(refreshing);
     fetch(`http://${HOST}:8000/forms/getAll?token=${token}`, {
       method: 'GET',
       headers: {
@@ -32,9 +36,13 @@ function FormsScreen({route, navigation}) {
     })
     .catch((error) => {
       console.error(error);
+      setRefreshing(false);
     });
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dcda2510b93641dc7f773021b536e0ea0ccda2c3
   React.useEffect(()=>{
     get_forms();
   }, []);
@@ -63,7 +71,11 @@ function FormsScreen({route, navigation}) {
       <FlatList
         data={forms}
         renderItem={renderItem}
+<<<<<<< HEAD
         keyExtractor={(item) => item.id} 
+=======
+        keyExtractor={(item) => item.id}
+>>>>>>> dcda2510b93641dc7f773021b536e0ea0ccda2c3
         onRefresh={get_forms}
         refreshing={refreshing} 
       />

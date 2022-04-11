@@ -23,7 +23,7 @@ function FormUpdateScreen({route,navigation}){
           'Accept': 'application/json, text/plain, */*',
           'Content-Type':'application/x-www-form-urlencoded'
         },
-        body: `details=${details}&finished=${finished}`
+        body: `details=${details}&finished=${finished}&reason=${reason}`
       })
       .then((response)=> response.json())
       .then((json) =>{
