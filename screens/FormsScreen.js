@@ -12,14 +12,15 @@ function FormsList({route, navigation}) {
   const form_id = route.params.id;
   const setFormId = route.params.setFormId;
   const [forms,setForms] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
       
     }, [])
   );
-
-  React.useEffect(()=>{
+  const get_forms = () => {
+    setRefreshing(true);
     fetch(`http://${HOST}:8000/forms/getAll?token=${token}`, {
       method: 'GET',
       headers: {
@@ -34,10 +35,15 @@ function FormsList({route, navigation}) {
         temp.push(json[i]);
       }
       setForms(temp);
+      setRefreshing(false);
     })
     .catch((error) => {
       console.error(error);
+      setRefreshing(false);
     });
+  }
+  React.useEffect(()=>{
+    get_forms();
   }, []);
 
   const renderItem = ({ item })=> (
@@ -64,7 +70,9 @@ function FormsList({route, navigation}) {
       <FlatList
         data={forms}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id} 
+        keyExtractor={(item) => item.id}
+        onRefresh={get_forms}
+        refreshing={refreshing} 
       />
     </View>
   )
