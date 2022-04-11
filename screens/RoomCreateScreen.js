@@ -6,6 +6,7 @@ import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDe
 //import * as FireStore from 'firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
+import styles2 from '../styles'
 
 function RoomCreateScreen({route,navigation}) {
   const token = route.params.token;
@@ -139,20 +140,33 @@ function RoomCreateScreen({route,navigation}) {
 
     <View style={styles.callButtons} >
       <View styles={styles.buttonContainer} >
-        <Button title="Click to stop call" onPress={onBackPress} />
+        <TouchableOpacity style={styles2.button} onPress={onBackPress}>
+        <Text style={styles2.button_text}>Zastaviť hovor</Text>
+        </TouchableOpacity>
+        {/* <Button title="Zastaviť hovor" onPress={onBackPress} /> */}
       </View>
       <View styles={styles.buttonContainer} >
-        {!localStream && <Button title='Click to start stream' onPress={startLocalStream} />}
-        {localStream && <Button title='Click to start call' onPress={() => startCall(route.params.roomId)} disabled={!!remoteStream} />}
+        {!localStream ? (
+        <TouchableOpacity style={styles2.button} onPress={startLocalStream}>
+          <Text style={styles2.button_text}>Spustiť stream</Text>
+        </TouchableOpacity>) : null}
+        {localStream ? (
+        <TouchableOpacity style={styles2.button} onPress={() => startCall(route.params.roomId)} disabled={!remoteStream}>
+          <Text style={styles2.button_text}>Spustiť hovor</Text>
+        </TouchableOpacity>):null }
       </View>
     </View>
 
-    {localStream && (
+    {localStream ? (
       <View style={styles.toggleButtons}>
-        <Button title='Switch camera' onPress={switchCamera} />
-        <Button title={`${isMuted ? 'Unmute' : 'Mute'} stream`} onPress={toggleMute} disabled={!remoteStream} />
+        <TouchableOpacity style={styles2.button} onPress={switchCamera}>
+           <Text style={styles2.button_text}>Zmena kamery</Text>
+           </TouchableOpacity>
+           <TouchableOpacity style={styles2.button} onPress={toggleMute} disabled={!remoteStream}>
+           <Text style={styles2.button_text}> Mute </Text>
+           </TouchableOpacity>
       </View>
-    )}
+    ) : null}
 
     <View style={{ display: 'flex', flex: 1, padding: 10 }} >
       <View style={styles.rtcview}>
@@ -198,5 +212,11 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       margin: 5,
+    },
+    callButtons: {
+      backgroundColor: '#f76226',
+      color: '#f76226',
+      borderRadius: 5,
+      margin: 5
     }
   });

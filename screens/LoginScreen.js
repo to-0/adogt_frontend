@@ -19,6 +19,7 @@ function LoginScreen({route, navigation}) {
         return;
       }
       // TODO zmenit url na komp lebo potom to nepojde z mobilu 
+      console.log(HOST);
       fetch(`http://${HOST}:8000/users/signUser?username=${username}&password=${pass}`)
       .then((response) => response.json())
       .then((json) => {

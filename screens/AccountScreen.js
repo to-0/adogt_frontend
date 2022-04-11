@@ -56,15 +56,15 @@ function AccountScreen({route, navigation}){
           <Text style={styles.button_text}>Odhlásiť sa</Text>
         </TouchableOpacity>
         <Text> Room ID </Text>
-        <TextInput onChangeText={(value) => setRoom(value)}/>
+        <TextInput onChangeText={(value) => setRoom(value)} style={{backgroundColor: 'white'}}/>
         <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Create',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Create Room</Text>
+            <Text style={styles.button_text}>Vytvoriť miestnosť</Text>
           </TouchableOpacity>
           </View>
           <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Join',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Join room</Text>
+            <Text style={styles.button_text}>Pridať sa do miestnosti</Text>
           </TouchableOpacity>
           </View>
       </View>

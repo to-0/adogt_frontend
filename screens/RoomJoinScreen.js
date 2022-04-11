@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
-import { Text, StyleSheet, Button, View } from 'react-native';
+import { Text, StyleSheet, Button, View,TouchableOpacity } from 'react-native';
 import {db} from '../firebase_db.js'
+import styles2 from '../styles'
 const configuration = {
     iceServers: [
       {
@@ -140,18 +141,22 @@ function RoomJoinScreen({route,navigation}) {
 
       <View style={styles.callButtons} >
         <View styles={styles.buttonContainer} >
-          <Button title="Click to stop call" onPress={onBackPress} />
+          <Button title="Zastaviť hovor" style={styles2.button} onPress={onBackPress} />
         </View>
         <View styles={styles.buttonContainer} >
-          {!localStream && <Button title='Click to start stream' onPress={startLocalStream} />}
-          {localStream && <Button title='Click to join call' onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream} />}
+          {!localStream &&  <TouchableOpacity style={styles2.button}  onPress={startLocalStream}>  <Text style={styles2.button_text}>Spustiť stream</Text> </TouchableOpacity> }
+          {localStream && <TouchableOpacity style={styles2.button} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>  <Text style={styles2.button_text}>Pripojiť sa do hovoru</Text> </TouchableOpacity>}
         </View>
       </View>
 
       {localStream && (
         <View style={styles.toggleButtons}>
-          <Button title='Switch camera' onPress={switchCamera} />
-          <Button title={`${isMuted ? 'Unmute' : 'Mute'} stream`} onPress={toggleMute} disabled={!remoteStream} />
+          <TouchableOpacity style={styles2.button}  onPress={switchCamera}> 
+           <Text style={styles.button_text}>Zmena kamery</Text> 
+           </TouchableOpacity>
+           <TouchableOpacity style={styles2.button}  onPress={toggleMute} disabled={!remoteStream}> 
+           <Text style={styles.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
+           </TouchableOpacity>
         </View>
       )}
 

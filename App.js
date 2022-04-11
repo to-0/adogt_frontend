@@ -11,10 +11,15 @@ import HomeStackScreen from './HomeScreenStack';
 import RegisterScreen from './screens/RegisterScreen';
 import FormStackScreen from './FormScreenStack';
 import AccountStackScreen from './AccountScreenStack';
+import OptionsScreen from './screens/OptionsScreen';
 
-const HOST = '192.168.1.23';
+var HOST = '192.168.1.23';
 export {HOST};
 const Tab = createBottomTabNavigator();
+const change_host = (val) => {
+  HOST = val;
+}
+export{change_host}
 
 function App() {
   const [token, setToken] = React.useState(undefined);
@@ -39,6 +44,12 @@ function App() {
           <Tab.Screen name="Registrácia" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/registerIcon.jpg')} />},
+              headerShown: false
+            }}
+          />
+          <Tab.Screen name="Nastavenia" component={OptionsScreen}
+            options={{
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/settings.png')} />},
               headerShown: false
             }}
           />
