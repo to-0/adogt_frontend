@@ -11,8 +11,15 @@ import HomeStackScreen from './HomeScreenStack';
 import RegisterScreen from './screens/RegisterScreen';
 import FormStackScreen from './FormScreenStack';
 import AccountStackScreen from './AccountScreenStack';
+import OptionsScreen from './screens/OptionsScreen';
+import { LogBox } from 'react-native';
 
-const HOST = '192.168.0.124';
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+import {Globals} from './Globals.js'
+
+var HOST = '192.168.1.23';
 export {HOST};
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +45,12 @@ function App() {
           <Tab.Screen name="Registrácia" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/registerIcon.jpg')} />},
+              headerShown: false
+            }}
+          />
+          <Tab.Screen name="Nastavenia" component={OptionsScreen}
+            options={{
+              tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/settings.png')} />},
               headerShown: false
             }}
           />

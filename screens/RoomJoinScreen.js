@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
-import { Text, StyleSheet, Button, View } from 'react-native';
+import { Text, StyleSheet, Button, View,TouchableOpacity } from 'react-native';
 import {db} from '../firebase_db.js'
+import styles2 from '../styles'
 const configuration = {
     iceServers: [
       {
@@ -135,25 +136,33 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-      <Text style={styles.heading} >Join Screen</Text>
+      <Text style={styles.heading} >Pripojenie do hovoru</Text>
       <Text style={styles.heading} >Room : {route.params.roomId}</Text>
 
-      <View style={styles.callButtons} >
-        <View styles={styles.buttonContainer} >
-          <Button title="Click to stop call" onPress={onBackPress} />
-        </View>
-        <View styles={styles.buttonContainer} >
-          {!localStream && <Button title='Click to start stream' onPress={startLocalStream} />}
-          {localStream && <Button title='Click to join call' onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream} />}
-        </View>
+      <View style={styles.toggleButtons} >
+        <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
+          <Text style={styles2.button_text}>Zastaviť hovor</Text>
+        </TouchableOpacity>
+          {!localStream ? (
+          <TouchableOpacity style={styles2.cButtons}  onPress={startLocalStream}> 
+          <Text style={styles2.button_text}>Stream</Text> 
+          </TouchableOpacity>):null}
+          {localStream ? (
+          <TouchableOpacity style={styles2.cButtons} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>
+             <Text style={styles2.button_text}>Pripojiť sa</Text> 
+          </TouchableOpacity>):null}
       </View>
 
-      {localStream && (
+      {localStream ? (
         <View style={styles.toggleButtons}>
-          <Button title='Switch camera' onPress={switchCamera} />
-          <Button title={`${isMuted ? 'Unmute' : 'Mute'} stream`} onPress={toggleMute} disabled={!remoteStream} />
+          <TouchableOpacity style={styles2.cButtons}  onPress={switchCamera}> 
+           <Text style={styles2.button_text}>Zmena kamery</Text> 
+           </TouchableOpacity>
+           <TouchableOpacity style={styles2.cButtons}  onPress={toggleMute} disabled={!remoteStream}> 
+           <Text style={styles2.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
+           </TouchableOpacity>
         </View>
-      )}
+      ):null}
 
       <View style={{ display: 'flex', flex: 1, padding: 10 }} >
         <View style={styles.rtcview}>
@@ -198,5 +207,12 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       margin: 5,
-    }
+    },
+    button: {
+      backgroundColor: '#f76226',
+      color: '#f76226',
+      // margin: 20,
+      borderRadius: 5,
+      // height: 35,
+    },
   });

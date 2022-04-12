@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function DetailsScreen({route}){
     const token = route.params.token;
@@ -11,7 +11,7 @@ function DetailsScreen({route}){
     const [year_format, setYearFormat] = React.useState('');
 
     React.useEffect(()=>{
-        fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`, {
+        fetch(`http://${Globals.host}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`, {
           method: 'get',
           headers: {
           'Accept': 'application/json, text/plain, */*', 

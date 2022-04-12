@@ -3,7 +3,7 @@ import { View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-root-toast';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function AdoptFormScreen({route,navigation}){
   const token = route.params.token;
@@ -24,7 +24,7 @@ function AdoptFormScreen({route,navigation}){
       "reason": reason,
     };
 
-    fetch(`http://${HOST}:8000/forms/create?token=${token}`, {
+    fetch(`http://${Globals.host}:8000/forms/create?token=${token}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*', 

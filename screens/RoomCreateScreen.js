@@ -6,6 +6,7 @@ import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDe
 //import * as FireStore from 'firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
+import styles2 from '../styles'
 
 function RoomCreateScreen({route,navigation}) {
   const token = route.params.token;
@@ -63,10 +64,11 @@ function RoomCreateScreen({route,navigation}) {
     };
     const newStream = await mediaDevices.getUserMedia(constraints);
     setLocalStream(newStream);
+    console.log("Tu");
   };
 
   const startCall = async id => {
-    console.log("tu");
+    console.log("tu idem spustit hovor");
     const localPC = new RTCPeerConnection(configuration);
     console.log("cau");
     localPC.addStream(localStream);
@@ -134,25 +136,33 @@ function RoomCreateScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={styles.heading} >Call Screen</Text>
+    <Text style={styles.heading} >Vytvorenie hovoru</Text>
     <Text style={styles.heading} >Room : {route.params.roomId}</Text>
+  <View style={styles.toggleButtons} >
+          <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
+          <Text style={styles2.button_text}>Zastaviť hovor</Text>
+          </TouchableOpacity>
+          {!localStream ? (
+          <TouchableOpacity style={styles2.cButtons} onPress={startLocalStream}>
+            <Text style={styles2.button_text}>Spustiť stream</Text>
+          </TouchableOpacity>) : null}
+          {localStream ? (
+          <TouchableOpacity style={styles2.cButtons} onPress={() => startCall(route.params.roomId)} disabled={!!remoteStream}>
+            <Text style={styles2.button_text}>Spustiť hovor</Text>
+          </TouchableOpacity>):null }
+      </View>
 
-    <View style={styles.callButtons} >
-      <View styles={styles.buttonContainer} >
-        <Button title="Click to stop call" onPress={onBackPress} />
-      </View>
-      <View styles={styles.buttonContainer} >
-        {!localStream && <Button title='Click to start stream' onPress={startLocalStream} />}
-        {localStream && <Button title='Click to start call' onPress={() => startCall(route.params.roomId)} disabled={!!remoteStream} />}
-      </View>
-    </View>
+      {localStream ? (
+        <View style={styles.toggleButtons}>
+          <TouchableOpacity style={styles2.cButtons} onPress={switchCamera}>
+            <Text style={styles2.button_text}>Zmena kamery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles2.cButtons} onPress={toggleMute} disabled={!remoteStream}>
+            <Text style={styles2.button_text}> Mute </Text>
+            </TouchableOpacity>
+        </View>
+      ) : null}
 
-    {localStream && (
-      <View style={styles.toggleButtons}>
-        <Button title='Switch camera' onPress={switchCamera} />
-        <Button title={`${isMuted ? 'Unmute' : 'Mute'} stream`} onPress={toggleMute} disabled={!remoteStream} />
-      </View>
-    )}
 
     <View style={{ display: 'flex', flex: 1, padding: 10 }} >
       <View style={styles.rtcview}>
@@ -193,10 +203,13 @@ const styles = StyleSheet.create({
     callButtons: {
       padding: 10,
       width: '100%',
-      flexDirection: 'row',
+      flexDirection: 'column',
       justifyContent: 'space-around',
     },
     buttonContainer: {
       margin: 5,
+    },
+    uppcontainer:{
+      flex: 1,
     }
   });

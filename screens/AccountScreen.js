@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Dimensions, Image, TouchableOpacity, TextInput } from 'react-native';
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function AccountScreen({route, navigation}){
   const token = route.params.token;
@@ -12,7 +12,7 @@ function AccountScreen({route, navigation}){
   const [roomId, setRoom] = React.useState('');
 
   const logout_function = ()=> {
-    fetch(`http://${HOST}:8000/users/logout?token=${token}`)
+    fetch(`http://${Globals.host}:8000/users/logout?token=${token}`)
     .then((response) => response.json())
     .then((json) => {
       route.params.setToken(undefined)
@@ -56,15 +56,15 @@ function AccountScreen({route, navigation}){
           <Text style={styles.button_text}>Odhlásiť sa</Text>
         </TouchableOpacity>
         <Text> Room ID </Text>
-        <TextInput onChangeText={(value) => setRoom(value)}/>
+        <TextInput onChangeText={(value) => setRoom(value)} style={{backgroundColor: 'white'}}/>
         <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Create',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Create Room</Text>
+            <Text style={styles.button_text}>Vytvoriť miestnosť</Text>
           </TouchableOpacity>
           </View>
           <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Join',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Join room</Text>
+            <Text style={styles.button_text}>Pridať sa do miestnosti</Text>
           </TouchableOpacity>
           </View>
       </View>

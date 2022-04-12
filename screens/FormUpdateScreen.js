@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styles from '../styles'
 import { TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function FormUpdateScreen({route,navigation}){
     const [reason, setReason] = React.useState('')
@@ -17,7 +17,7 @@ function FormUpdateScreen({route,navigation}){
       }
       console.log(details, finished);
       console.log(route.params.form_id)
-      fetch(`http://${HOST}:8000/forms/edit?token=${route.params.token}&form_id=${route.params.form_id}`,{
+      fetch(`http://${Globals.host}:8000/forms/edit?token=${route.params.token}&form_id=${route.params.form_id}`,{
         method: "PUT",
         headers: {
           'Accept': 'application/json, text/plain, */*',

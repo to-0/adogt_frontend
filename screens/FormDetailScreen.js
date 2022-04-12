@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import styles from '../styles';
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function FormDetailScreen ({route, navigation}){
     const data = route.params.data;
@@ -21,7 +21,7 @@ function FormDetailScreen ({route, navigation}){
     );
 
     const delete_form = ()=> {
-      fetch(`http://${HOST}:8000/forms/delete?token=${token}&form_id=${data.id}`,{
+      fetch(`http://${Globals.host}:8000/forms/delete?token=${token}&form_id=${data.id}`,{
         method: 'DELETE'
       })
       .then((response)=>response.json())
@@ -44,7 +44,7 @@ function FormDetailScreen ({route, navigation}){
     }
     React.useEffect(()=>{
       const token = route.params.token;
-      fetch(`http://${HOST}:8000/forms/detail?token=${token}&form_id=${data.id}`, {
+      fetch(`http://${Globals.host}:8000/forms/detail?token=${token}&form_id=${data.id}`, {
         method: 'GET',
         headers: {
         'Accept': 'application/json, text/plain, */*', 
@@ -63,7 +63,7 @@ function FormDetailScreen ({route, navigation}){
     }, []);
 
     const getDog = () => {
-        fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${data.dog_id}`,{
+        fetch(`http://${Globals.host}:8000/dogs/getDog?token=${token}&dog_id=${data.dog_id}`,{
             method: 'GET'
         })
         .then((response)=>response.json())

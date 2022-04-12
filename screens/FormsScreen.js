@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function FormsScreen({route, navigation}) {
   const token = route.params.token;
@@ -11,14 +11,14 @@ function FormsScreen({route, navigation}) {
   const [forms,setForms] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
+  // useFocusEffect(
+  //   React.useCallback(() => {
       
-    }, [])
-  );
+  //   }, [])
+  // );
   const get_forms = () => {
     setRefreshing(true);
-    fetch(`http://${HOST}:8000/forms/getAll?token=${token}`, {
+    fetch(`http://${Globals.host}:8000/forms/getAll?token=${token}`, {
       method: 'GET',
       headers: {
       'Accept': 'application/json, text/plain, */*', 
@@ -67,7 +67,7 @@ function FormsScreen({route, navigation}) {
       <FlatList
         data={forms}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id} 
+        keyExtractor={(item) => item.id}
         onRefresh={get_forms}
         refreshing={refreshing} 
       />

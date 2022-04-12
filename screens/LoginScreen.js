@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useEffect, useCallback } from "react";
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import styles from '../styles'
-import {HOST} from '../App.js';
+// import {HOST} from '../App.js';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import Toast from 'react-native-root-toast';
+import {Globals} from '../Globals'
 
 function LoginScreen({route, navigation}) {
     //toto su tie hodnoty, username je hodnota a setusername je ako keby metoda kde nastavime tu hodnotu, nieco ako premenna a su to nejake hooks... nvm 
@@ -19,7 +20,8 @@ function LoginScreen({route, navigation}) {
         return;
       }
       // TODO zmenit url na komp lebo potom to nepojde z mobilu 
-      fetch(`http://${HOST}:8000/users/signUser?username=${username}&password=${pass}`)
+      console.log(Globals.host);
+      fetch(`http://${Globals.host}:8000/users/signUser?username=${username}&password=${pass}`)
       .then((response) => response.json())
       .then((json) => {
         console.log(json)
