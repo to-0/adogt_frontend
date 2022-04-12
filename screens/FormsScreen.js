@@ -39,10 +39,6 @@ function FormsScreen({route, navigation}) {
       setRefreshing(false);
     });
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> dcda2510b93641dc7f773021b536e0ea0ccda2c3
   React.useEffect(()=>{
     get_forms();
   }, []);
@@ -71,11 +67,7 @@ function FormsScreen({route, navigation}) {
       <FlatList
         data={forms}
         renderItem={renderItem}
-<<<<<<< HEAD
         keyExtractor={(item) => item.id} 
-=======
-        keyExtractor={(item) => item.id}
->>>>>>> dcda2510b93641dc7f773021b536e0ea0ccda2c3
         onRefresh={get_forms}
         refreshing={refreshing} 
       />
