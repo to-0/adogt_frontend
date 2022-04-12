@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { View, Text, TextInput, Button, FlatList, AppRegistry, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles'
-import {HOST} from '../App.js';
+// import {HOST} from '../App.js';
 import Checkbox from 'expo-checkbox';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import Toast from 'react-native-root-toast';
+import {Globals} from '../Globals'
 
 function RegisterScreen({route,navigation}){
   const [username,setUsername] = React.useState('');
@@ -25,7 +26,7 @@ function RegisterScreen({route,navigation}){
       "password": password,
       "shelter": sh
     }
-    fetch(`http://${HOST}:8000/users/register`,{
+    fetch(`http://${Globals.host}:8000/users/register`,{
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',

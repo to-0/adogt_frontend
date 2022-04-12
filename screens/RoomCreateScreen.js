@@ -143,7 +143,6 @@ function RoomCreateScreen({route,navigation}) {
         <TouchableOpacity style={styles2.button} onPress={onBackPress}>
         <Text style={styles2.button_text}>Zastaviť hovor</Text>
         </TouchableOpacity>
-        {/* <Button title="Zastaviť hovor" onPress={onBackPress} /> */}
       </View>
       <View styles={styles.buttonContainer} >
         {!localStream ? (

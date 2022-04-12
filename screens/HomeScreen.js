@@ -3,7 +3,8 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
+// import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function HomeScreen({route, navigation}){
   const token = route.params.token;
@@ -26,7 +27,7 @@ function HomeScreen({route, navigation}){
   };
   const get_dogs = () => {
     setRefreshing(true);
-    fetch(`http://${HOST}:8000/dogs/getAll?token=${token}`, {
+    fetch(`http://${Globals.host}:8000/dogs/getAll?token=${token}`, {
       method: 'get',
       headers: {
       'Accept': 'application/json, text/plain, */*', 

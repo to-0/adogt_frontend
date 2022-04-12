@@ -4,8 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
 import HomeScreen from './HomeScreen';
+import {Globals} from '../Globals'
 
 function AddDogScreen({route}){
   const token = route.params.token;
@@ -39,7 +39,7 @@ function AddDogScreen({route}){
       "health": health
     };
 
-    fetch(`http:/${HOST}:8000/dogs/addDog?token=${token}`, {
+    fetch(`http:/${Globals.host}:8000/dogs/addDog?token=${token}`, {
       method: "POST",
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -50,14 +50,14 @@ function AddDogScreen({route}){
     .then((response) => response.json())
     .then((json)=> {
       if(json.message == "OK"){
-        dog_id = json.id
+        var dog_id = json.id
 
         const options = {
           httpMethod: 'POST',
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
           fieldName: 'file',
         }
-        FileSystem.uploadAsync(`http://${HOST}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
+        FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
           alert(response.body);
         })

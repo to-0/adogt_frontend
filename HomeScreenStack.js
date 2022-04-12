@@ -9,8 +9,6 @@ import WalkFormScreen from './screens/WalkFormScreen';
 import AdoptFormScreen from './screens/AdoptFormScreen';
 import EditDogScreen from './screens/EditDogScreen.js';
 
-import {HOST} from './App.js';
-
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen({route}) {

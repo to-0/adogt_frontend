@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Dimensions, Image, TouchableOpacity, TextInput } from 'react-native';
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function AccountScreen({route, navigation}){
   const token = route.params.token;
@@ -12,7 +12,7 @@ function AccountScreen({route, navigation}){
   const [roomId, setRoom] = React.useState('');
 
   const logout_function = ()=> {
-    fetch(`http://${HOST}:8000/users/logout?token=${token}`)
+    fetch(`http://${Globals.host}:8000/users/logout?token=${token}`)
     .then((response) => response.json())
     .then((json) => {
       route.params.setToken(undefined)

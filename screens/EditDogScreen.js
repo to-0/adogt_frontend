@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 import { RootSiblingParent } from 'react-native-root-siblings';
 import Toast from 'react-native-root-toast';
 import { useFocusEffect } from '@react-navigation/native';
@@ -38,7 +38,7 @@ function EditDogScreen({route,navigation}){
       "health": health
     };
 
-    fetch(`http://${HOST}:8000/dogs/editDog?token=${token}&dog_id=${dog_id}`,{
+    fetch(`http://${Globals.host}:8000/dogs/editDog?token=${token}&dog_id=${dog_id}`,{
       method: 'PUT',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -66,7 +66,7 @@ function EditDogScreen({route,navigation}){
   }
 
   const getDog = () => {
-    fetch(`http://${HOST}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`,{
+    fetch(`http://${Globals.host}:8000/dogs/getDog?token=${token}&dog_id=${dog_id}`,{
         method: 'GET'
     })
     .then((response)=>response.json())
@@ -82,7 +82,7 @@ function EditDogScreen({route,navigation}){
     })
   }
   const add_terms = () => {
-      fetch(`http://${HOST}:8000/terms/create?token=${token}&dog_id=${dog_id}`, {
+      fetch(`http://${Globals.host}:8000/terms/create?token=${token}&dog_id=${dog_id}`, {
         method: 'POST',
       })
       .then((response)=>response.json())
@@ -90,6 +90,28 @@ function EditDogScreen({route,navigation}){
         Alert.alert(
           "Potvrdenie",
           "Úspešne Ste pridali termíny pre psa.",
+          [
+            {
+              text: "Zavrieť",
+              onPress: () => navigation.navigate('Prehľad psov', {token: token, shelter: true}),
+              style: "cancel"
+            }
+          ]
+        );
+      })
+      .catch((error)=>{
+        alert(error)
+      })
+  }
+  const delete_dog = () => {
+    fetch(`http://${Globals.host}:8000/dogs/deleteDog?token=${token}&dog_id=${dog_id}`, {
+        method: 'DELETE',
+      })
+      .then((response)=>response.json())
+      .then((json)=>{
+        Alert.alert(
+          "Potvrdenie",
+          json.message,
           [
             {
               text: "Zavrieť",
@@ -127,6 +149,9 @@ function EditDogScreen({route,navigation}){
 
         <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={add_terms}>
             <Text style={styles.button_text}>Pridať termíny pre psa</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={delete_dog}>
+            <Text style={styles.button_text}>Vymazať psa</Text>
         </TouchableOpacity>
       </View>
     </RootSiblingParent>

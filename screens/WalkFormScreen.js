@@ -4,7 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-root-toast';
 
 import styles from '../styles'
-import {HOST} from '../App.js';
+import {Globals} from '../Globals'
 
 function WalkFormScreen({route,navigation}){
   const token = route.params.token;
@@ -16,7 +16,7 @@ function WalkFormScreen({route,navigation}){
   const [open, setOpen] = React.useState(false);
   
   React.useEffect(()=>{
-    fetch(`http://${HOST}:8000/terms?token=${token}&dog_id=${dog_id}`, {
+    fetch(`http://${Globals.host}:8000/terms?token=${token}&dog_id=${dog_id}`, {
       method: 'get',
       headers: {
       'Accept': 'application/json, text/plain, */*', 
@@ -39,7 +39,7 @@ function WalkFormScreen({route,navigation}){
       console.log(temp);
       console.log(tmp_free);
       //setDates(temp);
-      //setFreeDates(tmp_free);
+      setFreeDates(tmp_free);
     })
     .catch((error) => {
       console.error(error);
@@ -59,7 +59,7 @@ function WalkFormScreen({route,navigation}){
       "term_id": date,
     };
 
-    fetch(`http://${HOST}:8000/forms/create?token=${token}`, {
+    fetch(`http://${Globals.host}:8000/forms/create?token=${token}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*', 

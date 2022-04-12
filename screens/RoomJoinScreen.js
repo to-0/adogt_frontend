@@ -141,24 +141,24 @@ function RoomJoinScreen({route,navigation}) {
 
       <View style={styles.callButtons} >
         <View styles={styles.buttonContainer} >
-          <Button title="Zastaviť hovor" style={styles2.button} onPress={onBackPress} />
+          <Button title="Zastaviť hovor" style={styles.button} onPress={onBackPress} />
         </View>
         <View styles={styles.buttonContainer} >
-          {!localStream &&  <TouchableOpacity style={styles2.button}  onPress={startLocalStream}>  <Text style={styles2.button_text}>Spustiť stream</Text> </TouchableOpacity> }
-          {localStream && <TouchableOpacity style={styles2.button} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>  <Text style={styles2.button_text}>Pripojiť sa do hovoru</Text> </TouchableOpacity>}
+          {!localStream ? ( <TouchableOpacity style={styles.button}  onPress={startLocalStream}>  <Text style={styles2.button_text}>Spustiť stream</Text> </TouchableOpacity>):null}
+          {localStream ? (<TouchableOpacity style={styles.button} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>  <Text style={styles2.button_text}>Pripojiť sa do hovoru</Text> </TouchableOpacity>):null}
         </View>
       </View>
 
-      {localStream && (
+      {localStream ? (
         <View style={styles.toggleButtons}>
-          <TouchableOpacity style={styles2.button}  onPress={switchCamera}> 
+          <TouchableOpacity style={styles.button}  onPress={switchCamera}> 
            <Text style={styles.button_text}>Zmena kamery</Text> 
            </TouchableOpacity>
-           <TouchableOpacity style={styles2.button}  onPress={toggleMute} disabled={!remoteStream}> 
+           <TouchableOpacity style={styles.button}  onPress={toggleMute} disabled={!remoteStream}> 
            <Text style={styles.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
            </TouchableOpacity>
         </View>
-      )}
+      ):null}
 
       <View style={{ display: 'flex', flex: 1, padding: 10 }} >
         <View style={styles.rtcview}>
@@ -203,5 +203,12 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       margin: 5,
-    }
+    },
+    button: {
+      backgroundColor: '#f76226',
+      color: '#f76226',
+      // margin: 20,
+      borderRadius: 5,
+      // height: 35,
+    },
   });

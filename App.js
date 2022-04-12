@@ -12,14 +12,16 @@ import RegisterScreen from './screens/RegisterScreen';
 import FormStackScreen from './FormScreenStack';
 import AccountStackScreen from './AccountScreenStack';
 import OptionsScreen from './screens/OptionsScreen';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+import {Globals} from './Globals.js'
 
 var HOST = '192.168.1.23';
 export {HOST};
 const Tab = createBottomTabNavigator();
-const change_host = (val) => {
-  HOST = val;
-}
-export{change_host}
 
 function App() {
   const [token, setToken] = React.useState(undefined);
