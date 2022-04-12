@@ -38,8 +38,8 @@ function WalkFormScreen({route,navigation}){
       }
       console.log(temp);
       console.log(tmp_free);
-      setDates(temp);
-      setFreeDates(tmp_free);
+      //setDates(temp);
+      //setFreeDates(tmp_free);
     })
     .catch((error) => {
       console.error(error);

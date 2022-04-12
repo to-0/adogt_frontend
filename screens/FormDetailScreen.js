@@ -9,8 +9,7 @@ import {HOST} from '../App.js';
 function FormDetailScreen ({route, navigation}){
     const data = route.params.data;
     const token = route.params.token;
-    const form_id = route.params.form_id
-    const [reason, setReason] = React.useState('')
+    const [reason, setReason] = React.useState('');
     const [details, setDetails]= React.useState('');
     const [finished, setFinished] = React.useState(false);
     const [dog_name, setDogName] = React.useState(undefined)
@@ -27,15 +26,13 @@ function FormDetailScreen ({route, navigation}){
       })
       .then((response)=>response.json())
       .then((json)=>{
-        console.log(data.id)
-        route.params.setFormId(data.id)
         Alert.alert(
           "Odstránenie",
           "Úspešne Ste odstránili formulár.",
           [
             {
               text: "Zavrieť",
-              onPress: () => navigation.navigate("Prehľad formulárov", {"token": token, "shelter": false, "id": form_id, "setFormId": route.params.setFormId}),
+              onPress: () => navigation.navigate("Prehľad formulárov", {"token": token, "shelter": false}),
               style: "cancel"
             }
           ]
@@ -59,7 +56,6 @@ function FormDetailScreen ({route, navigation}){
         setDetails(json.details);
         setFinished(json.finished);
         setReason(json.reason);
-        console.log(json);
       })
       .catch((error) => {
         console.error(error);

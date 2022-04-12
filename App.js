@@ -28,7 +28,6 @@ function App() {
   const [email,setEmail] = React.useState('');
   const [dog,setDog] = React.useState(undefined);
   const [dog_id,setDogId] = React.useState(-1);
-  const [form_id,setFormId] = React.useState(-1);
   
   return (
     <NavigationContainer>
@@ -69,7 +68,7 @@ function App() {
               headerShown: false
             }}/>
       
-          <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter, "id": form_id, setFormId: setFormId }}
+          <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter }}
             options={{
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />},
               headerShown: false
