@@ -181,5 +181,13 @@ export default StyleSheet.create({
     flex: 1, 
     alignItems: 'center', 
     justifyContent: 'flex-start', 
-  }
+  },
+  cButtons: {
+    backgroundColor: '#f76226',
+    color: '#f76226',
+    borderRadius: 5,
+    margin: 5,
+    height: 35,
+    width: (Dimensions.get('window').width) * 0.4,
+  },
 });

@@ -136,26 +136,30 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-      <Text style={styles.heading} >Join Screen</Text>
+      <Text style={styles.heading} >Pripojenie do hovoru</Text>
       <Text style={styles.heading} >Room : {route.params.roomId}</Text>
 
-      <View style={styles.callButtons} >
-        <View styles={styles.buttonContainer} >
-          <Button title="Zastaviť hovor" style={styles.button} onPress={onBackPress} />
-        </View>
-        <View styles={styles.buttonContainer} >
-          {!localStream ? ( <TouchableOpacity style={styles.button}  onPress={startLocalStream}>  <Text style={styles2.button_text}>Spustiť stream</Text> </TouchableOpacity>):null}
-          {localStream ? (<TouchableOpacity style={styles.button} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>  <Text style={styles2.button_text}>Pripojiť sa do hovoru</Text> </TouchableOpacity>):null}
-        </View>
+      <View style={styles.toggleButtons} >
+        <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
+          <Text style={styles2.button_text}>Zastaviť hovor</Text>
+        </TouchableOpacity>
+          {!localStream ? (
+          <TouchableOpacity style={styles2.cButtons}  onPress={startLocalStream}> 
+          <Text style={styles2.button_text}>Stream</Text> 
+          </TouchableOpacity>):null}
+          {localStream ? (
+          <TouchableOpacity style={styles2.cButtons} onPress={() => joinCall(route.params.roomId)} disabled={!!remoteStream}>
+             <Text style={styles2.button_text}>Pripojiť sa</Text> 
+          </TouchableOpacity>):null}
       </View>
 
       {localStream ? (
         <View style={styles.toggleButtons}>
-          <TouchableOpacity style={styles.button}  onPress={switchCamera}> 
-           <Text style={styles.button_text}>Zmena kamery</Text> 
+          <TouchableOpacity style={styles2.cButtons}  onPress={switchCamera}> 
+           <Text style={styles2.button_text}>Zmena kamery</Text> 
            </TouchableOpacity>
-           <TouchableOpacity style={styles.button}  onPress={toggleMute} disabled={!remoteStream}> 
-           <Text style={styles.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
+           <TouchableOpacity style={styles2.cButtons}  onPress={toggleMute} disabled={!remoteStream}> 
+           <Text style={styles2.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
            </TouchableOpacity>
         </View>
       ):null}
