@@ -121,25 +121,19 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={styles.heading} >Room : {route.params.roomId}</Text>
+    <Text style={styles.heading} >Miestnosť : {route.params.roomId}</Text>
 
-    <View style={styles.toggleButtons} >
-      <TouchableOpacity style={styles.cButtons} onPress={onBackPress}>
-        <Text style={styles.button_text}>Zastaviť hovor</Text>
+    {!localStream ? (
+      <TouchableOpacity style={styles.cButtons}  onPress={startLocalStream}> 
+        <Text style={styles.button_text}>Stream</Text> 
       </TouchableOpacity>
+    ):null}
 
-      {!localStream ? (
-        <TouchableOpacity style={styles.cButtons}  onPress={startLocalStream}> 
-          <Text style={styles.button_text}>Stream</Text> 
-        </TouchableOpacity>
-      ):null}
-
-      {localStream ? (
-        <TouchableOpacity style={styles.cButtons} onPress={() => joinCall(roomId)} disabled={!!remoteStream}>
-            <Text style={styles.button_text}>Pripojiť sa</Text> 
-        </TouchableOpacity>
-      ):null}
-    </View>
+    {localStream ? (
+      <TouchableOpacity style={styles.cButtons} onPress={() => joinCall(roomId)} disabled={!!remoteStream}>
+          <Text style={styles.button_text}>Pripojiť sa</Text> 
+      </TouchableOpacity>
+    ):null}
 
     {localStream ? (
       <View style={styles.toggleButtons}>
