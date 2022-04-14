@@ -136,7 +136,7 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-      <Text style={styles.heading} >Pripojenie do hovoru</Text>
+      {/* <Text style={styles.heading} >Pripojenie do hovoru</Text> */}
       <Text style={styles.heading} >Room : {route.params.roomId}</Text>
 
       <View style={styles.toggleButtons} >

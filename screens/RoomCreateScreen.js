@@ -136,7 +136,7 @@ function RoomCreateScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={[styles.heading, {marginTop: 20}]} >Videohovor</Text>
+    {/* <Text style={[styles.heading, {marginTop: 20}]} >Videohovor</Text> */}
     <Text style={[styles.heading, {marginBottom: 20}]} >Miestnosť: {route.params.roomId}</Text>
   <View style={styles.toggleButtons} >
           <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
