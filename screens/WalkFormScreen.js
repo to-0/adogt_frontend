@@ -90,7 +90,7 @@ function WalkFormScreen({route,navigation}){
     <View>
       <View style={[styles.dog_form, {marginTop: 20}]}>
         <View style={styles.dropdown}>
-          <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={setDate} placeholder="Výber dátumu"
+          <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={() => {setDate}} placeholder="Výber dátumu"
             schema={{label: 'date', value: 'id'}} />
         </View>
 

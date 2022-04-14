@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { View, TextInput, Button, Dimensions } from 'react-native';
+import { View, TextInput, Text, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
 import styles from '../styles'
-import HomeScreen from './HomeScreen';
-import {Globals} from '../Globals'
+import {Globals} from '../Globals';
 
 function AddDogScreen({route}){
   const token = route.params.token;
@@ -59,7 +58,17 @@ function AddDogScreen({route}){
         }
         FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
-          alert(response.body);
+          Alert.alert(
+            "Potvrdenie",
+            json.message,
+            [
+              {
+                text: "Zavrieť",
+                onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
+                style: "cancel"
+              }
+            ]
+          );
         })
         .catch((error)=> {
           console.log(error);
@@ -70,15 +79,44 @@ function AddDogScreen({route}){
     })
   }  
   return (
-    <View>
-        <TextInput placeholder='Meno' onChangeText={(value) => setName(value)} style={[styles.form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
-        <TextInput placeholder='Plemeno' onChangeText={(value) => setBreed(value)} style={styles.form}/>
-        <TextInput placeholder='Vek' onChangeText={(value) => setAge(value)}  style={styles.form}/>
-        <TextInput placeholder='Zdravotny stav' onChangeText={(value) => setHealth(value)}  style={styles.form}/>
-        <TextInput placeholder='Detaily o' onChangeText={(value) => setDetails(value)}  style={styles.form}/>
-        <Button  style={styles.button} title='Vybrat obrazok' onPress={select_image}/>
-        <Button  style={styles.button} title='Pridat psa do databazy' onPress={create_dog}/>
+    <View style={[styles.dog_form, {marginTop: 20}]}>
+      <Text style={styles.dog_form_info}>Meno</Text>
+        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
+
+        <Text style={styles.dog_form_info}>Plemeno</Text>
+        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setBreed(value)}} defaultValue={breed.toString()}/>
+
+        <Text style={styles.dog_form_info}>Vek</Text>
+        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setAge(value)}} defaultValue={age.toString()}/>
+
+        <Text style={styles.dog_form_info}>Zdravotný stav</Text>
+        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setHealth(value)}} defaultValue={health.toString()}/>
+
+        <Text style={styles.dog_form_info}>Ďalšie informácie</Text>
+        <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
+
+        <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={select_image}>
+            <Text style={styles.button_text}>Vybrať obrázok</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={create_dog}>
+            <Text style={styles.button_text}>Pridať psa</Text>
+        </TouchableOpacity>
     </View>
   )
 }
+
+const localStyles = StyleSheet.create({
+  form: {
+    width: (Dimensions.get('window').width) * 0.6,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    margin: 10,
+  },
+  button: {
+
+  }
+})
 export default AddDogScreen;

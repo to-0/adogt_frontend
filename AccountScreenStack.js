@@ -21,9 +21,11 @@ function AccountStackScreen({route}) {
         <AccountStack.Screen name="Pridať psa" component={AddDogScreen}
             initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}} />
         <AccountStack.Screen name='Join' component={RoomJoinScreen}
-          initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}} />
+          initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}} 
+          options={{headerShown: false}} />
         <AccountStack.Screen name='Create' component={RoomCreateScreen}
-          initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}} />
+          initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}}
+          options={{headerShown: false}} />
     </AccountStack.Navigator>
   )
 }

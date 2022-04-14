@@ -190,4 +190,8 @@ export default StyleSheet.create({
     height: 35,
     width: (Dimensions.get('window').width) * 0.4,
   },
+  dropdown: {
+    width: (Dimensions.get('window').width) * 0.8,
+    marginBottom: 20,
+  }
 });

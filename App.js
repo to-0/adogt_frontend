@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppRegistry, Image } from 'react-native';
+import { AppRegistry, Image, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
@@ -19,7 +19,7 @@ LogBox.ignoreLogs([
 ]);
 import {Globals} from './Globals.js'
 
-var HOST = '192.168.1.23';
+var HOST = '192.168.0.124';
 export {HOST};
 const Tab = createBottomTabNavigator();
 
@@ -38,18 +38,21 @@ function App() {
           <>
           <Tab.Screen name="Prihlásenie" component={LoginScreen} initialParams={{ setToken: setToken, setShelter: setShelter, setUsername: setUsername, setEmail: setEmail, "email": email }}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Prihlásenie</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/loginIcon.jpg')} />},
               headerShown: false
             }}
           />
           <Tab.Screen name="Registrácia" component={RegisterScreen}  initialParams={{ setToken: setToken, setShelter: setShelter, setEmail: setEmail, setUsername: setUsername }}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Registrácia</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/registerIcon.jpg')} />},
               headerShown: false
             }}
           />
           <Tab.Screen name="Nastavenia" component={OptionsScreen}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Nastavenia</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/settings.png')} />},
               headerShown: false
             }}
@@ -59,6 +62,7 @@ function App() {
           <>
           <Tab.Screen name="Psy" component={HomeStackScreen} initialParams={{"token": token, "shelter":shelter, "dog": dog, "id": dog_id}}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Psy</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/dogIcon.png')} />},
               headerShown: false
             }}>
@@ -66,12 +70,14 @@ function App() {
     
           <Tab.Screen name="Profil" component={AccountStackScreen} initialParams={{ "token": token, "shelter":shelter, "username":username, "email":email, setToken: setToken}}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Profil</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/accountIcon.png')} />},
               headerShown: false
             }}/>
       
           <Tab.Screen name="Formuláre" component={FormStackScreen} initialParams={{ "token": token, "shelter":shelter }}
             options={{
+              tabBarLabel:({ focused })=>(<Text style={{color:focused?"#f76226":"black", fontSize: 11}}>Formuláre</Text>),
               tabBarIcon: () => {return <Image style={styles.navigation_icon} source={require('./img/formsIcon.jpg')} />},
               headerShown: false
             }}/>
