@@ -32,17 +32,30 @@ function AccountScreen({route, navigation}){
   }, []);
 
   return (
-    <View style={[styles.center_view, {height: (Dimensions.get('window').height)}]}>
+      <View style={[styles.center_view, {height: (Dimensions.get('window').height)}]}>
       <Image style={styles.profile_icon} source={require('../img/profileIcon.png')} />
       <View style={styles.profile_text_fields}>
         <Text style={styles.profile_text}>Meno: {username}</Text>
         <Text style={styles.profile_text}>E-mail: {email}</Text>
       </View>
 
-      {shelter == true ? (
+      <View style={[styles.dog_form, {marginBottom: 0, width: (Dimensions.get('window').width) * 0.7}]}>
+        <Text style={styles.dog_form_info}>Názov miestnosti</Text>
+        <TextInput style={[styles.dog_form_item, {width: (Dimensions.get('window').width) * 0.6}]} onChangeText={(value) => {setRoom(value)}}/>
+      </View>
+        
+          <TouchableOpacity style={[styles.button, {marginBottom: 0, marginTop: 10}]} onPress={() => navigation.navigate('Videohovor ',{"roomId":roomId})}>
+            <Text style={styles.button_text}>Vytvoriť miestnosť</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Videohovor',{"roomId":roomId})}>
+            <Text style={styles.button_text}>Pridať sa do miestnosti</Text>
+          </TouchableOpacity>
+
+          {shelter == true ? (
         <>
         <View style={{justifyContent: 'flex-end'}}>
-          <TouchableOpacity style={[styles.button, {marginBottom: 10}]} onPress={()=> navigation.navigate('Pridať psa')}>
+          <TouchableOpacity style={[styles.button, {marginBottom: 0}]} onPress={()=> navigation.navigate('Pridať psa')}>
             <Text style={styles.button_text}>Pridanie psa</Text>
           </TouchableOpacity>
         </View>
@@ -55,18 +68,6 @@ function AccountScreen({route, navigation}){
         <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={logout_function}>
           <Text style={styles.button_text}>Odhlásiť sa</Text>
         </TouchableOpacity>
-        <Text> Room ID </Text>
-        <TextInput onChangeText={(value) => setRoom(value)} style={{backgroundColor: 'white'}}/>
-        <View style={{justifyContent: 'flex-end'}}>
-          <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Create',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Vytvoriť miestnosť</Text>
-          </TouchableOpacity>
-          </View>
-          <View style={{justifyContent: 'flex-end'}}>
-          <TouchableOpacity style={[styles.button, {marginBottom: 30}]} onPress={() => navigation.navigate('Join',{"roomId":roomId})}>
-            <Text style={styles.button_text}>Pridať sa do miestnosti</Text>
-          </TouchableOpacity>
-          </View>
       </View>
     </View>
   )

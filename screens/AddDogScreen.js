@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, Text, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, TextInput, Text, Dimensions, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
@@ -79,7 +79,9 @@ function AddDogScreen({route}){
     })
   }  
   return (
-    <View style={[styles.dog_form, {marginTop: 20}]}>
+    <KeyboardAvoidingView>
+      <ScrollView>
+      <View style={[styles.dog_form, {marginTop: 20}]}>
       <Text style={styles.dog_form_info}>Meno</Text>
         <TextInput style={styles.dog_form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
 
@@ -103,6 +105,8 @@ function AddDogScreen({route}){
             <Text style={styles.button_text}>Pridať psa</Text>
         </TouchableOpacity>
     </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 

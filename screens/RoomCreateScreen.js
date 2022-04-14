@@ -136,15 +136,15 @@ function RoomCreateScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={styles.heading} >Vytvorenie hovoru</Text>
-    <Text style={styles.heading} >Room : {route.params.roomId}</Text>
+    <Text style={[styles.heading, {marginTop: 20}]} >Videohovor</Text>
+    <Text style={[styles.heading, {marginBottom: 20}]} >Miestnosť: {route.params.roomId}</Text>
   <View style={styles.toggleButtons} >
           <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
           <Text style={styles2.button_text}>Zastaviť hovor</Text>
           </TouchableOpacity>
           {!localStream ? (
           <TouchableOpacity style={styles2.cButtons} onPress={startLocalStream}>
-            <Text style={styles2.button_text}>Spustiť stream</Text>
+            <Text style={styles2.button_text}>Spustiť video</Text>
           </TouchableOpacity>) : null}
           {localStream ? (
           <TouchableOpacity style={styles2.cButtons} onPress={() => startCall(route.params.roomId)} disabled={!!remoteStream}>
@@ -158,7 +158,7 @@ function RoomCreateScreen({route,navigation}) {
             <Text style={styles2.button_text}>Zmena kamery</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles2.cButtons} onPress={toggleMute} disabled={!remoteStream}>
-            <Text style={styles2.button_text}> Mute </Text>
+            <Text style={styles2.button_text}> Stlmiť zvuk </Text>
             </TouchableOpacity>
         </View>
       ) : null}
@@ -172,8 +172,8 @@ function RoomCreateScreen({route,navigation}) {
         {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream && remoteStream.toURL()} />}
       </View>
     </View>
-
   </>
+    
   )
 }
 export default RoomCreateScreen;

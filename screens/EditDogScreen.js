@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from '../styles'
 import {Globals} from '../Globals'
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -127,7 +127,9 @@ function EditDogScreen({route,navigation}){
   }
   return (
     <RootSiblingParent>
-      <View style={[styles.dog_form, {marginTop: 20}]}>
+      <KeyboardAvoidingView>
+        <ScrollView>
+        <View style={[styles.dog_form, {marginTop: 20}]}>
         <Text style={styles.dog_form_info}>Meno</Text>
         <TextInput style={styles.dog_form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
 
@@ -153,7 +155,9 @@ function EditDogScreen({route,navigation}){
         <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={delete_dog}>
             <Text style={styles.button_text}>Vymazať psa</Text>
         </TouchableOpacity>
-      </View>
+        </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </RootSiblingParent>
   )
 }
