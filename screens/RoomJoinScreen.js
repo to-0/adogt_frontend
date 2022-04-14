@@ -137,7 +137,7 @@ function RoomJoinScreen({route,navigation}) {
   return (
     <>
       {/* <Text style={styles.heading} >Pripojenie do hovoru</Text> */}
-      <Text style={styles.heading} >Room : {route.params.roomId}</Text>
+      <Text style={styles.heading} >Miestnosť : {route.params.roomId}</Text>
 
       <View style={styles.toggleButtons} >
         <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
