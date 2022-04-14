@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 
-import styles from '../styles'
-import {Globals} from '../Globals'
+import styles from '../styles';
+import {Globals} from '../Globals';
 
 function DetailsScreen({route}){
     const token = route.params.token;
@@ -30,7 +30,7 @@ function DetailsScreen({route}){
                 setYearFormat('rokov');
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
       }, [])
 
@@ -38,12 +38,12 @@ function DetailsScreen({route}){
         <View style={styles.dog_detail}>
             <View style={styles.detail}>
                 <Text style={styles.detail_info}>Meno:</Text>
-                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.name}</Text>
+                <Text style={styles.detail_text}>{details.name}</Text>
             </View>
             
             <View style={styles.detail}>
                 <Text style={styles.detail_info}>Vek:</Text>
-                <Text style={[styles.detail_text, {fontSize: 18}]}>{details.age} {year_format}</Text>
+                <Text style={styles.detail_text}>{details.age} {year_format}</Text>
             </View>
 
             <View style={styles.detail}>
@@ -51,17 +51,17 @@ function DetailsScreen({route}){
                 <Text style={styles.detail_text}>{details.breed}</Text>
             </View>
 
-            <View style={styles.detail}>
+            <View style={[styles.detail, {flexDirection: 'column'}]}>
                 <Text style={styles.detail_info}>Zdravotný stav:</Text>
-                <Text style={styles.detail_text}>{details.health}</Text>
+                <Text style={styles.detail_text_multiline}>{details.health}</Text>
             </View>
 
-            <View style={styles.detail}>
+            <View style={[styles.detail, {flexDirection: 'column'}]}>
                 <Text style={styles.detail_info}>Ďalšie informácie:</Text>
-                <Text style={styles.detail_text}>{details.details}</Text>
-            </View>
-            
+                <Text style={styles.detail_text_multiline}>{details.details}</Text>
+            </View>     
         </View>            
     );
 }
+
 export default DetailsScreen;

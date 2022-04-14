@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createNativeStackNavigator, Text } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AccountScreen from './screens/AccountScreen.js';
 import AddDogScreen from './screens/AddDogScreen.js';
@@ -16,10 +16,9 @@ function AccountStackScreen({route}) {
   return (
     <AccountStack.Navigator> 
         <AccountStack.Screen name="Profil používateľa" component={AccountScreen}
-            initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}}
-              />
+            initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}}/>
         <AccountStack.Screen name="Pridať psa" component={AddDogScreen}
-            initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}} />
+            initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}}/>
         <AccountStack.Screen name='Videohovor' component={RoomJoinScreen}
           initialParams={{setToken: route.params.setToken, "token": token, "shelter": shelter, "email": email, "username": username}}/>
         <AccountStack.Screen name='Videohovor ' component={RoomCreateScreen}

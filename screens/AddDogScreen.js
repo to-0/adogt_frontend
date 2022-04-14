@@ -3,10 +3,10 @@ import { View, TextInput, Text, Dimensions, StyleSheet, TouchableOpacity, Alert,
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
-import styles from '../styles'
+import styles from '../styles';
 import {Globals} from '../Globals';
 
-function AddDogScreen({route}){
+function AddDogScreen({route, navigation}){
   const token = route.params.token;
   const [name,setName] = React.useState('');
   const [breed,setBreed] = React.useState('');
@@ -49,18 +49,18 @@ function AddDogScreen({route}){
     .then((response) => response.json())
     .then((json)=> {
       if(json.message == "OK"){
-        var dog_id = json.id
+        var dog_id = json.id;
 
         const options = {
           httpMethod: 'POST',
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
           fieldName: 'file',
-        }
+        };
         FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
           Alert.alert(
             "Potvrdenie",
-            json.message,
+            "Úspešne Ste pridali nového psa.",
             [
               {
                 text: "Zavrieť",
@@ -75,52 +75,39 @@ function AddDogScreen({route}){
         })
       }
       else
-        alert(json.message);
+        console.log(json.message);
     })
   }  
   return (
     <KeyboardAvoidingView>
       <ScrollView>
-      <View style={[styles.dog_form, {marginTop: 20}]}>
-      <Text style={styles.dog_form_info}>Meno</Text>
-        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
+        <View style={[styles.form, {marginTop: 20}]}>
+          <Text style={styles.form_info}>Meno</Text>
+          <TextInput style={styles.form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
 
-        <Text style={styles.dog_form_info}>Plemeno</Text>
-        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setBreed(value)}} defaultValue={breed.toString()}/>
+          <Text style={styles.form_info}>Plemeno</Text>
+          <TextInput style={styles.form_item} onChangeText={(value) => {setBreed(value)}} defaultValue={breed.toString()}/>
 
-        <Text style={styles.dog_form_info}>Vek</Text>
-        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setAge(value)}} defaultValue={age.toString()}/>
+          <Text style={styles.form_info}>Vek</Text>
+          <TextInput style={styles.form_item} onChangeText={(value) => {setAge(value)}} defaultValue={age.toString()}/>
 
-        <Text style={styles.dog_form_info}>Zdravotný stav</Text>
-        <TextInput style={styles.dog_form_item} onChangeText={(value) => {setHealth(value)}} defaultValue={health.toString()}/>
+          <Text style={styles.form_info}>Zdravotný stav</Text>
+          <TextInput style={styles.form_item} onChangeText={(value) => {setHealth(value)}} defaultValue={health.toString()}/>
 
-        <Text style={styles.dog_form_info}>Ďalšie informácie</Text>
-        <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
+          <Text style={styles.form_info}>Ďalšie informácie</Text>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
 
-        <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={select_image}>
-            <Text style={styles.button_text}>Vybrať obrázok</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={select_image}>
+              <Text style={styles.button_text}>Vybrať obrázok</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={create_dog}>
-            <Text style={styles.button_text}>Pridať psa</Text>
-        </TouchableOpacity>
-    </View>
+          <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={create_dog}>
+              <Text style={styles.button_text}>Pridať psa</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   )
 }
 
-const localStyles = StyleSheet.create({
-  form: {
-    width: (Dimensions.get('window').width) * 0.6,
-    backgroundColor: 'white',
-    borderColor: 'black',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    margin: 10,
-  },
-  button: {
-
-  }
-})
 export default AddDogScreen;

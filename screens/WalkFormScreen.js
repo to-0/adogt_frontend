@@ -3,21 +3,20 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-root-toast';
 
-import styles from '../styles'
-import {Globals} from '../Globals'
+import styles from '../styles';
+import {Globals} from '../Globals';
 
 function WalkFormScreen({route,navigation}){
   const token = route.params.token;
   const dog_id = route.params.id;
   const [details, setDetails] = React.useState('');
-  const [dates,setDates] = React.useState([{}]);
   const [date, setDate] = React.useState(null);
   const [freedates, setFreeDates] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   
   React.useEffect(()=>{
     fetch(`http://${Globals.host}:8000/terms?token=${token}&dog_id=${dog_id}`, {
-      method: 'get',
+      method: 'GET',
       headers: {
       'Accept': 'application/json, text/plain, */*', 
       'Content-Type': 'application/json'
@@ -36,9 +35,6 @@ function WalkFormScreen({route,navigation}){
         if (json[i].free == true)
           tmp_free.push(json[i]);
       }
-      console.log(temp);
-      console.log(tmp_free);
-      //setDates(temp);
       setFreeDates(tmp_free);
     })
     .catch((error) => {
@@ -82,20 +78,20 @@ function WalkFormScreen({route,navigation}){
       );
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
   };
 
   return (
     <View>
-      <View style={[styles.dog_form, {marginTop: 20}]}>
+      <View style={[styles.form, {marginTop: 20}]}>
         <View style={styles.dropdown}>
-          <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={() => {setDate}} placeholder="Výber dátumu"
+          <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
             schema={{label: 'date', value: 'id'}} />
         </View>
 
-        <Text style={styles.dog_form_info}>Doplňujúce informácie</Text>
-        <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
+        <Text style={styles.form_info}>Doplňujúce informácie</Text>
+        <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
 
         <TouchableOpacity style={styles.button} onPress={button_walk}>
           <Text style={styles.button_text}>Požiadať o venčenie</Text>
@@ -106,4 +102,5 @@ function WalkFormScreen({route,navigation}){
     
   )
 }
+
 export default WalkFormScreen;

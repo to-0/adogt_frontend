@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {db} from '../firebase_db.js'
-
-import { View, Text, Button, Dimensions, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import {db} from '../firebase_db.js';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
-//import * as FireStore from 'firebase/firestore';
-import firestore from '@react-native-firebase/firestore';
-import { NavigationContainer } from '@react-navigation/native';
-import styles2 from '../styles'
+
+import styles from '../styles';
 
 function RoomCreateScreen({route,navigation}) {
-  const token = route.params.token;
-  const email = route.params.email;
-  const username = route.params.username;
+  const roomId = route.params.roomId;
+  const [localStream, setLocalStream] = React.useState();
+  const [remoteStream, setRemoteStream] = React.useState();
+  const [cachedLocalPC, setCachedLocalPC] = React.useState();
+  const [isMuted, setIsMuted] = React.useState(false);
+
   const configuration = {
     iceServers: [
       {
@@ -20,6 +20,7 @@ function RoomCreateScreen({route,navigation}) {
     ],
     iceCandidatePoolSize: 10,
   };
+
   function onBackPress() {
     if (cachedLocalPC) {
       cachedLocalPC.removeStream(localStream);
@@ -28,15 +29,9 @@ function RoomCreateScreen({route,navigation}) {
     setLocalStream();
     setRemoteStream();
     setCachedLocalPC();
-    // cleanup
+    
     navigation.navigate('Profil používateľa')
-  }
-
-  const [localStream, setLocalStream] = React.useState();
-  const [remoteStream, setRemoteStream] = React.useState();
-  const [cachedLocalPC, setCachedLocalPC] = React.useState();
-
-  const [isMuted, setIsMuted] = React.useState(false);
+  };
 
   React.useEffect(() => {
     // startLocalStream();
@@ -68,28 +63,21 @@ function RoomCreateScreen({route,navigation}) {
   };
 
   const startCall = async id => {
-    console.log("tu idem spustit hovor");
     const localPC = new RTCPeerConnection(configuration);
-    console.log("cau");
     localPC.addStream(localStream);
-    console.log("tu 2");
     
-    //const roomRef = await db.collection('rooms').doc(id);
-    const roomRef = await db.collection('rooms').doc(id);
+    const roomRef = db.collection('rooms').doc(id);
     const callerCandidatesCollection = roomRef.collection('callerCandidates');
     localPC.onicecandidate = e => {
-      if (!e.candidate) {
-        console.log('Got final candidate!');
+      if (!e.candidate)
         return;
-      }
+      
       callerCandidatesCollection.add(e.candidate.toJSON());
     };
 
     localPC.onaddstream = e => {
-      if (e.stream && remoteStream !== e.stream) {
-        console.log('RemotePC received the stream call', e.stream);
+      if (e.stream && remoteStream !== e.stream)
         setRemoteStream(e.stream);
-      }
     };
 
     const offer = await localPC.createOffer();
@@ -124,11 +112,10 @@ function RoomCreateScreen({route,navigation}) {
 
   // Mutes the local's outgoing audio
   const toggleMute = () => {
-    if (!remoteStream) {
+    if (!remoteStream)
       return;
-    }
+    
     localStream.getAudioTracks().forEach(track => {
-      // console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
       track.enabled = !track.enabled;
       setIsMuted(!track.enabled);
     });
@@ -136,32 +123,36 @@ function RoomCreateScreen({route,navigation}) {
 
   return (
     <>
-    {/* <Text style={[styles.heading, {marginTop: 20}]} >Videohovor</Text> */}
-    <Text style={[styles.heading, {marginBottom: 20}]} >Miestnosť: {route.params.roomId}</Text>
-  <View style={styles.toggleButtons} >
-          <TouchableOpacity style={styles2.cButtons} onPress={onBackPress}>
-          <Text style={styles2.button_text}>Zastaviť hovor</Text>
-          </TouchableOpacity>
-          {!localStream ? (
-          <TouchableOpacity style={styles2.cButtons} onPress={startLocalStream}>
-            <Text style={styles2.button_text}>Spustiť video</Text>
-          </TouchableOpacity>) : null}
-          {localStream ? (
-          <TouchableOpacity style={styles2.cButtons} onPress={() => startCall(route.params.roomId)} disabled={!!remoteStream}>
-            <Text style={styles2.button_text}>Spustiť hovor</Text>
-          </TouchableOpacity>):null }
-      </View>
+    <Text style={[styles.heading, {marginBottom: 20}]} >Miestnosť: {roomId}</Text>
+    <View style={styles.toggleButtons} >
+      <TouchableOpacity style={styles.cButtons} onPress={onBackPress}>
+        <Text style={styles.button_text}>Zastaviť hovor</Text>
+      </TouchableOpacity>
+
+      {!localStream ? (
+        <TouchableOpacity style={styles.cButtons} onPress={startLocalStream}>
+          <Text style={styles.button_text}>Spustiť video</Text>
+        </TouchableOpacity>
+      ) : null}
 
       {localStream ? (
-        <View style={styles.toggleButtons}>
-          <TouchableOpacity style={styles2.cButtons} onPress={switchCamera}>
-            <Text style={styles2.button_text}>Zmena kamery</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles2.cButtons} onPress={toggleMute} disabled={!remoteStream}>
-            <Text style={styles2.button_text}> Stlmiť zvuk </Text>
-            </TouchableOpacity>
-        </View>
-      ) : null}
+        <TouchableOpacity style={styles.cButtons} onPress={() => startCall(roomId)} disabled={!!remoteStream}>
+          <Text style={styles.button_text}>Spustiť hovor</Text>
+        </TouchableOpacity>
+      ):null }
+    </View>
+
+    {localStream ? (
+      <View style={styles.toggleButtons}>
+        <TouchableOpacity style={styles.cButtons} onPress={switchCamera}>
+          <Text style={styles.button_text}>Zmena kamery</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.cButtons} onPress={toggleMute} disabled={!remoteStream}>
+          <Text style={styles.button_text}> Stlmiť zvuk </Text>
+        </TouchableOpacity>
+      </View>
+    ) : null}
 
 
     <View style={{ display: 'flex', flex: 1, padding: 10 }} >
@@ -172,44 +163,8 @@ function RoomCreateScreen({route,navigation}) {
         {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream && remoteStream.toURL()} />}
       </View>
     </View>
-  </>
-    
+    </>
   )
 }
-export default RoomCreateScreen;
 
-const styles = StyleSheet.create({
-    heading: {
-      alignSelf: 'center',
-      fontSize: 30,
-    },
-    rtcview: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'black',
-      margin: 5,
-    },
-    rtc: {
-      flex: 1,
-      width: '100%',
-      height: '100%',
-    },
-    toggleButtons: {
-      width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-    },
-    callButtons: {
-      padding: 10,
-      width: '100%',
-      flexDirection: 'column',
-      justifyContent: 'space-around',
-    },
-    buttonContainer: {
-      margin: 5,
-    },
-    uppcontainer:{
-      flex: 1,
-    }
-  });
+export default RoomCreateScreen;

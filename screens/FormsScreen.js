@@ -1,21 +1,15 @@
 import * as React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 
-import styles from '../styles'
-import {Globals} from '../Globals'
+import styles from '../styles';
+import {Globals} from '../Globals';
 
 function FormsScreen({route, navigation}) {
   const token = route.params.token;
   const shelter = route.params.shelter;
-  const form_id = route.params.id;
   const [forms,setForms] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-      
-  //   }, [])
-  // );
   const get_forms = () => {
     setRefreshing(true);
     fetch(`http://${Globals.host}:8000/forms/getAll?token=${token}`, {
@@ -28,23 +22,24 @@ function FormsScreen({route, navigation}) {
     .then((response) => response.json())
     .then((json) => {
       var temp = []
-      for(var i=0;i<json.length;i++){
+      for(var i=0;i<json.length;i++)
         temp.push(json[i]);
-      }
+      
       setForms(temp);
       setRefreshing(false);
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
       setRefreshing(false);
     });
-  }
+  };
+
   React.useEffect(()=>{
     get_forms();
   }, []);
 
   const renderItem = ({ item })=> (
-    <TouchableOpacity onPress={()=>{navigation.navigate('Detail formulára',{token: token, shelter:shelter, data:item})}}>
+    <TouchableOpacity onPress={()=>{navigation.navigate('Detail formulára',{"token": token, "shelter":shelter, "data":item})}}>
       <View>
         <View style={styles.item}>
           <View style={{flex: 3}}>

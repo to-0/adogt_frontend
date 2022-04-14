@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import styles from '../styles';
-import {Globals} from '../Globals'
+import {Globals} from '../Globals';
 
 function FormDetailScreen ({route, navigation}){
     const data = route.params.data;
@@ -12,7 +12,7 @@ function FormDetailScreen ({route, navigation}){
     const [reason, setReason] = React.useState('');
     const [details, setDetails]= React.useState('');
     const [finished, setFinished] = React.useState(false);
-    const [dog_name, setDogName] = React.useState(undefined)
+    const [dog_name, setDogName] = React.useState(undefined);
     
     useFocusEffect(
         React.useCallback(() => {
@@ -39,11 +39,11 @@ function FormDetailScreen ({route, navigation}){
         );
       })
       .catch((error)=>{
-        alert(error);
+        console.log(error);
       })
-    }
+    };
+
     React.useEffect(()=>{
-      const token = route.params.token;
       fetch(`http://${Globals.host}:8000/forms/detail?token=${token}&form_id=${data.id}`, {
         method: 'GET',
         headers: {
@@ -58,21 +58,21 @@ function FormDetailScreen ({route, navigation}){
         setReason(json.reason);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
     }, []);
 
     const getDog = () => {
-        fetch(`http://${Globals.host}:8000/dogs/getDog?token=${token}&dog_id=${data.dog_id}`,{
-            method: 'GET'
-        })
-        .then((response)=>response.json())
-        .then((json)=>{
-            setDogName(json.name);
-        })
-        .catch((error)=>{
-            alert(error);
-        })
+      fetch(`http://${Globals.host}:8000/dogs/getDog?token=${token}&dog_id=${data.dog_id}`,{
+          method: 'GET'
+      })
+      .then((response)=>response.json())
+      .then((json)=>{
+        setDogName(json.name);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
     };
 
     return (
@@ -125,21 +125,20 @@ function FormDetailScreen ({route, navigation}){
             </View>
           ):(<></>)}
           
-          <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'flex-start'}}>
-          {route.params.shelter == false ? (
-              <>
-              <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => navigation.navigate('Úprava formulára', {"form_id":data.id})}>
-                <Text style={styles.button_text}>Upraviť formulár</Text>
-              </TouchableOpacity>
-              </>
-            )
-            : (<></>)
-          }
-          <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={delete_form}>
-            <Text style={styles.button_text}>Vymazať formulár</Text>
-          </TouchableOpacity>
+          <View style={styles.edit_form_buttons}>
+            {route.params.shelter == false ? (
+                <>
+                <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => navigation.navigate('Úprava formulára', {"form_id":data.id})}>
+                  <Text style={styles.button_text}>Upraviť formulár</Text>
+                </TouchableOpacity>
+                </>
+              )
+              : (<></>)}
+
+            <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={delete_form}>
+              <Text style={styles.button_text}>Vymazať formulár</Text>
+            </TouchableOpacity>
           </View>
-          
         </View>
       </ImageBackground>
     )

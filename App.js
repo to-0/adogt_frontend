@@ -3,9 +3,8 @@ import { AppRegistry, Image, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
-import firebase from '@react-native-firebase/app';
 
-import styles from './styles'
+import styles from './styles';
 import LoginScreen from './screens/LoginScreen';
 import HomeStackScreen from './HomeScreenStack';
 import RegisterScreen from './screens/RegisterScreen';
@@ -16,11 +15,8 @@ import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
+  'Each child in a list should have a unique "key" prop.',
 ]);
-import {Globals} from './Globals.js'
-
-var HOST = '192.168.0.124';
-export {HOST};
 const Tab = createBottomTabNavigator();
 
 function App() {
@@ -28,8 +24,8 @@ function App() {
   const [shelter,setShelter] = React.useState(false);
   const [username,setUsername] = React.useState('');
   const [email,setEmail] = React.useState('');
-  const [dog,setDog] = React.useState(undefined);
-  const [dog_id,setDogId] = React.useState(-1);
+  const dog = undefined;
+  const dog_id = -1;
   
   return (
     <NavigationContainer>
@@ -88,5 +84,4 @@ function App() {
   );
 }
 
-AppRegistry.registerComponent(App, () => App);
 export default App;

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-root-toast';
 
-import styles from '../styles'
-import {Globals} from '../Globals'
+import styles from '../styles';
+import {Globals} from '../Globals';
 
 function AdoptFormScreen({route,navigation}){
   const token = route.params.token;
@@ -34,7 +34,6 @@ function AdoptFormScreen({route,navigation}){
     })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json)
       Alert.alert(
         "Potvrdenie",
         "Úspešne Ste odoslali adopčný formulár. Ďalšie informácie Vám pošleme emailom.",
@@ -53,12 +52,12 @@ function AdoptFormScreen({route,navigation}){
   };
 
   return (
-    <View style={styles.dog_form}>
-      <Text style={styles.dog_form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}}/>
+    <View style={styles.form}>
+      <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}}/>
 
-      <Text style={styles.dog_form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.dog_form_item, styles.dog_form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
+      <Text style={styles.form_info}>Doplňujúce informácie</Text>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
 
       <TouchableOpacity style={styles.button} onPress={button_adopt}>
         <Text style={styles.button_text}>Požiadať o adopciu</Text>

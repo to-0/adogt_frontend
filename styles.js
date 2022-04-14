@@ -6,13 +6,14 @@ export default StyleSheet.create({
     height: undefined,
     aspectRatio: 1 / 1,
   },
-  form: {
+  login_form: {
     width: (Dimensions.get('window').width) * 0.6,
     backgroundColor: 'white',
     borderColor: 'black',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     margin: 10,
+    padding: 0,
   },
   button: {
     width: (Dimensions.get('window').width) * 0.6,
@@ -102,13 +103,17 @@ export default StyleSheet.create({
   detail_text: {
     fontSize:18,
   },
-  dog_detail_buttons: {
+  detail_text_multiline: {
+    fontSize: 18,
+    textAlign: 'left',
+  },
+  side_buttons_view: {
     flexDirection: 'row',
     margin: 20,
     marginTop: 15,
     justifyContent: 'center',
   },
-  dog_button: {
+  side_button: {
     margin: 15,
     width: (Dimensions.get('window').width) * 0.35,
     backgroundColor: '#f76226',
@@ -116,13 +121,13 @@ export default StyleSheet.create({
     borderRadius: 5,
     height: 35,
   },
-  dog_form: {
+  form: {
     flexDirection: 'column',
     alignItems: 'center',
     margin: 20,
     marginTop: 40,
   },
-  dog_form_item: {
+  form_item: {
     width: (Dimensions.get('window').width) * 0.8,
     height: 36,
     backgroundColor: 'white',
@@ -133,11 +138,11 @@ export default StyleSheet.create({
     fontSize: 16,
     borderRadius: 5,
   },
-  dog_form_item_multiline: {
+  form_item_multiline: {
     height: (Dimensions.get('window').height) * 0.12,
     textAlignVertical: 'top',
   },
-  dog_form_info: {
+  form_info: {
     alignSelf: 'flex-start',
     marginLeft: 15,
   },
@@ -193,5 +198,51 @@ export default StyleSheet.create({
   dropdown: {
     width: (Dimensions.get('window').width) * 0.8,
     marginBottom: 20,
-  }
+  },
+  room_number: {
+    width: (Dimensions.get('window').width) * 0.7,
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: 0
+  },
+  edit_form_buttons: {
+    marginTop: 30, 
+    alignItems: 'center', 
+    justifyContent: 'flex-start'
+  },
+
+  heading: {
+    alignSelf: 'center',
+    fontSize: 30,
+  },
+  rtcview: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    margin: 5,
+  },
+  rtc: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  toggleButtons: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  callButtons: {
+    padding: 10,
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+  },
+  buttonContainer: {
+    margin: 5,
+  },
+  uppcontainer:{
+    flex: 1,
+  },
 });
