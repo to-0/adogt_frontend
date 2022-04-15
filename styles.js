@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   navigation_icon: {
@@ -211,7 +211,6 @@ export default StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'flex-start'
   },
-
   heading: {
     alignSelf: 'center',
     fontSize: 30,
@@ -228,23 +227,6 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-  },
-  toggleButtons: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  callButtons: {
-    padding: 10,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
-  buttonContainer: {
-    margin: 5,
-  },
-  uppcontainer:{
-    flex: 1,
   },
   video_call_view: {
     display: 'flex', 

@@ -49,7 +49,7 @@ function HomeScreen({route, navigation}){
 
   //https://medium.com/@timtan93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad 
   React.useEffect(()=>{
-    get_dogs()
+    get_dogs();
   }, []);
     
   const renderItem = ({ item })=> (

@@ -8,7 +8,7 @@ import {Globals} from '../Globals';
 function FormUpdateScreen({route,navigation}){
   const token = route.params.token;
   const form_id = route.params.form_id;
-  const [reason, setReason] = React.useState('')
+  const [reason, setReason] = React.useState('');
   const [finished,setFinished] = React.useState(false);
   const [details,setDetails] = React.useState('');
 
@@ -34,14 +34,17 @@ function FormUpdateScreen({route,navigation}){
     });
   }, []);
 
-  const editForm = ()=>{
+  const editForm = () =>{
+    if (reason == undefined || reason == null)
+      setReason('');
+
     var putBody = {
       'details': details,
       'finished': finished,
-      'reason': reason
+      'reason': reason,
     };
 
-    fetch(`http://${Globals.host}:8000/forms/edit?token=${route.params.token}&form_id=${route.params.form_id}`,{
+    fetch(`http://${Globals.host}:8000/forms/edit?token=${token}&form_id=${form_id}`,{
       method: "PUT",
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -57,7 +60,7 @@ function FormUpdateScreen({route,navigation}){
       [
         {
           text: "Zavrieť",
-          onPress: () => navigation.navigate('Prehľad formulárov', {"token": token, "shelter": true}),
+          onPress: () => navigation.navigate('Prehľad formulárov', {"token": token, "shelter": false}),
           style: "cancel"
         }
       ]

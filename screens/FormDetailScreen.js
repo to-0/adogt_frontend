@@ -89,10 +89,8 @@ function FormDetailScreen ({route, navigation}){
       .then((json) => {
         console.log(json)
         for(var i=0;i<json.length;i++){
-          if (json[i].form_id == data.id && json[i].dog_id == data.dog_id) {
-            console.log(json[i].date)
+          if (json[i].form_id == data.id && json[i].dog_id == data.dog_id)
             setDate(json[i].date.substring(8, 10) + "." + json[i].date.substring(5, 7) + "." + json[i].date.substring(0, 4));
-          }
         }
       })
       .catch((error) => {
