@@ -13,10 +13,12 @@ function FormDetailScreen ({route, navigation}){
     const [details, setDetails]= React.useState('');
     const [finished, setFinished] = React.useState(false);
     const [dog_name, setDogName] = React.useState(undefined);
+    const [date, setDate] = React.useState(undefined);
     
     useFocusEffect(
         React.useCallback(() => {
           getDog();
+          getTerm();
         }, [])
     );
 
@@ -75,6 +77,29 @@ function FormDetailScreen ({route, navigation}){
       })
     };
 
+    const getTerm = () => {
+      fetch(`http://${Globals.host}:8000/terms?token=${token}&dog_id=${data.dog_id}`, {
+        method: 'GET',
+        headers: {
+        'Accept': 'application/json, text/plain, */*', 
+        'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        for(var i=0;i<json.length;i++){
+          if (json[i].form_id == data.id && json[i].dog_id == data.dog_id) {
+            console.log(json[i].date)
+            setDate(json[i].date.substring(8, 10) + "." + json[i].date.substring(5, 7) + "." + json[i].date.substring(0, 4));
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+
     return (
       <ImageBackground source={require('../img/doggo.jpg')} resizeMode="cover" style={styles.small_background_image_full_width}>
         <View style={styles.form_detail}>
@@ -92,6 +117,15 @@ function FormDetailScreen ({route, navigation}){
               <Text style={styles.detail_info}>Pes:</Text>
               <Text style={styles.detail_text}>{dog_name}</Text>
           </View>
+
+          {data.type == 2 ? (
+            <>
+            <View style={styles.form_info_detail}>
+              <Text style={styles.detail_info}>Dátum venčenia:</Text>
+              <Text style={styles.detail_text}>{date}</Text>
+            </View>
+            </>
+          ):(<></>)}
 
           <View style={styles.form_info_detail}>
               <Text style={styles.detail_info}>Dátum vytvorenia:</Text>
@@ -112,10 +146,12 @@ function FormDetailScreen ({route, navigation}){
           </View>
           
           {reason != '' && reason != null ? (
+            <>
             <View style={[styles.form_info_detail, {flexDirection: 'column'}]}>
-                <Text style={styles.detail_info}>Dôvod pre adopciu:</Text>
-                <Text style={styles.detail_text}>{reason}</Text>
+              <Text style={styles.detail_info}>Dôvod pre adopciu:</Text>
+              <Text style={styles.detail_text}>{reason}</Text>
             </View>
+            </>
           ):(<></>)}
 
           {details != '' && details != null ? (

@@ -7,9 +7,32 @@ import {Globals} from '../Globals';
 
 function FormUpdateScreen({route,navigation}){
   const token = route.params.token;
+  const form_id = route.params.form_id;
   const [reason, setReason] = React.useState('')
   const [finished,setFinished] = React.useState(false);
   const [details,setDetails] = React.useState('');
+
+  React.useEffect(()=>{
+    fetch(`http://${Globals.host}:8000/forms/detail?token=${token}&form_id=${form_id}`, {
+      method: 'GET',
+      headers: {
+      'Accept': 'application/json, text/plain, */*', 
+      'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json.details == null)
+        setDetails('');
+      else
+        setDetails(json.details);
+      setFinished(json.finished);
+      setReason(json.reason);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, []);
 
   const editForm = ()=>{
     var putBody = {
@@ -47,11 +70,15 @@ function FormUpdateScreen({route,navigation}){
 
   return(
     <View style={styles.form}>
-      <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}}/>
+      {reason != null ? (
+        <>
+          <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}} defaultValue={reason.toString()}/>
+        </>
+        ):(<></>)}
 
       <Text style={styles.form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
 
       <View style={styles.checkbox_view}>
           <Text style={styles.form_info}>Ukončenie formulára</Text>

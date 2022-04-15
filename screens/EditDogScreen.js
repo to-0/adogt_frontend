@@ -16,6 +16,8 @@ function EditDogScreen({route,navigation}){
   const [details, setDetails] = React.useState(false);
   const [health, setHealth] = React.useState('');
 
+  let numOfLinesCompany = 0;
+
   useFocusEffect(
     React.useCallback(() => {
       getDog();

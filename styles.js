@@ -139,7 +139,7 @@ export default StyleSheet.create({
     borderRadius: 5,
   },
   form_item_multiline: {
-    height: (Dimensions.get('window').height) * 0.12,
+    height: (Dimensions.get('window').height) * 0.2,
     textAlignVertical: 'top',
   },
   form_info: {
@@ -215,6 +215,7 @@ export default StyleSheet.create({
   heading: {
     alignSelf: 'center',
     fontSize: 30,
+    margin: 20
   },
   rtcview: {
     flex: 1,
@@ -245,4 +246,9 @@ export default StyleSheet.create({
   uppcontainer:{
     flex: 1,
   },
+  video_call_view: {
+    display: 'flex', 
+    flex: 1, 
+    padding: 10
+  }
 });

@@ -121,33 +121,33 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={styles.heading} >Miestnosť : {route.params.roomId}</Text>
+    <Text style={styles.heading} >Miestnosť : {roomId}</Text>
 
     {!localStream ? (
-      <TouchableOpacity style={styles.cButtons}  onPress={startLocalStream}> 
+      <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]}  onPress={startLocalStream}> 
         <Text style={styles.button_text}>Stream</Text> 
       </TouchableOpacity>
     ):null}
 
     {localStream ? (
-      <TouchableOpacity style={styles.cButtons} onPress={() => joinCall(roomId)} disabled={!!remoteStream}>
+      <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={() => joinCall(roomId)} disabled={!!remoteStream}>
           <Text style={styles.button_text}>Pripojiť sa</Text> 
       </TouchableOpacity>
     ):null}
 
     {localStream ? (
-      <View style={styles.toggleButtons}>
-        <TouchableOpacity style={styles.cButtons} onPress={switchCamera}> 
+      <View style={[styles.side_buttons_view, {marginBottom: 0}]}>
+        <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={switchCamera}> 
           <Text style={styles.button_text}>Zmena kamery</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.cButtons}  onPress={toggleMute} disabled={!remoteStream}> 
+        <TouchableOpacity style={[styles.side_button, {marginBottom: 0}]}  onPress={toggleMute} disabled={!remoteStream}> 
           <Text style={styles.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
         </TouchableOpacity>
       </View>
     ):null}
 
-    <View style={{ display: 'flex', flex: 1, padding: 10 }} >
+    <View style={styles.video_call_view} >
       <View style={styles.rtcview}>
         {localStream && <RTCView style={styles.rtc} streamURL={localStream && localStream.toURL()} />}
       </View>
