@@ -88,9 +88,11 @@ function FormUpdateScreen({route,navigation}){
           <Checkbox style={styles.checkbox} value={finished} onValueChange={(newValue) => setFinished(newValue)}/>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={editForm}>
-        <Text style={styles.button_text}>Potvrdiť zmeny</Text>
-      </TouchableOpacity>
+      <View style={styles.button_bottom}>
+        <TouchableOpacity style={styles.button} onPress={editForm}>
+          <Text style={styles.button_text}>Potvrdiť zmeny</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

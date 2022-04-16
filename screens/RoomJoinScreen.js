@@ -126,7 +126,7 @@ function RoomJoinScreen({route,navigation}) {
     <View style={[styles.side_buttons_view, {marginTop: 0, marginBottom: 0}]} >
     <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={onBackPress}>
         <Text style={styles.button_text}>Zastaviť hovor</Text>
-      </TouchableOpacity>
+    </TouchableOpacity>
 
     {!localStream ? (
       <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]}  onPress={startLocalStream}> 

@@ -9,20 +9,9 @@ function HomeScreen({route, navigation}){
   const token = route.params.token;
   const shelter = route.params.shelter;
   const [dogs, setDogs] = React.useState([{}]);
-  const [refreshing,setRefreshing] = React.useState(false)
-
-  var dog_images = {
-    1: require('../img/baset.jpg'), 
-    2: require('../img/bigl.jpg'),
-    3: require('../img/dobermann.jpg'),
-    4: require('../img/jackRussel.jpg'),
-    5: require('../img/vlciak.jpg'),
-    6: require('../img/jazvecik.jpg'),
-    7: require('../img/bulldog.jpg'),
-    8: require('../img/mops.jpg'),
-    9: require('../img/doga.jpg'),
-    10: require('../img/labrador.jpg')
-  };
+  const [refreshing,setRefreshing] = React.useState(false);
+  //Zdroj obrazka: https://wdrfree.com/stock-vector/lazy-dog
+  var default_dog_image = require('../img/lazyDog.jpg');
 
   const get_dogs = () => {
     setRefreshing(true);
@@ -55,7 +44,7 @@ function HomeScreen({route, navigation}){
   const renderItem = ({ item })=> (
     <TouchableWithoutFeedback onPress={()=> navigation.navigate('Detail psa', {"token": token, "shelter": shelter, "dog": item})}>
       <ScrollView>
-        <Image style={styles.item_image} source={item.data == '' ? dog_images[item.id]: {uri: `data:${item.image_type};base64,${item.data}`}} />
+        <Image style={styles.item_image} source={item.data == '' ? default_dog_image: {uri: `data:${item.image_type};base64,${item.data}`}} />
         
         <View style={styles.item}>
   

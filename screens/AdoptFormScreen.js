@@ -54,15 +54,18 @@ function AdoptFormScreen({route,navigation}){
   return (
     <View style={styles.form}>
       <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setReason(value)}}/>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte dôvod pre adopciu" 
+        onChangeText={(value) => {setReason(value)}}/>
 
       <Text style={styles.form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
+        onChangeText={(value) => {setDetails(value)}}/>
 
-      <TouchableOpacity style={styles.button} onPress={button_adopt}>
-        <Text style={styles.button_text}>Požiadať o adopciu</Text>
-      </TouchableOpacity>
-      
+      <View style={styles.button_bottom}>
+        <TouchableOpacity style={styles.button} onPress={button_adopt}>
+          <Text style={styles.button_text}>Požiadať o adopciu</Text>
+        </TouchableOpacity>
+      </View>      
     </View>
   )
 }

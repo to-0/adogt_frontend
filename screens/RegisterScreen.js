@@ -57,6 +57,7 @@ function RegisterScreen({route}){
   return (
     <RootSiblingParent>
       <ImageBackground source={require('../img/registrationDoggo.png')} resizeMode="cover" style={styles.small_background_image_full_height}>
+        {/*Zdroj obrazku: https://www.integrity-online.xyz/ProductDetail.aspx?iid=162935607&pr=40.88 */}
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
           <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.12}]}>Registrácia</Text>
           <TextInput placeholder='Meno' onChangeText={(value) => setUsername(value)} style={[styles.login_form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>

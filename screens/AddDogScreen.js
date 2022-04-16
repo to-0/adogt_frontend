@@ -96,19 +96,20 @@ function AddDogScreen({route, navigation}){
       <ScrollView>
         <View style={[styles.form, {marginTop: 20}]}>
           <Text style={styles.form_info}>Meno</Text>
-          <TextInput style={styles.form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
+          <TextInput style={styles.form_item} placeholder="Zadajte meno" onChangeText={(value) => {setName(value)}} />
 
           <Text style={styles.form_info}>Plemeno</Text>
-          <TextInput style={styles.form_item} onChangeText={(value) => {setBreed(value)}} defaultValue={breed.toString()}/>
+          <TextInput style={styles.form_item} placeholder="Zadajte plemeno" onChangeText={(value) => {setBreed(value)}} />
 
           <Text style={styles.form_info}>Vek</Text>
-          <TextInput style={styles.form_item} onChangeText={(value) => {setAge(value)}} defaultValue={age.toString()}/>
+          <TextInput style={styles.form_item} placeholder="Zadajte vek" onChangeText={(value) => {setAge(value)}} />
 
           <Text style={styles.form_info}>Zdravotný stav</Text>
-          <TextInput style={styles.form_item} onChangeText={(value) => {setHealth(value)}} defaultValue={health.toString()}/>
+          <TextInput style={styles.form_item} placeholder="Zadajte zdravotný stav" onChangeText={(value) => {setHealth(value)}} />
 
           <Text style={styles.form_info}>Ďalšie informácie</Text>
-          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte ďalšie informácie" 
+            onChangeText={(value) => {setDetails(value)}} />
 
           <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={select_image}>
               <Text style={styles.button_text}>Vybrať obrázok</Text>

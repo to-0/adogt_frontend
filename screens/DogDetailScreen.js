@@ -7,18 +7,8 @@ import styles from '../styles';
 function DogDetailScreen({route,navigation}){
     const token = route.params.token;
     const dog = route.params.dog;
-    var dog_images = {
-        1: require('../img/baset.jpg'),
-        2: require('../img/bigl.jpg'),
-        3: require('../img/dobermann.jpg'),
-        4: require('../img/jackRussel.jpg'),
-        5: require('../img/vlciak.jpg'),
-        6: require('../img/jazvecik.jpg'),
-        7: require('../img/bulldog.jpg'),
-        8: require('../img/mops.jpg'),
-        9: require('../img/doga.jpg'),
-        10: require('../img/labrador.jpg')
-    };
+    //Zdroj obrazka: https://wdrfree.com/stock-vector/lazy-dog
+    var default_dog_image = require('../img/lazyDog.jpg');
 
     var year_format = '';
     if (dog.age == 1)
@@ -30,7 +20,7 @@ function DogDetailScreen({route,navigation}){
 
     return (
         <View>
-            <Image style={styles.item_image} source={dog.data == '' ? dog_images[dog.id]: {uri: `data:${dog.image_type};base64,${dog.data}`}} />
+            <Image style={styles.item_image} source={dog.data == '' ? default_dog_image: {uri: `data:${dog.image_type};base64,${dog.data}`}} />
   
             <View>
                 <View style={styles.dog_detail}>

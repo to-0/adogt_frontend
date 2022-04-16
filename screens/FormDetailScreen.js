@@ -100,6 +100,7 @@ function FormDetailScreen ({route, navigation}){
 
     return (
       <ImageBackground source={require('../img/doggo.jpg')} resizeMode="cover" style={styles.small_background_image_full_width}>
+         {/*Zdroj obrazku: https://sk.pinterest.com/pin/590112357413129981/ */}
         <View style={styles.form_detail}>
           {data.type == 1 ? (
               <>

@@ -79,7 +79,7 @@ export default StyleSheet.create({
     margin: 20,
   },
   profile_text_fields: {
-    width: (Dimensions.get('window').width) * 0.7,
+    width: (Dimensions.get('window').width) * 0.6,
     flex: 1,
     margin: 20,
     marginTop: 0,
@@ -122,14 +122,15 @@ export default StyleSheet.create({
     height: 35,
   },
   form: {
+    flex: 1,
+    height: Dimensions.get('window').height,
     flexDirection: 'column',
     alignItems: 'center',
-    margin: 20,
-    marginTop: 40,
+    margin: 20
   },
   form_item: {
     width: (Dimensions.get('window').width) * 0.8,
-    height: 36,
+    height: 42,
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 1,
@@ -161,6 +162,7 @@ export default StyleSheet.create({
     flexDirection: 'row', 
     width: (Dimensions.get('window').width), 
     paddingLeft: 20,
+    marginTop: 10
   },
   registration_checkbox_view: {
     flexDirection: 'row', 
@@ -232,5 +234,9 @@ export default StyleSheet.create({
     display: 'flex', 
     flex: 1, 
     padding: 10
+  },
+  button_bottom: {
+    flex: 1, 
+    justifyContent: 'flex-end'
   }
 });

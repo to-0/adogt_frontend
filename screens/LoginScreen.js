@@ -42,6 +42,7 @@ function LoginScreen({route, navigation}) {
     return (
       <RootSiblingParent>
         <ImageBackground source={require('../img/background.webp')} resizeMode="cover" style={styles.background_image}>
+          {/*Zdroj obrazku: https://cutewallpaper.org/download.php?file=/22/dog-drawings-wallpapers/2326221784.jpg */}
           <KeyboardAvoidingView style={styles.center_view}>
 
             <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.23}]}>

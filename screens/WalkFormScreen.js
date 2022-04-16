@@ -83,20 +83,20 @@ function WalkFormScreen({route,navigation}){
   };
 
   return (
-    <View>
-      <View style={[styles.form, {marginTop: 20}]}>
-        <View style={styles.dropdown}>
-          <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
-            schema={{label: 'date', value: 'id'}} />
-        </View>
+    <View style={styles.form}>
+      <View style={styles.dropdown}>
+        <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
+          schema={{label: 'date', value: 'id'}} />
+      </View>
 
-        <Text style={styles.form_info}>Doplňujúce informácie</Text>
-        <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}}/>
+      <Text style={styles.form_info}>Doplňujúce informácie</Text>
+      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
+        onChangeText={(value) => {setDetails(value)}}/>
 
+      <View style={styles.button_bottom}>
         <TouchableOpacity style={styles.button} onPress={button_walk}>
           <Text style={styles.button_text}>Požiadať o venčenie</Text>
         </TouchableOpacity>
-
       </View>
     </View>
     

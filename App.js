@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppRegistry, Image, Text } from 'react-native';
+import { Image, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
@@ -16,6 +16,8 @@ import { LogBox } from 'react-native';
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
   'Each child in a list should have a unique "key" prop.',
+  'Possible Unhandled Promise Rejection',
+  'Can\'t perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.'
 ]);
 const Tab = createBottomTabNavigator();
 
