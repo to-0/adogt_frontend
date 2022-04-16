@@ -38,6 +38,12 @@ function RegisterScreen({route}){
     })
     .then(response => response.json())
     .then((json)=>{
+      console.log(json);
+      if(json.message != 'OK'){
+        alert(json.message);
+        return;
+      }
+      
       route.params.setShelter(sh);
       route.params.setUsername(username);
       route.params.setEmail(email);

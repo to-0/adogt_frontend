@@ -50,7 +50,20 @@ function AddDogScreen({route, navigation}){
     .then((json)=> {
       if(json.message == "OK"){
         var dog_id = json.id;
-
+        if (localUri === '') {
+          Alert.alert(
+            "Potvrdenie",
+            "Úspešne Ste pridali nového psa.",
+            [
+              {
+                text: "Zavrieť",
+                onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
+                style: "cancel"
+              }
+            ]
+          );
+          return;
+        }
         const options = {
           httpMethod: 'POST',
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,

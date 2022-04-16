@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription, Text, StyleSheet, View,TouchableOpacity } from 'react-native-webrtc';
+import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription} from 'react-native-webrtc';
+import {Text, StyleSheet, View,TouchableOpacity } from 'react-native';
 import {db} from '../firebase_db.js'
 
 import styles from '../styles';
@@ -121,7 +122,11 @@ function RoomJoinScreen({route,navigation}) {
 
   return (
     <>
-    <Text style={styles.heading} >Miestnosť : {roomId}</Text>
+    <Text style={styles.heading} >Miestnosť: {roomId}</Text>
+    <View style={[styles.side_buttons_view, {marginTop: 0, marginBottom: 0}]} >
+    <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={onBackPress}>
+        <Text style={styles.button_text}>Zastaviť hovor</Text>
+      </TouchableOpacity>
 
     {!localStream ? (
       <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]}  onPress={startLocalStream}> 
@@ -134,15 +139,17 @@ function RoomJoinScreen({route,navigation}) {
           <Text style={styles.button_text}>Pripojiť sa</Text> 
       </TouchableOpacity>
     ):null}
+    </View>
+    
 
     {localStream ? (
       <View style={[styles.side_buttons_view, {marginBottom: 0}]}>
-        <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={switchCamera}> 
+        <TouchableOpacity style={[styles.side_button, { marginBottom: 0}]} onPress={switchCamera}> 
           <Text style={styles.button_text}>Zmena kamery</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.side_button, {marginBottom: 0}]}  onPress={toggleMute} disabled={!remoteStream}> 
-          <Text style={styles.button_text}>{`${isMuted ? 'Unmute' : 'Mute'}`}</Text> 
+        <TouchableOpacity style={[styles.side_button, {marginBottom: 0}]} onPress={toggleMute} disabled={!remoteStream}>
+          <Text style={styles.button_text}> Stlmiť zvuk </Text>
         </TouchableOpacity>
       </View>
     ):null}
