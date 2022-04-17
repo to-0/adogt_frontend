@@ -36,7 +36,7 @@ function AdoptFormScreen({route,navigation}){
     .then((json) => {
       Alert.alert(
         "Potvrdenie",
-        "Úspešne Ste odoslali adopčný formulár. Ďalšie informácie Vám pošleme emailom.",
+        json.message=='OK' ? 'Úspešne Ste vytvorili formulár na adopciu.':json.message,
         [
           {
             text: "Zavrieť",

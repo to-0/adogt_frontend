@@ -58,12 +58,11 @@ function AddDogScreen({route, navigation}){
     })
     .then((response) => response.json())
     .then((json)=> {
-      if(json.message == "OK"){
         var dog_id = json.id;
         if (localUri === '') {
           Alert.alert(
             "Potvrdenie",
-            "Úspešne Ste pridali nového psa.",
+            json.message=="OK"? "Úspešne Ste pridali nového psa.":json.message,
             [
               {
                 text: "Zavrieť",
@@ -81,6 +80,7 @@ function AddDogScreen({route, navigation}){
         };
         FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
+<<<<<<< HEAD
           if (json.message != "Neexistujú dáta na úpravu.") {
             Alert.alert(
               "Potvrdenie",
@@ -94,13 +94,23 @@ function AddDogScreen({route, navigation}){
               ]
             );
           }
+=======
+          Alert.alert(
+            "Potvrdenie",
+            json.message=="OK"? "Úspešne Ste pridali nového psa.":json.message,
+            [
+              {
+                text: "Zavrieť",
+                onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
+                style: "cancel"
+              }
+            ]
+          );
+>>>>>>> 5bdac0e34440cc93d9184dc85d5c056fee2becf0
         })
         .catch((error)=> {
           console.log(error);
         })
-      }
-      else
-        console.log(json.message);
     })
   }  
   return (
