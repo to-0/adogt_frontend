@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 import { useFocusEffect } from '@react-navigation/native';
 
 import styles from '../styles';
@@ -24,11 +24,11 @@ function EditDogScreen({route,navigation}){
   
   const edit_dog = () => {
     if (name == '' || breed == '' || age == 0 || health == '') {
-      Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
+      Toast.show('Chýbajúce údaje', Toast.LONG);
       return;
     }
     if (isNaN(parseInt(age))) {
-      Toast.show('Vek musí byť číslo', {duration: Toast.durations.LONG});
+      Toast.show('Vek musí byť číslo', Toast.LONG);
       return;
     }
     var putBody = {

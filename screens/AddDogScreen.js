@@ -2,10 +2,11 @@ import * as React from 'react';
 import { View, TextInput, Text, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
+import { Dimensions } from 'react-native-web';
 
 function AddDogScreen({route, navigation}){
   const token = route.params.token;
@@ -32,11 +33,11 @@ function AddDogScreen({route, navigation}){
 
   const create_dog = () => {
     if (name == '' || breed == '' || age == 0 || health == '') {
-      Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
+      Toast.show('Chýbajúce údaje', Toast.LONG);
       return;
     }
     if (isNaN(parseInt(age))) {
-      Toast.show('Vek musí byť číslo', {duration: Toast.durations.LONG});
+      Toast.show('Vek musí byť číslo', Toast.LONG);
       return;
     }
 
@@ -80,21 +81,6 @@ function AddDogScreen({route, navigation}){
         };
         FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
-<<<<<<< HEAD
-          if (json.message != "Neexistujú dáta na úpravu.") {
-            Alert.alert(
-              "Potvrdenie",
-              "Úspešne Ste pridali nového psa.",
-              [
-                {
-                  text: "Zavrieť",
-                  onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
-                  style: "cancel"
-                }
-              ]
-            );
-          }
-=======
           Alert.alert(
             "Potvrdenie",
             json.message=="OK"? "Úspešne Ste pridali nového psa.":json.message,
@@ -106,7 +92,6 @@ function AddDogScreen({route, navigation}){
               }
             ]
           );
->>>>>>> 5bdac0e34440cc93d9184dc85d5c056fee2becf0
         })
         .catch((error)=> {
           console.log(error);
@@ -116,7 +101,7 @@ function AddDogScreen({route, navigation}){
   return (
     <KeyboardAvoidingView>
       <ScrollView>
-        <View style={[styles.form, {marginTop: 20}]}>
+        <View style={[styles.long_form, {marginTop: 20}]}>
           <Text style={styles.form_info}>Meno</Text>
           <TextInput style={styles.form_item} placeholder="Zadajte meno" onChangeText={(value) => {setName(value)}} />
 

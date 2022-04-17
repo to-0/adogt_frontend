@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, TextInput, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -15,9 +15,7 @@ function RegisterScreen({route}){
   
   const register_user = () => {
     if (username == '' || password == '' || email == '') {
-      Toast.show('Chýbajúce údaje', {
-        duration: Toast.durations.LONG,
-      });
+      Toast.show('Chýbajúce údaje', Toast.LONG);
       return;
     }
 
@@ -40,9 +38,7 @@ function RegisterScreen({route}){
     .then((json)=>{
       console.log(json);
       if(json.message != 'OK'){
-        Toast.show('Používateľ už má vytvorené konto.', {
-          duration: Toast.durations.LONG,
-        });
+        Toast.show('Používateľ už má vytvorené konto.', Toast.LONG);
         return;
       }
       

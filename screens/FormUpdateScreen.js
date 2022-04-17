@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -42,7 +42,7 @@ function FormUpdateScreen({route,navigation}){
     if (reason == undefined || reason == null || reason == '') {
       console.log(type);
       if (type == 1) {
-        Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
+        Toast.show('Chýbajúce údaje', Toast.LONG);
         return;
       }
       else

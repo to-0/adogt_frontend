@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, Dimensions, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles'
 import {Globals} from '../Globals'
@@ -25,9 +25,7 @@ function AccountScreen({route, navigation}){
 
   const create_call = () => {
     if (roomId == null || roomId == '') {
-      Toast.show('Je potrebné vyplniť názov miestnosti', {
-        duration: Toast.durations.LONG,
-      });
+      Toast.show('Je potrebné vyplniť názov miestnosti', Toast.LONG);
       return;
     }
     navigation.navigate('Videohovor ',{"roomId":roomId});
@@ -35,9 +33,7 @@ function AccountScreen({route, navigation}){
 
   const join_call = () => {
     if (roomId == null || roomId == '') {
-      Toast.show('Je potrebné vyplniť názov miestnosti', {
-        duration: Toast.durations.LONG,
-      });
+      Toast.show('Je potrebné vyplniť názov miestnosti', Toast.LONG);
       return;
     }
     navigation.navigate('Videohovor',{"roomId":roomId});
@@ -45,7 +41,7 @@ function AccountScreen({route, navigation}){
 
 
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView behavior='padding'>
       <ScrollView>
         <View style={[styles.center_view, {height: (Dimensions.get('window').height * 0.85)}]}>
           <Image style={styles.profile_icon} source={require('../img/profileIcon.png')} />

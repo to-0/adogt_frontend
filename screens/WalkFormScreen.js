@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -44,7 +44,7 @@ function WalkFormScreen({route,navigation}){
   
   const button_walk = () => {
     if (date == null) {
-      Toast.show('Chýbajúci dátum venčenia', {duration: Toast.durations.LONG});
+      Toast.show('Chýbajúci dátum venčenia', Toast.LONG);
       return;
     }
 
@@ -83,8 +83,6 @@ function WalkFormScreen({route,navigation}){
   };
 
   return (
-    <KeyboardAvoidingView>
-      <ScrollView>
         <View style={styles.form}>
           <View style={styles.dropdown}>
             <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
@@ -100,9 +98,7 @@ function WalkFormScreen({route,navigation}){
               <Text style={styles.button_text}>Požiadať o venčenie</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>    
+        </View> 
   )
 }
 

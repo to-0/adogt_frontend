@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, TextInput, Dimensions, ImageBackground, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -12,19 +12,15 @@ function LoginScreen({route, navigation}) {
 
     const button_login = () => {    
       if (username == '' || pass == '') {
-        Toast.show('Chýbajúce prihlasovacie údaje', {
-          duration: Toast.durations.LONG,
-        });
+        Toast.show('Chýbajúce prihlasovacie údaje', Toast.LONG);
         return;
       }
       
       fetch(`http://${Globals.host}:8000/users/signUser?username=${username}&password=${pass}`)
       .then((response) => response.json())
       .then((json) => {
-        if (json.message != undefined) {
-          Toast.show('Nesprávne prihlasovacie údaje', {
-            duration: Toast.durations.LONG,
-          });
+        if (json.message != "OK") {
+          Toast.show('Nesprávne prihlasovacie údaje', Toast.LONG);
         }
 
         route.params.setShelter(json.shelter);

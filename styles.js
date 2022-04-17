@@ -128,6 +128,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     margin: 20
   },
+  long_form: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 20
+  },
   form_item: {
     width: (Dimensions.get('window').width) * 0.8,
     height: 42,

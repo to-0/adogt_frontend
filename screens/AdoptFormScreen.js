@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -13,7 +13,7 @@ function AdoptFormScreen({route,navigation}){
 
   const button_adopt = () => {
     if (reason == '') {
-      Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
+      Toast.show('Chýbajúce údaje', Toast.LONG);
       return;
     }
 
