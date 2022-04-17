@@ -67,7 +67,7 @@ function WalkFormScreen({route,navigation}){
     .then((json) => {
       Alert.alert(
         "Potvrdenie",
-        "Úspešne Ste odoslali formulár na venčenie. Ďalšie informácie Vám pošleme emailom.",
+        json.message=='OK' ? 'Úspešne Ste vytvorili formulár na venčenie.':json.message,
         [
           {
             text: "Zavrieť",

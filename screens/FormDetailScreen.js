@@ -30,7 +30,7 @@ function FormDetailScreen ({route, navigation}){
       .then((json)=>{
         Alert.alert(
           "Odstránenie",
-          "Úspešne Ste odstránili formulár.",
+          json.message=="OK"? "Úspešne Ste odstránili formulár.":json.message,
           [
             {
               text: "Zavrieť",
@@ -60,6 +60,7 @@ function FormDetailScreen ({route, navigation}){
         setReason(json.reason);
       })
       .catch((error) => {
+        alert("Niečo sa pokazilo")
         console.log(error);
       });
     }, []);

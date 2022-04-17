@@ -56,7 +56,7 @@ function FormUpdateScreen({route,navigation}){
     .then((json) =>{
       Alert.alert(
       "Potvrdenie",
-      "Úspešne Ste upravili formulár.",
+      json.message=="OK"? "Úspešne Ste upravili formulár.":json.message,
       [
         {
           text: "Zavrieť",

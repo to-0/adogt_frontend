@@ -48,12 +48,11 @@ function AddDogScreen({route, navigation}){
     })
     .then((response) => response.json())
     .then((json)=> {
-      if(json.message == "OK"){
         var dog_id = json.id;
         if (localUri === '') {
           Alert.alert(
             "Potvrdenie",
-            "Úspešne Ste pridali nového psa.",
+            json.message=="OK"? "Úspešne Ste pridali nového psa.":json.message,
             [
               {
                 text: "Zavrieť",
@@ -73,7 +72,7 @@ function AddDogScreen({route, navigation}){
         .then((response)=>{
           Alert.alert(
             "Potvrdenie",
-            "Úspešne Ste pridali nového psa.",
+            json.message=="OK"? "Úspešne Ste pridali nového psa.":json.message,
             [
               {
                 text: "Zavrieť",
@@ -86,9 +85,6 @@ function AddDogScreen({route, navigation}){
         .catch((error)=> {
           console.log(error);
         })
-      }
-      else
-        console.log(json.message);
     })
   }  
   return (

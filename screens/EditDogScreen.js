@@ -93,7 +93,7 @@ function EditDogScreen({route,navigation}){
     .then((json)=>{
       Alert.alert(
         "Potvrdenie",
-        "Úspešne Ste pridali termíny pre psa.",
+        json.message=="OK"? "Úspešne Ste pridali termíny pre psa.":json.message,
         [
           {
             text: "Zavrieť",
@@ -116,7 +116,7 @@ function EditDogScreen({route,navigation}){
     .then((json)=>{
       Alert.alert(
         "Potvrdenie",
-        "Úspešne Ste vymazali psa.",
+        json.message=="OK"? "Úspešne Ste vymazali psa.":json.message,
         [
           {
             text: "Zavrieť",
