@@ -21,6 +21,7 @@ function DetailsScreen({route}){
         .then((response) => response.json())
         .then((json) => {
             setDetails(json);
+            console.log("detaily" + json.details);
 
             if (json.age == 1)
                 setYearFormat('rok');
@@ -56,10 +57,13 @@ function DetailsScreen({route}){
                 <Text style={styles.detail_text_multiline}>{details.health}</Text>
             </View>
 
-            <View style={[styles.detail, {flexDirection: 'column'}]}>
-                <Text style={styles.detail_info}>Ďalšie informácie:</Text>
-                <Text style={styles.detail_text_multiline}>{details.details}</Text>
-            </View>     
+            {details.details != undefined && details.details != null && details.details != '' ? (
+            <>
+                <View style={[styles.detail, {flexDirection: 'column'}]}>
+                    <Text style={styles.detail_info}>Ďalšie informácie:</Text>
+                    <Text style={styles.detail_text_multiline}>{details.details}</Text>
+                </View> 
+            </>):(<></>)}    
         </View>            
     );
 }

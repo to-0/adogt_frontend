@@ -144,11 +144,11 @@ function RoomJoinScreen({route,navigation}) {
 
     {localStream ? (
       <View style={[styles.side_buttons_view, {marginBottom: 0}]}>
-        <TouchableOpacity style={[styles.side_button, { marginBottom: 0}]} onPress={switchCamera}> 
+        <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={switchCamera}> 
           <Text style={styles.button_text}>Zmena kamery</Text> 
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.side_button, {marginBottom: 0}]} onPress={toggleMute} disabled={!remoteStream}>
+        <TouchableOpacity style={[styles.side_button, {marginTop: 0, marginBottom: 0}]} onPress={toggleMute} disabled={!remoteStream}>
           <Text style={styles.button_text}> Stlmiť zvuk </Text>
         </TouchableOpacity>
       </View>

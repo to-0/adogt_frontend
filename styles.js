@@ -123,7 +123,7 @@ export default StyleSheet.create({
   },
   form: {
     flex: 1,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height * 0.78,
     flexDirection: 'column',
     alignItems: 'center',
     margin: 20

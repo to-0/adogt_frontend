@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-root-toast';
 
@@ -83,23 +83,26 @@ function WalkFormScreen({route,navigation}){
   };
 
   return (
-    <View style={styles.form}>
-      <View style={styles.dropdown}>
-        <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
-          schema={{label: 'date', value: 'id'}} />
-      </View>
+    <KeyboardAvoidingView>
+      <ScrollView>
+        <View style={styles.form}>
+          <View style={styles.dropdown}>
+            <DropDownPicker open={open} value={date} items={freedates} setOpen={setOpen} setValue={(value) => {setDate(value)}} placeholder="Výber dátumu"
+              schema={{label: 'date', value: 'id'}} />
+          </View>
 
-      <Text style={styles.form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
-        onChangeText={(value) => {setDetails(value)}}/>
+          <Text style={styles.form_info}>Doplňujúce informácie</Text>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
+            onChangeText={(value) => {setDetails(value)}}/>
 
-      <View style={styles.button_bottom}>
-        <TouchableOpacity style={styles.button} onPress={button_walk}>
-          <Text style={styles.button_text}>Požiadať o venčenie</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-    
+          <View style={styles.button_bottom}>
+            <TouchableOpacity style={styles.button} onPress={button_walk}>
+              <Text style={styles.button_text}>Požiadať o venčenie</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>    
   )
 }
 

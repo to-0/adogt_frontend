@@ -16,8 +16,6 @@ function EditDogScreen({route,navigation}){
   const [details, setDetails] = React.useState(false);
   const [health, setHealth] = React.useState('');
 
-  let numOfLinesCompany = 0;
-
   useFocusEffect(
     React.useCallback(() => {
       getDog();
@@ -25,7 +23,7 @@ function EditDogScreen({route,navigation}){
   );
   
   const edit_dog = () => {
-    if (name == '' || breed == '' || age == 0 || details == '' || health == '') {
+    if (name == '' || breed == '' || age == 0 || health == '') {
       Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
       return;
     }

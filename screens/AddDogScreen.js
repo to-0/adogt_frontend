@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, TextInput, Text, Dimensions, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import Toast from 'react-native-root-toast';
 
 import styles from '../styles';
 import {Globals} from '../Globals';
@@ -30,6 +31,15 @@ function AddDogScreen({route, navigation}){
   };
 
   const create_dog = () => {
+    if (name == '' || breed == '' || age == 0 || health == '') {
+      Toast.show('Chýbajúce údaje', {duration: Toast.durations.LONG});
+      return;
+    }
+    if (isNaN(parseInt(age))) {
+      Toast.show('Vek musí byť číslo', {duration: Toast.durations.LONG});
+      return;
+    }
+
     var postBody = {
       "name": name,
       "breed": breed,
@@ -71,17 +81,19 @@ function AddDogScreen({route, navigation}){
         };
         FileSystem.uploadAsync(`http://${Globals.host}:8000/image/insert?token=${token}&dog_id=${dog_id}`,localUri,options)
         .then((response)=>{
-          Alert.alert(
-            "Potvrdenie",
-            "Úspešne Ste pridali nového psa.",
-            [
-              {
-                text: "Zavrieť",
-                onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
-                style: "cancel"
-              }
-            ]
-          );
+          if (json.message != "Neexistujú dáta na úpravu.") {
+            Alert.alert(
+              "Potvrdenie",
+              "Úspešne Ste pridali nového psa.",
+              [
+                {
+                  text: "Zavrieť",
+                  onPress: () => navigation.navigate('Profil používateľa', {token: token, shelter: true}),
+                  style: "cancel"
+                }
+              ]
+            );
+          }
         })
         .catch((error)=> {
           console.log(error);

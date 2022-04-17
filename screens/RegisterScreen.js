@@ -40,7 +40,9 @@ function RegisterScreen({route}){
     .then((json)=>{
       console.log(json);
       if(json.message != 'OK'){
-        alert(json.message);
+        Toast.show('Používateľ už má vytvorené konto.', {
+          duration: Toast.durations.LONG,
+        });
         return;
       }
       

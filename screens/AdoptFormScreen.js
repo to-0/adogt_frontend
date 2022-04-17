@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Toast from 'react-native-root-toast';
 
 import styles from '../styles';
@@ -52,21 +52,25 @@ function AdoptFormScreen({route,navigation}){
   };
 
   return (
-    <View style={styles.form}>
-      <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte dôvod pre adopciu" 
-        onChangeText={(value) => {setReason(value)}}/>
+    <KeyboardAvoidingView>
+      <ScrollView>
+        <View style={styles.form}>
+          <Text style={styles.form_info}>Prečo si myslíte, že je psík pre vás vhodný?</Text>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte dôvod pre adopciu" 
+            onChangeText={(value) => {setReason(value)}}/>
 
-      <Text style={styles.form_info}>Doplňujúce informácie</Text>
-      <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
-        onChangeText={(value) => {setDetails(value)}}/>
+          <Text style={styles.form_info}>Doplňujúce informácie</Text>
+          <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} placeholder="Zadajte doplňujúce informácie" 
+            onChangeText={(value) => {setDetails(value)}}/>
 
-      <View style={styles.button_bottom}>
-        <TouchableOpacity style={styles.button} onPress={button_adopt}>
-          <Text style={styles.button_text}>Požiadať o adopciu</Text>
-        </TouchableOpacity>
-      </View>      
-    </View>
+          <View style={styles.button_bottom}>
+            <TouchableOpacity style={styles.button} onPress={button_adopt}>
+              <Text style={styles.button_text}>Požiadať o adopciu</Text>
+            </TouchableOpacity>
+          </View>      
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 export default AdoptFormScreen;
