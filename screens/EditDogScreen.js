@@ -132,7 +132,7 @@ function EditDogScreen({route,navigation}){
     <RootSiblingParent>
       <KeyboardAvoidingView>
         <ScrollView>
-          <View style={[styles.form, {marginTop: 20}]}>
+          <View style={[styles.long_form, {marginTop: 20}]}>
             <Text style={styles.form_info}>Meno</Text>
             <TextInput style={styles.form_item} onChangeText={(value) => {setName(value)}} defaultValue={name.toString()}/>
 
