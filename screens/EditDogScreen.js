@@ -148,17 +148,17 @@ function EditDogScreen({route,navigation}){
             <Text style={styles.form_info}>Ďalšie informácie</Text>
             <TextInput style={[styles.form_item, styles.form_item_multiline]} multiline={true} onChangeText={(value) => {setDetails(value)}} defaultValue={details.toString()}/>
 
-            <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={edit_dog}>
+            <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={edit_dog}>
                 <Text style={styles.button_text}>Upraviť psa</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={add_terms}>
                 <Text style={styles.button_text}>Pridať termíny pre psa</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity style={[styles.button, {marginTop: 30}]} onPress={delete_dog}>
+
+            <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={delete_dog}>
                 <Text style={styles.button_text}>Vymazať psa</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
