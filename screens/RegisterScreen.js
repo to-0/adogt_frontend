@@ -59,8 +59,8 @@ function RegisterScreen({route}){
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
           <Text style={[styles.title, {marginTop: (Dimensions.get('window').height) * 0.12}]}>Registrácia</Text>
           <TextInput placeholder='Meno' onChangeText={(value) => setUsername(value)} style={[styles.login_form, {marginTop: (Dimensions.get('window').height) * 0.08}]}/>
-          <TextInput placeholder='Email' onChangeText={(value) => setPassword(value)} style={[styles.login_form]}/>
-          <TextInput placeholder='Heslo' onChangeText={(value) => setEmail(value)} secureTextEntry={true} style={styles.login_form}/>
+          <TextInput placeholder='Email' onChangeText={(value) => setEmail(value)} style={[styles.login_form]}/>
+          <TextInput placeholder='Heslo' onChangeText={(value) => setPassword(value)} secureTextEntry={true} style={styles.login_form}/>
 
           <View style={styles.registration_checkbox_view}>
             <Text>Ste útulok?</Text>
